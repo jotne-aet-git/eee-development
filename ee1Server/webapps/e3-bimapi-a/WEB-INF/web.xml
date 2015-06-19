@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"  
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"  
+  version="2.5">   
+ 
+  <display-name>EDMwebServices(tm)</display-name>  
+  <description>  
+    The EXPRESS Data manager(tm) front end of EDMwebServices(tm)  
+  </description>  
+ 
+  <context-param> 
+    <param-name>soap.input.file</param-name> 
+    <param-value>O:/__jotne/ee-tomcat/temp/soapMessageFromClient.xml</param-value> 
+    <description> 
+      Every soap message from the clients are copied to this file 
+    </description> 
+  </context-param> 
+      
+  <context-param> 
+    <param-name>soap.output.file</param-name> 
+    <param-value>O:/__jotne/ee-tomcat/temp/soapMessageToClient.xml</param-value> 
+    <description> 
+      Every soap message from the server returned to a client is copied to this file 
+    </description> 
+  </context-param> 
+ 
+  <context-param> 
+    <param-name>log.directory</param-name> 
+    <param-value>O:/__jotne/ee-tomcat/logs</param-value> 
+    <description> 
+      The directory where log files are created.  
+      If not defined, "java.io.tmpdir" is used as log directory 
+    </description> 
+  </context-param> 
+ 
+<context-param> 
+    <param-name>edm.host</param-name> 
+    <param-value>localhost</param-value> 
+    <description> 
+      The adress to the machine the EDMserver is running on. 
+      Keep 'localhost'. Front and back end modules must run on 
+      the same machine. 
+    </description> 
+  </context-param> 
+      
+  <context-param> 
+    <param-name>edm.port</param-name> 
+    <param-value>4590</param-value> 
+    <description> 
+      The service port the EDMserver is listening on. 
+    </description> 
+  </context-param>
+   
+  <servlet> 
+    <servlet-name>WSDLGenerator</servlet-name> 
+    <description> 
+      WSDL generator servlet 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.WSDLGenerator</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+ 
+  <servlet> 
+    <servlet-name>AccessControl</servlet-name> 
+    <description> 
+      Access Control Servlet 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.LoginServlet</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+ 
+  <servlet> 
+    <servlet-name>earlybinding</servlet-name> 
+    <description> 
+      Servlet that handles SOAP messages for execution of queries. 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.ExecuteQuery</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+ 
+  <servlet> 
+    <servlet-name>RESTServlet</servlet-name> 
+    <servlet-class>edmws.webapp.servlets.RESTServlet</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+
+  <servlet> 
+    <servlet-name>Admin</servlet-name> 
+    <description> 
+      Servlet that define logging parameters for an logged on session. 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.AdminServlet</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+
+ 
+  <servlet> 
+    <servlet-name>HttpFileTransfer</servlet-name> 
+    <description> 
+      Servlet that do up and download of files. 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.HttpFileTransfer</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+
+  <servlet> 
+    <servlet-name>E3ReposServlet</servlet-name> 
+    <description> 
+      Servlet that is being developed now 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.E3ReposServlet</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+  </servlet> 
+  
+  <servlet-mapping> 
+    <servlet-name>earlybinding</servlet-name> 
+    <url-pattern>/earlybinding/*</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet-mapping> 
+    <servlet-name>RESTServlet</servlet-name> 
+    <url-pattern>/REST/*</url-pattern> 
+  </servlet-mapping> 
+
+  <servlet-mapping> 
+    <servlet-name>WSDLGenerator</servlet-name> 
+    <url-pattern>/WSDLGenerator/*</url-pattern> 
+  </servlet-mapping> 
+      
+  <servlet-mapping> 
+    <servlet-name>AccessControl</servlet-name> 
+    <url-pattern>/AccessControl/*</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet-mapping> 
+    <servlet-name>Admin</servlet-name> 
+    <url-pattern>/Admin/*</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet-mapping> 
+    <servlet-name>HttpFileTransfer</servlet-name> 
+    <url-pattern>/HttpFileTransfer/*</url-pattern> 
+  </servlet-mapping> 
+
+  <servlet-mapping> 
+    <servlet-name>E3ReposServlet</servlet-name> 
+    <url-pattern>/E3ReposServlet/*</url-pattern> 
+  </servlet-mapping> 
+  
+</web-app> 
+  
