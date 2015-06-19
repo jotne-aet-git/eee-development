@@ -10,6 +10,7 @@ The **ee1Server** is an image of the eeE EDM BIM Model Server installation, EDM 
 - db (.gitignore): EDM database folder, 
 - edm-bin (.gitignore): same as the "bin" folder of a normal EDM installation .gitignore
 - trace (.gitignore): EDM trace output folder 
+- z-old-db (.gitignore): Old database snapshots, i.e. db20150617.zip
 
 The rest of the folders are a normal TOMCAT "webroot" folder structure:
 
