@@ -17,4 +17,10 @@ SET CATALINA_HOME=C:\apps\apache-tomcat-8.0.22
 SET CATALINA_BASE=%CD%
 set PATH=%PATH%;%EDM_HOME_BIN%
 
+rem make sure necessary directories exist
+
+md logs
+md temp
+md trace
+
 

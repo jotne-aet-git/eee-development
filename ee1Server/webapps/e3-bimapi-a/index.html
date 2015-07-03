@@ -84,7 +84,7 @@
 				fillModelTable0(null);
 			} else if(src.id.search("repository_") == 0) {
 				var filter = {};
-				filter.repository_name = src.id.slice(pos);
+				filter.project_id = src.id.slice(pos);
 				fillModelTable0(filter);
 			} else if(src.id.search("model_") == 0) {
 				var filter = {};
@@ -116,7 +116,7 @@
 			}
 		}
 		var sdata = '<table>';
-		sdata += '<tr><td>Repository:</td><td>' + g_selected_model.repository_name + '</td></tr>';
+		sdata += '<tr><td>Project:</td><td>' + g_selected_model.project_id + '</td></tr>';
 		sdata += '<tr><td>Model:</td><td>' + g_selected_model.model_name + '</td></tr>';
 		sdata += '<tr><td>Domain:</td><td>' + g_selected_model.domain_name + '</td></tr>';
 		sdata += '<table>';
@@ -148,8 +148,8 @@
 		+ "<li>The webpage does not look very nice, since the author is not focused on web design and HTML</li>"
 		+ "</ul>"
 		+ "<p>The source for this web page will be found at <a href='https://github.com/GeorgDangl/eeE-BIM-API' target='_blank'>GITHUB</a></p>"
-		+ "<p>The current path to services are <b><i>&lt;server&gt;/e3-bimapi-a/E3ReposServlet</i></b>, and version is <b><i>0.2</i></b></p>"
-		+ "<p>Example path:  <i>http://localhost:8080/e3-bimapi-a/E3ReposServlet/eee-repos/0.2/models/?EDMSESSIONID=AUTO_LOGIN</i></p>"
+		+ "<p>The current path to services are <b><i>&lt;server&gt;/e3-bimapi-a/E3ReposServlet</i></b>, and version is <b><i>0.3</i></b></p>"
+		+ "<p>Example path:  <i>http://localhost:8080/e3-bimapi-a/E3ReposServlet/eee-repos/0.3/models/?EDMSESSIONID=AUTO_LOGIN</i></p>"
 		+ "<h3>Select 'List Models' from top menu to get started :)</h3>"		
 		;
 		
@@ -215,19 +215,6 @@
 	 
 	var g_model_list = JSON.parse("[]");
 
-	function getRepositoryByGuid(data,guid){
-    	var result = null;
-		for (var i=0; i < data.length; i++) {
-			var md = data[i].model_meta_data;
-			if(md.model_guid == guid) {
-				result = md.repository_name;
-				break;
-			}
-		}
-		return result;
-	}
-
-
 	 function makeModelTree() {
 		var data = g_model_list;
 		var tree = JSON.parse("{}");
@@ -237,25 +224,25 @@
 		tree.children = JSON.parse("[]");
 		for (var i=0; i < data.length; i++) {
 			var md = data[i].model_meta_data;
-			var rep = null;
+			var project = null;
 			for (var i2=0; i2 < tree.children.length; i2++) {
-				if(tree.children[i2].name == md.repository_name) {
-					rep = tree.children[i2];
+				if(tree.children[i2].name == md.project_id) {
+					project = tree.children[i2];
 					break;
 				}
 			}
-			if (rep == null) {
-				rep = JSON.parse("{}")
-				rep.type = 'repository';
-				rep.name = md.repository_name;
-				rep.id = md.repository_name;
-				rep.children = JSON.parse("[]")
-				tree.children[tree.children.length] = rep;
+			if (project == null) {
+				project = JSON.parse("{}")
+				project.type = 'project';
+				project.name = md.project_id;
+				project.id = md.project_id;
+				project.children = JSON.parse("[]")
+				tree.children[tree.children.length] = project;
 			}
 			var model = null;
-			for (var i2=0; i2 < rep.children.length; i2++) {
-				if(rep.children[i2].name == md.model_name) {
-					model = rep.children[i2];
+			for (var i2=0; i2 < project.children.length; i2++) {
+				if(project.children[i2].name == md.model_name) {
+					model = project.children[i2];
 					break;
 				}
 			}
@@ -265,7 +252,7 @@
 				model.name = md.model_name;
 				model.id = md.model_name;
 				model.children = JSON.parse("[]")
-				rep.children[rep.children.length] = model;
+				project.children[project.children.length] = model;
 			}
 			var domain = null;
 			for (var i2=0; i2 < model.children.length; i2++) {
@@ -323,19 +310,19 @@
 
 	function fillModelTable0(filter1) {
 		 var data = g_model_list;
-		 var sdata = '<table><th>Repository</th><th>Model</th><th>Type</th><th>Version</th><th>Domain</th><th>Schema</th><th>URL</th>';
+		 var sdata = '<table><th>Project</th><th>Model</th><th>Type</th><th>Version</th><th>Domain</th><th>Schema</th><th>URL</th>';
 		 sdata = sdata + '<th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Description</th></tr>';
 		 for (var i=0; i < data.length; i++) {
 			var model_url = data[i].model_url;
 			var md = data[i].model_meta_data;
 			if (filter1 != null) {
-				if( (filter1.repository_name != null) && (filter1.repository_name != md.repository_name)) continue;
+				if( (filter1.project_id != null) && (filter1.project_id != md.project_id)) continue;
 				if( (filter1.model_name != null) && (filter1.model_name != md.model_name)) continue;
 				if( (filter1.domain_name != null) && (filter1.domain_name != md.domain_name)) continue;
 				if( (filter1.model_guid != null) && (filter1.model_guid != md.model_guid)) continue;
 			}
 			sdata += '<tr>';
-			sdata += '<td>' + md.repository_name + '</td>';
+			sdata += '<td>' + md.project_id + '</td>';
 			sdata += '<td>' + md.model_name + '</td>';
 			sdata += '<td>' + md.model_type + '</td>';
 			sdata += '<td>' + md.model_version + '</td>';
@@ -361,9 +348,15 @@
 	 }
 	 	 
 	 function getE3ServiceURL() {
-	      var url = '/e3-bimapi-a/E3ReposServlet/eee-repos/v0.2/';
+	      var url = '/e3-bimapi-a/E3ReposServlet/eee-repos/0.3/';
 		  return url;
 	 }
+
+ 	function getE3Repository(){
+    	//var result = 'rep1';
+    	var result = '';
+		return result;
+	}
 
 	 function getE3ServiceSessionID() {
 	      var sid  = 'EDMSESSIONID=AUTO_LOGIN';
@@ -383,7 +376,7 @@
 	function rqFetchModel() {
         var form = document.getElementById("upload_model_form");
         var mdIn = {};
-        mdIn.repository_name= document.getElementById("uu_repository_name").value;
+        mdIn.project_id= document.getElementById("uu_project_id").value;
         mdIn.model_name		= document.getElementById("uu_model_name").value;
         mdIn.model_type		= document.getElementById("uu_model_type").value;
         mdIn.domain_name	= document.getElementById("uu_domain_name").value;
@@ -439,9 +432,7 @@
      //var _eeeDeleteModelRequest = {"filter1":null,"filter2":null,"recursive":true};     
      function rqDeleteModelByGuid(guid) {
 		 var _cmd = getE3ServiceURL();
-    	 _cmd += getE3ServiceSessionID();
-    	 _cmd += '0.2/'; // version
-    	 _cmd += getRepositoryByGuid(g_model_list,guid);
+    	 _cmd += getE3Repository();
     	 _cmd += '/models/' + guid;
     	 _cmd += '?';
     	 _cmd += getE3ServiceSessionID();
@@ -458,9 +449,8 @@
 
   
      function rqDownloadModelByGuid(guid) {
-    	 var _cmd = '/e3-bimapi-a/E3ReposServlet/eee-repos/';
-    	 _cmd += '0.2/'; // version
-    	 _cmd += getRepositoryByGuid(g_model_list,guid);
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += getE3Repository();
     	 _cmd += '/models/' + guid;
     	 _cmd += '?EDMSESSIONID=AUTO_LOGIN';
     	 var _body = {};
@@ -475,9 +465,8 @@
 	 
      var _eeeUpdateModelRequest = {"filter1":null,"filter2":null,"recursive":true};     
      function rqUpdateModelByGuid(guid) {
-    	 var _cmd = '/e3-bimapi-a/E3ReposServlet/eee-repos/';
-    	 _cmd += '0.2/'; // version
-    	 _cmd += getRepositoryByGuid(g_model_list,guid);
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += getE3Repository();
     	 _cmd += '/models/' + guid;
     	 _cmd += '?EDMSESSIONID=AUTO_LOGIN';
     	 var _body =  JSON.stringify(_eeeUpdateModelRequest);
@@ -497,7 +486,7 @@
 			_form = _form + ' onSubmit="fixformUploadModelFile()">';
 			_form = _form + '<table><tr><th></th><th><STRONG>Upload New Model</STRONG></th></tr>';
 			_form = _form + '<tr><td>File:</td><td><input name="file" type="file"></td></tr>';
-			_form = _form + '<tr><td>Repository:</td><td><input id="uu_repository_name" name="repository_name" type="text"></td></tr>';
+			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_id" name="project_id" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
 			_form = _form + '<tr><td>Domain:</td><td><input id="uu_domain_name" name="domain_name" type="text"></td></tr>';
@@ -516,7 +505,7 @@
 
     function formUploadModelVersionFile(md) {
 /*
-			sdata += '<td>' + md.repository_name + '</td>';
+			sdata += '<td>' + md.project_id + '</td>';
 			sdata += '<td>' + md.model_name + '</td>';
 			sdata += '<td>' + md.model_type + '</td>';
 			sdata += '<td>' + md.model_version + '</td>';
@@ -530,7 +519,7 @@
 			_form = _form + ' onSubmit="fixformUploadModelFile()">';
 			_form = _form + '<table><tr><th></th><th><STRONG>Upload New Model Version</STRONG></th></tr>';
 			_form = _form + '<tr><td>File:       </td><td><input id="uu_file"            name="file"            type="file">                                            </td></tr>';
-			_form = _form + '<tr><td>Repository: </td><td><input id="uu_repository_name" name="repository_name" type="text" readonly value="' + md.repository_name + '"></td></tr>';
+			_form = _form + '<tr><td>Project: </td><td><input id="uu_project_id" name="project_id" type="text" readonly value="' + md.project_id + '"></td></tr>';
 			_form = _form + '<tr><td>Model:      </td><td><input id="uu_model_name"      name="model_name"      type="text" readonly value="' + md.model_name +      '"></td></tr>';
 			_form = _form + '<tr><td>Model Type: </td><td><input id="uu_model_type"      name="model_type"      type="text" readonly value="IFC2x3">                    </td></tr>';
 			_form = _form + '<tr><td>Domain:     </td><td><input id="uu_domain_name"     name="domain_name"     type="text" readonly value="' + md.domain_name +     '"></td></tr>';
@@ -550,7 +539,7 @@
         var action = form.action;
         action = action + '?EDMSESSIONID=AUTO_LOGIN'
         action = action + '&webform=upload_model_file'
-        action = action + '&repository_name=' + document.getElementById("uu_repository_name").value;
+        action = action + '&project_id=' + document.getElementById("uu_project_id").value;
         action = action + '&model_name='  + document.getElementById("uu_model_name").value;
         action = action + '&model_type='  + document.getElementById("uu_model_type").value;
         action = action + '&domain_name=' + document.getElementById("uu_domain_name").value;
@@ -566,7 +555,7 @@
 			_form = _form + '<form id="fetch_model_form" name="fetch_model_form"  method="post">'
 			_form = _form + '<table><tr><th></th><th><STRONG>Fetch New Model</STRONG></th></tr>';
 			_form = _form + '<tr><td>Data URL:</td><td><input id="uu_model_content" name="model_content" type="text"></td></tr>';
-			_form = _form + '<tr><td>Repository:</td><td><input id="uu_repository_name" name="repository_name" type="text"></td></tr>';
+			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_id" name="project_id" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
 			_form = _form + '<tr><td>Domain:</td><td><input id="uu_domain_name" name="domain_name" type="text"></td></tr>';
@@ -583,7 +572,7 @@
 			_form = _form + '<form id="fetch_model_form" name="fetch_model_form"  method="post">'
 			_form = _form + '<table><tr><th></th><th><STRONG>Fetch New Model Version</STRONG></th></tr>';
 			_form = _form + '<tr><td>Data URL:</td><td><input id="uu_model_content" name="model_content" type="text"></td></tr>';
-			_form = _form + '<tr><td>Repository: </td><td><input id="uu_repository_name" name="repository_name" type="text" readonly value="' + md.repository_name + '"></td></tr>';
+			_form = _form + '<tr><td>Project: </td><td><input id="uu_project_id" name="project_id" type="text" readonly value="' + md.project_id + '"></td></tr>';
 			_form = _form + '<tr><td>Model:      </td><td><input id="uu_model_name"      name="model_name"      type="text" readonly value="' + md.model_name +      '"></td></tr>';
 			_form = _form + '<tr><td>Model Type: </td><td><input id="uu_model_type"      name="model_type"      type="text" readonly value="IFC2x3">                    </td></tr>';
 			_form = _form + '<tr><td>Domain:     </td><td><input id="uu_domain_name"     name="domain_name"     type="text" readonly value="' + md.domain_name +     '"></td></tr>';
