@@ -191,8 +191,9 @@
 				rqDeleteModelByGuid(guid);
 			} else 
 			if(src.id.search("update_") == 0) {
-				alert('update guid='  + guid);
-				rqUpdateModelByGuid(guid);
+				//alert('update guid='  + guid);
+				formUpdateModelVersion(getModelData(guid));
+				//rqUpdateModelByGuid(guid);
 			} else 
 			if(src.id.search("upload_") == 0) {
 				alert('upload new version guid='  + guid);
@@ -463,22 +464,47 @@
           });    	 
      }
 	 
-     var _eeeUpdateModelRequest = {"filter1":null,"filter2":null,"recursive":true};     
-     function rqUpdateModelByGuid(guid) {
-		 var _cmd = getE3ServiceURL();
-    	 _cmd += getE3Repository();
-    	 _cmd += '/models/' + guid;
-    	 _cmd += '?EDMSESSIONID=AUTO_LOGIN';
-    	 var _body =  JSON.stringify(_eeeUpdateModelRequest);
-    	 ajax({method:"PUT", url:_cmd, body: _body}).done(function(_data,_status) {
+ 	function rqUpdateModelVersion() {
+        var form = document.getElementById("update_model_form");
+        var mdIn = {};
+        mdIn.description	= document.getElementById("uu_description").value;
+        mdIn.schema_url		= document.getElementById("uu_schema_url").value;
+		var guid			= document.getElementById("uu_model_guid").value;
+ 
+ 		var _cmd = getE3ServiceURL();
+		_cmd += '/models/' + guid;
+    	_cmd += '?';
+    	_cmd += getE3ServiceSessionID();
+    	var _body = JSON.stringify(mdIn);
+        alert(_cmd + " <= " + _body);
+		ajax({method:"PUT", url:_cmd, body: _body}).done(function(_data,_status) {
     		 if (_status && _status != 200) { 
     		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
     		 	return; 
     		 }
-        	 document.getElementById("content").innerHTML = '<p>Model updated</p><br/><p>' + _data + '</p>';
+			 //alert(_data);
+         	 mirrorJson(_cmd,_body,_data);
+			 document.getElementById("content").innerHTML = _data;
           });    	 
      }
 
+	 
+     function formUpdateModelVersion(md) {
+			var _form    = ''
+			_form = _form + '<form id="update_model_form" name="update_model_form"  method="post">'
+			_form = _form + '<table><tr><th></th><th><STRONG>Update Model Version</STRONG> (only description editable)</th></tr>';
+			_form = _form + '<tr><td>Model guid	:</td><td><input id="uu_model_guid"     name="guid"     	type="text" readonly value="' + md.model_guid +     '"></td></tr>';
+			_form = _form + '<tr><td>Project	:</td><td><input id="uu_project_id" 	name="project_id" 	type="text" readonly value="' + md.project_id +     '"></td></tr>';
+			_form = _form + '<tr><td>Model		:</td><td><input id="uu_model_name" 	name="model_name" 	type="text" readonly value="' + md.model_name +     '"></td></tr>';
+			_form = _form + '<tr><td>Model Type	:</td><td><input id="uu_model_type" 	name="model_type" 	type="text" readonly value="' + md.model_type +     '"></td></tr>';
+			_form = _form + '<tr><td>Domain		:</td><td><input id="uu_domain_name" 	name="domain_name" 	type="text" readonly value="' + md.domain_name+     '"></td></tr>';
+			_form = _form + '<tr><td>Description:</td><td><input id="uu_description"    name="description"  type="text"          value="' + md.description+     '"></td></tr>';
+			_form = _form + '<tr><td>Schema URL :</td><td><input id="uu_schema_url"     name="schema_url"   type="text" 		 value="' + md.schema_url +     '"></td></tr>';
+			_form = _form + '</table>';	
+			_form = _form + '<input type="button" value="Submit" onClick="rqUpdateModelVersion()"/>';
+			_form = _form + '</form>';     
+        	 document.getElementById("content").innerHTML = _form;
+     }
    
     function formUploadModelFile() {
 			var _form    = ''
@@ -583,6 +609,7 @@
 			_form = _form + '</form>';     
         	 document.getElementById("content").innerHTML = _form;
      }
+
 
 
 	function mirrorJson(url,jsonIn,jsonOut) {
