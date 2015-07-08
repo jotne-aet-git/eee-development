@@ -138,11 +138,12 @@
 		+ "<p>This page uses REST/JSON API to exploit the <a href='https://github.com/GeorgDangl/eeE-BIM-API' target='_blank'>eeEmbedded Repository Services</a></p>"
 		+ "<p>The services are implemented on the EDMmodelServer by <a href='http://www.jotneit.no/' target='_blank'>Jotne EPM Technology</a></p>"
 		+ "<p>Please refer to the <a href='http://141.30.165.10/' target='_blank'/>eeEmbedded Project</a></p>"
-		+ "<p>The current implementation is very early and not complete, here are some lowlights:</p>"
+		+ "<p>For testing retrieval (GET) for all API classes with full URL got to <a href='browse1.html'>eeEmbedded Repository Services Browser #1 Test Page</a></p>"
+		+ "<p>The current implementation is early and not complete, here are some lowlights:</p>"
 		+ "<ul>"
 		+ "<li>Access control is not implemented, anyone gets access by including parameter <b>?EDMSESSIONID=AUTO_LOGIN</b> in the URL</li>"
 		+ "<li>Upload is only supported by webform and by giving an external URL for IFC data source ('Fetch')</li>"
-		+ "<li>Meta-data fields 'Description' and 'Schema URL' are not supported yet</li>"
+		+ "<li>Meta-data fields 'Description' and 'Schema URL' are not fully supported yet</li>"
 		+ "<li>There is very little sanity checks on the parameters, so expect unexpected behaviour</li>"
 		+ "<li>Over all it is not much tested, so do not expect great stability and good behaviour!</li>"
 		+ "<li>The webpage does not look very nice, since the author is not focused on web design and HTML</li>"
@@ -547,7 +548,7 @@
 			_form = _form + '<tr><td>File:       </td><td><input id="uu_file"            name="file"            type="file">                                            </td></tr>';
 			_form = _form + '<tr><td>Project: </td><td><input id="uu_project_id" name="project_id" type="text" readonly value="' + md.project_id + '"></td></tr>';
 			_form = _form + '<tr><td>Model:      </td><td><input id="uu_model_name"      name="model_name"      type="text" readonly value="' + md.model_name +      '"></td></tr>';
-			_form = _form + '<tr><td>Model Type: </td><td><input id="uu_model_type"      name="model_type"      type="text" readonly value="IFC2x3">                    </td></tr>';
+			_form = _form + '<tr><td>Model Type: </td><td><input id="uu_model_type"      name="model_type"      type="text"          value="IFC2x3">                    </td></tr>';
 			_form = _form + '<tr><td>Domain:     </td><td><input id="uu_domain_name"     name="domain_name"     type="text" readonly value="' + md.domain_name +     '"></td></tr>';
 			_form = _form + '<tr><td>Description:</td><td><input id="uu_description"     name="description"     type="text"          value="' + md.description +     '"></td></tr>';
 			_form = _form + '<tr><td>Schema URL: </td><td><input id="uu_schema_url"      name="schema_url"      type="text" readonly value="' + md.schema_url +      '"></td></tr>';
@@ -659,7 +660,7 @@
 		<td><div class="topmenu" id="cmd_list_models" 		onClick="onMenu_ListModelsClick()")	>List Models</div></td>
 		<td><div class="topmenu" id="cmd_upload_model" 		onClick="onMenu_UploadModelClick()")>Upload New Model</div></td>
 		<td><div class="topmenu" id="cmd_fetch_model" 		onClick="onMenu_FetchModelClick()")>Fetch New Model</div></td>
-		<td><h2>eeEmbedded BIM API Test page</h2></td><td>  -- v2015.06.18 Jotne EPM Technology AS </td>
+		<td><h2>eeEmbedded BIM API Test page</h2></td><td>  -- v2015.07.08 Jotne EPM Technology AS </td>
 		</tr>
      </table>
      <table>

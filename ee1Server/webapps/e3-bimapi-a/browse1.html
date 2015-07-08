@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html> 
+   <head>
+ 
+     <meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+     <title>eeEmbedded BIMAPI Repository Services Explorer #1</title> 
+<!--     <script type='text/javascript' src='http://www.x3dom.org/download/x3dom.js'></script> --> 
+     <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/x3dom.css'> 
+   
+    <script type="text/javascript">
+     
+     function ajax(info) {
+    	 var asyncObj; 
+    	 try { 
+    	 	asyncObj = new XMLHttpRequest(); } 
+    	 catch (e1) { 
+    	 	try { 
+    	 		asyncObj = new ActiveXObject("Microsoft.XMLHTTP"); } 
+    	 	catch (e2) { 
+    	 		asyncObj = new ActiveXObject("Msxml2.XMLHTTP"); 
+    	 	}
+    	 }
+         return { 
+         	'asyncObj':asyncObj, 
+         	'method':info.method, 
+         	'url':info.url, 
+         	'body':info.body,
+         	'done':function(_call){
+	        	 	this.asyncObj.onreadystatechange = function(){
+	        	  		if (this.readyState == 4) _call(this.responseText,this.status); 
+	        	  		//_call(this.responseText,this.status); 
+	        	 	};  
+        	 		this.asyncObj.open(this.method, this.url, true);
+        	 		this.asyncObj.send(this.body);  
+         	}
+		};		
+     }
+     
+
+	 var g_selected_model = null;
+     function onModelTreeClick(e) {
+    	if (!e) e = window.event; var src = e.target || e.srcElement;
+		// find the relevant model data  in global list
+		// display in properties window
+		if(src.id) {
+			var pos = src.id.search("_") + 1;
+			if(src.id.search("tree_") == 0) {
+				fillModelTable0(null);
+			} else if(src.id.search("project_") == 0) {
+				var project_id = src.id.slice(pos);
+				//alert('Expand project node:' + project_id );
+				rqAddMultimodels(project_id);
+			} else if(src.id.search("details_project_") == 0) {
+				var project_id = src.id.slice(pos);
+				alert('Show details for project node:' + project_id );
+			} else if(src.id.search("multimodel_") == 0) {
+				var multimodel_id = src.id.slice(pos);
+				//alert('Expand multimodel node:' + multimodel_id );
+				//rqAddModels(multimodel_id);
+				rqAddDomains(multimodel_id);
+			} else if(src.id.search("details_multimodel_") == 0) {
+				var multimodel_id = src.id.slice(pos);
+				alert('Show details for multimodel node:' + multimodel_id );
+			} else if(src.id.search("domain_") == 0) {
+				var local_domain_id = src.id.slice(pos);
+				pos = local_domain_id.search("-##-");
+				var multimodel_id = local_domain_id.slice(0,pos);
+				domain_id = local_domain_id.slice(pos+4);
+				//alert('mm:' + multimodel_id + ' domain_id:' + domain_id );
+				rqAddModels(multimodel_id,domain_id);
+			} else if(src.id.search("details_domain_") == 0) {
+				var project_id = src.id.slice(pos);
+				alert('Show details for domain node:' + project_id );
+			} else if(src.id.search("model_") == 0) {
+				var model_id  = src.id.slice(pos);
+				alert('Execute operations on model node: ' + model_id );				
+			} else if(src.id.search("details_model_") == 0) {
+				var model_id  = src.id.slice(pos);
+				alert('Show details for model node: ' + model_id );				
+			} else {
+				alert('Unhandled tree node:' + src.id);
+			}
+		} else {
+			alert('Missing event source in tree?');
+		}
+     }
+
+
+	function eeMenu(selitem) {
+		var bgcolor = 'white';
+		document.getElementById("cmd_home").style.backgroundColor=bgcolor;
+		document.getElementById("cmd_list_models").style.backgroundColor=bgcolor;
+		document.getElementById("cmd_list_projects").style.backgroundColor=bgcolor;
+		document.getElementById("cmd_list_multimodels").style.backgroundColor=bgcolor;
+		document.getElementById("cmd_list_domains").style.backgroundColor=bgcolor;
+		selitem.style.backgroundColor='yellow';
+	}
+
+	var _homepage = "<h2>Welcome to the eeEmbedded BIM API server browser #1</h2>"
+		+ "<p>This page is a primitive way to browse eeE BIM Repository Server Contents</p>"
+		+ "<p>For testing the API on pure model level go to <a href='index.html'>eeEmbedded Repository Services Test Page</a></p>"
+		+ "<p>The services are implemented on the EDMmodelServer by <a href='http://www.jotneit.no/' target='_blank'>Jotne EPM Technology</a></p>"
+		+ "<p>Please refer to the <a href='http://141.30.165.10/' target='_blank'/>eeEmbedded Project</a></p>"		
+		+ "<p>The source for this web page will be found at <a href='https://github.com/jotne-aet-git/eee-development' target='_blank'>GITHUB</a></p>"
+		+ "<h3>Select 'List Projects' from top menu to get started :)</h3>"				
+		;
+		
+     function onMenu_HomeClick() {		
+    	eeMenu(document.getElementById("cmd_home"));
+		document.getElementById("modelList").innerHTML='<p>No tree</p>';
+		document.getElementById("content").innerHTML=_homepage;
+		document.getElementById("workdata_div").innerHTML='<p>No action</p>';
+     }
+	
+     function onMenu_ListModelsClick() {		
+    	eeMenu(document.getElementById("cmd_list_models"));
+		rqListModels();
+     }
+	 
+     function onMenu_ListProjectsClick(e) {		
+    	eeMenu(document.getElementById("cmd_list_projects"));
+		rqListProjects();
+     }
+
+     function onMenu_ListMultimodelsClick(e) {		
+    	eeMenu(document.getElementById("cmd_list_multimodels"));
+		rqListMultimodels();
+     }
+
+     function onMenu_ListDomainsClick(e) {		
+    	eeMenu(document.getElementById("cmd_list_domains"));
+		rqListDomains();
+     }
+
+      function onModelClick(e) {
+    	if (!e) e = window.event; var src = e.target || e.srcElement;
+		// find the relevant model data  in global list
+		// display in properties window
+		if(src.id) {
+			var pos = src.id.search("_") + 1;
+			var guid = src.id.slice(pos);
+			if(src.id.search("download_") == 0) {
+				alert('Download guid=' + guid);
+				rqDownloadModelByGuid(guid);
+			} else
+			if(src.id.search("delete_") == 0) {
+				alert('Delete guid=' + guid);
+				rqDeleteModelByGuid(guid);
+			} else 
+			if(src.id.search("update_") == 0) {
+				//alert('update guid='  + guid);
+				formUpdateModelVersion(getModelData(guid));
+				//rqUpdateModelByGuid(guid);
+			} else 
+			if(src.id.search("upload_") == 0) {
+				alert('upload new version guid='  + guid);
+				formUploadModelVersionFile(getModelData(guid));
+				//rqUploadModelVersionByGuid(guid);
+			} else 
+			if(src.id.search("fetch_") == 0) {
+				alert('fetch new version guid='  + guid);
+				formFetchModelVersionFile(getModelData(guid));
+				//rqUploadModelVersionByGuid(guid);
+			} else {
+				//alert('haha:' + src.id);
+			}
+		} else {
+			//alert('koko');
+		}
+	}
+
+
+	 
+	var g_model_list = JSON.parse("[]");
+	var g_project_list = JSON.parse("[]");
+	var g_multimodel_list = JSON.parse("[]");
+
+	 function makeModelTree() {
+		var data = g_model_list;
+		var tree = JSON.parse("{}");
+		tree.type="tree";
+		tree.name="Model Tree";
+		tree.id = "";	
+		tree.children = JSON.parse("[]");
+		for (var i=0; i < data.length; i++) {
+			var md = data[i].model_meta_data;
+			var project = null;
+			for (var i2=0; i2 < tree.children.length; i2++) {
+				if(tree.children[i2].name == md.project_id) {
+					project = tree.children[i2];
+					break;
+				}
+			}
+			if (project == null) {
+				project = JSON.parse("{}")
+				project.type = 'project';
+				project.name = md.project_id;
+				project.id = md.project_id;
+				project.children = JSON.parse("[]")
+				tree.children[tree.children.length] = project;
+			}
+			var model = null;
+			for (var i2=0; i2 < project.children.length; i2++) {
+				if(project.children[i2].name == md.model_name) {
+					model = project.children[i2];
+					break;
+				}
+			}
+			if(model == null) {
+				model = JSON.parse("{}")
+				model.type = "model";
+				model.name = md.model_name;
+				model.id = md.model_name;
+				model.children = JSON.parse("[]")
+				project.children[project.children.length] = model;
+			}
+			var domain = null;
+			for (var i2=0; i2 < model.children.length; i2++) {
+				if(model.children[i2].name == md.domain_name) {
+					domain = model.children[i2];
+					break;
+				}
+			}
+			if(domain == null) {
+				domain = JSON.parse("{}")
+				domain.type = "domain";
+				domain.name = md.domain_name;
+				domain.id = md.domain_name;
+				domain.children = JSON.parse("[]")
+				model.children[model.children.length] = domain;
+			}
+// versions / guids will not repeat
+			var version =  JSON.parse("{}")
+			version.type = "version";
+			version.name = md.model_version;
+			version.id = md.model_guid;
+			version.url = data[i].model_url;
+			domain.children[domain.children.length] = version;
+		}
+		return tree;
+	}
+
+	function fillModelTreeNode(node) {
+		var sdata = '';
+		sdata += '<li id ="' + node.type + '_' + node.id + '">' + node.name;
+		if(node.children != null) {
+			sdata += '<ul>';
+			for (var i4=0; i4 < node.children.length; i4++) {
+				var child = node.children[i4];
+				sdata += fillModelTreeNode(child);
+			}
+			sdata += '</ul>';
+		}
+		sdata += '</li>';
+		return sdata;
+	}
+	
+	function fillModelList() {
+		var data = g_model_list;
+		var tree = makeModelTree();
+		var sdata = '<ul>';
+		sdata += fillModelTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+
+ 	function getTreeDataById(tree,id) {
+		if(tree.children) {
+			for (var i=0; i < tree.children.length; i++) {
+				var md = tree.children[i];
+				if (id == md.project_id) return md;
+				if (id == md.multimodel_id) return md;
+				var child = getTreeDataById(md,id);
+				if (child != null) return child;
+			}
+		}
+		return null;
+	 }
+	 
+ 	function getProjectDataById(id) {
+		var data = g_project_list;
+		for (var i=0; i < data.length; i++) {
+			var md = data[i];
+			if (id == md.project_id) return md;
+		}		
+		for (var i=0; i < data.length; i++) {
+			var md = data[i];
+			var child = getTreeDataById(md,id);
+			if (child != null) return child;
+		}		
+		return null;
+	 }
+
+ 	function fillProjectTreeNode(node) {
+		var sdata = '';
+		sdata += '<li>';
+		sdata += '<div id ="' + node.type + '_' + node.id + '">' + node.name + '</div>';
+		sdata += '<div id ="details_' + node.type + '_' + node.id + '">&nbsp;&nbsp;Details</div>';
+		if(node.children != null) {
+			sdata += '<ul>';
+			for (var i4=0; i4 < node.children.length; i4++) {
+				var child = node.children[i4];
+				sdata += fillProjectTreeNode(child);
+			}
+			sdata += '</ul>';
+		}
+		sdata += '</li>';
+		return sdata;
+	}
+
+	 function makeProjectTreeLevel(node) {
+		//var data = node.children;
+		//node.children = JSON.parse("[]");
+		if(node.children) {
+			for (var i=0; i < node.children.length; i++) {
+				var md = node.children[i];//.project_meta_data;
+				if( md.type == 'project') {
+					md.id = md.project_id;
+					md.name = md.project_name;
+				} else 
+				if( md.type == 'multimodel') {
+					md.id = md.multimodel_id;
+					md.name = md.multimodel_name;
+				} else 
+				if( md.type == 'domain') {
+					md.id = md.multimodel_id + '-##-' + md.domain_id;
+					md.name = md.domain_name;
+				} else 
+				if( md.type == 'model') {
+					md.id = md.model_guid;
+					md.name = md.domain_name + ' - ' + md.model_version;
+				} else {
+					md.name = md.type + '?';
+				}
+				makeProjectTreeLevel(md);
+			}
+		}
+		return node;
+	}
+
+	 function makeProjectTree() {
+		var data = g_project_list;
+		var tree = JSON.parse("{}");
+		tree.type="tree";
+		tree.name="Project Tree";
+		tree.id = "";	
+		tree.children = JSON.parse("[]");
+		for (var i=0; i < data.length; i++) {
+			var md = data[i];//.project_meta_data;
+			md.type = 'project';
+			tree.children[tree.children.length] = md;
+		}
+		makeProjectTreeLevel(tree);
+		return tree;
+	}
+	 
+	function fillProjectList() {
+		var data = g_project_list;
+		var tree = makeProjectTree();
+		var sdata = '<ul>';
+		sdata += fillProjectTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+
+
+	 function makeMultimodelTree() {
+		var data = g_multimodel_list;
+		var tree = JSON.parse("{}");
+		tree.type="tree";
+		tree.name="Multimodel Tree";
+		tree.id = "";	
+		tree.children = JSON.parse("[]");
+		for (var i=0; i < data.length; i++) {
+			var md = data[i];//.multimodel_meta_data;
+			md.type = 'multimodel';
+			md.id = md.multimodel_id;
+			md.name = md.multimodel_name;
+			tree.children[tree.children.length] = md;
+		}
+		return tree;
+	}
+	 
+	function fillMultimodelList() {
+		var data = g_multimodel_list;
+		var tree = makeMultimodelTree();
+		var sdata = '<ul>';
+		sdata += fillProjectTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+
+	 
+	function addMultimodelList(project_id,multimodel_list) {
+		g_multimodel_list = multimodel_list;
+		var project = getProjectDataById(project_id);
+		project.children = JSON.parse("[]");
+		for (var i=0; i < multimodel_list.length; i++) {
+			var md = multimodel_list[i];//.multimodel_meta_data;
+			md.type = 'multimodel';
+			project.children[project.children.length] = md;
+		}
+		var tree = makeProjectTree();
+		var sdata = '<ul>';
+		sdata += fillProjectTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+
+	function addModelList(multimodel_id,domain_id,model_list) {
+		var mm   = getProjectDataById(multimodel_id);
+		var node = null;
+		for (var i=0; i < mm.children.length; i++) {
+			if (mm.children[i].domain_id == domain_id) {
+				node = mm.children[i];
+				break;
+			}
+		}
+		node.children = JSON.parse("[]");
+		for (var i=0; i < model_list.length; i++) {
+			var md = model_list[i].model_meta_data;//.multimodel_meta_data;
+			md.type = 'model';
+			node.children[node.children.length] = md;
+		}
+		var tree = makeProjectTree();
+		var sdata = '<ul>';
+		sdata += fillProjectTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+ 
+	 function makeDomainTree() {
+		var data = g_multimodel_list;
+		var tree = JSON.parse("{}");
+		tree.type="tree";
+		tree.name="Domain Tree";
+		tree.id = "";	
+		tree.children = JSON.parse("[]");
+		for (var i=0; i < data.length; i++) {
+			var md = data[i];//.multimodel_meta_data;
+			md.type = 'domain';
+			md.id = md.domain_id;
+			md.name = md.domain_name;
+			tree.children[tree.children.length] = md;
+		}
+		return tree;
+	}
+	 
+	function fillDomainList() {
+		var data = g_multimodel_list;
+		var tree = makeDomainTree();
+		var sdata = '<ul>';
+		sdata += fillProjectTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+	 
+	function addDomainList(multimodel_id,domain_list) {
+		var node  = getProjectDataById(multimodel_id);
+		node.children = JSON.parse("[]");
+		for (var i=0; i < domain_list.length; i++) {
+			var md = domain_list[i];
+			md.type = 'domain';
+			node.children[node.children.length] = md;
+		}
+		var tree = makeProjectTree();
+		var sdata = '<ul>';
+		sdata += fillProjectTreeNode(tree);
+		sdata += '</ul>';
+		document.getElementById("modelList").innerHTML = sdata;     
+	 }
+	 
+	function fillModelTable() {
+		fillModelTable0(null)
+	}
+
+	function fillModelTable0(filter1) {
+		 var data = g_model_list;
+		 var sdata = '<table><th>Project</th><th>Model</th><th>Type</th><th>Version</th><th>Domain</th><th>Schema</th><th>URL</th>';
+		 sdata = sdata + '<th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Description</th></tr>';
+		 for (var i=0; i < data.length; i++) {
+			var model_url = data[i].model_url;
+			var md = data[i].model_meta_data;
+			if (filter1 != null) {
+				if( (filter1.project_id != null) && (filter1.project_id != md.project_id)) continue;
+				if( (filter1.model_name != null) && (filter1.model_name != md.model_name)) continue;
+				if( (filter1.domain_name != null) && (filter1.domain_name != md.domain_name)) continue;
+				if( (filter1.model_guid != null) && (filter1.model_guid != md.model_guid)) continue;
+			}
+			sdata += '<tr>';
+			sdata += '<td>' + md.project_id + '</td>';
+			sdata += '<td>' + md.model_name + '</td>';
+			sdata += '<td>' + md.model_type + '</td>';
+			sdata += '<td>' + md.model_version + '</td>';
+			sdata += '<td>' + md.domain_name + '</td>';
+			sdata += '<td><a href=' + md.schema_url + ' target="blank">Schema</a></td>';
+			sdata += '<td><a href=' + model_url + ' target="blank">URL</a></td>';
+			sdata += '<td onclick="onModelClick(event)" class="zlink" id="download_' + md.model_guid + '">Download</td>';
+			sdata += '<td onclick="onModelClick(event)" class="zlink" id="delete_' + md.model_guid + '">Delete</td>';
+			sdata += '<td onclick="onModelClick(event)" class="zlink" id="update_' + md.model_guid + '">Update Meta Data</td>';
+			sdata += '<td onclick="onModelClick(event)" class="zlink" id="upload_' + md.model_guid + '">Upload Version</td>';
+			sdata += '<td onclick="onModelClick(event)" class="zlink" id="fetch_'  + md.model_guid + '">Fetch Version</td>';
+			sdata += '<td>' + md.description + '</td>';
+/*				
+			 sdata += '<li id="M'+ data[0][i].Id +'">' + data[0][i].Name + '<ul>';
+			 if (data[0][i].Children) for (var j=0; j < data[0][i].Children.length; j++) {
+				 sdata += '<li id="O'+ data[0][i].Children[j].Id +'">' + data[0][i].Children[j].Name + '</li>';
+			 }
+*/				 
+			sdata += '</tr>';
+		 }
+		 sdata += '</table>';
+		 document.getElementById("content").innerHTML = sdata;
+	 }
+	 	 
+	 function getE3ServiceURL() {
+	      var url = '/e3-bimapi-a/E3ReposServlet/eee-repos/0.3/';
+		  return url;
+	 }
+
+ 	function getE3Repository(){
+    	//var result = 'rep1';
+    	var result = '';
+		return result;
+	}
+
+	 function getE3ServiceSessionID() {
+	      var sid  = 'EDMSESSIONID=AUTO_LOGIN';
+		  return sid;
+	 }
+
+	function getModelData(guid) {
+		 var data = g_model_list;
+		 for (var i=0; i < data.length; i++) {
+			var model_url = data[i].model_url;
+			var md = data[i].model_meta_data;
+			if (guid == md.model_guid) return md;
+		}
+		return {};
+	 }
+
+	 
+     function rqListModels() {
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'models'; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { 
+    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
+    		 	return; 
+    		 }
+    		 
+        	g_model_list = JSON.parse(_data);
+			fillModelList(); 
+			fillModelTable();
+//        	 document.getElementById("modelList").innerHTML = '<p>Models listed!</p>';
+//        	 document.getElementById("content").innerHTML = '<h3>List</h3><pre>'+ _data + '</pre>';
+        	 mirrorJson(_cmd,_body,_data);
+        	 var upload_url = '/e3-bimapi-a/E3ReposServlet/eee-transfers/upload_file?'
+        	 upload_url = upload_url + 'EDMSESSIONID=AUTO_LOGIN';
+        	 upload_url = upload_url + '&filename="default"';
+        	 document.getElementById("upload_form").action = upload_url;
+          });    	 
+     }
+
+     function rqListProjects() {
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'projects'; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { 
+    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
+    		 	return; 
+    		 }
+    		 
+        	g_project_list = JSON.parse(_data);
+			fillProjectList(); 
+//			fillProjectTable();
+//        	 document.getElementById("modelList").innerHTML = '<p>Models listed!</p>';
+//        	 document.getElementById("content").innerHTML = '<h3>List</h3><pre>'+ _data + '</pre>';
+        	 mirrorJson(_cmd,_body,_data);
+          });    	 
+     }
+	 
+     function rqListMultimodels() {
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'multimodels'; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { 
+    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
+    		 	return; 
+    		 }
+    		 
+        	g_multimodel_list = JSON.parse(_data);
+			fillMultimodelList(); 
+//			fillMultiModelTable();
+//        	 document.getElementById("modelList").innerHTML = '<p>Models listed!</p>';
+//        	 document.getElementById("content").innerHTML = '<h3>List</h3><pre>'+ _data + '</pre>';
+        	 mirrorJson(_cmd,_body,_data);
+          });    	 
+     }
+	 
+     function rqAddMultimodels(project_id) {
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'projects/' + project_id + '/multimodels'; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { 
+    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
+    		 	return; 
+    		 }
+    		 
+        	var multimodel_list = JSON.parse(_data);
+			//alert(JSON.stringify(multimodel_list));
+			addMultimodelList(project_id,multimodel_list); 
+			mirrorJson(_cmd,_body,_data);
+          });    	 
+     }
+
+     function rqListDomains() {
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'domains'; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { 
+    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
+    		 	return; 
+    		 }
+    		 
+        	g_multimodel_list = JSON.parse(_data);
+			fillDomainList(); 
+			mirrorJson(_cmd,_body,_data);
+          });    	 
+     }
+	 
+     function rqAddDomains(multimodel_id) {
+		var project_id = getProjectDataById(multimodel_id).project_id;
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'projects/' + project_id + '/multimodels/' + multimodel_id + "/domains"; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+			 if (_status && _status != 200) { 
+				alert('Server error: ' + _status + ' (' + _data + ')'); 
+				return; 
+			 }
+        	var model_list = JSON.parse(_data);
+			mirrorJson(_cmd,_body,_data);
+			addDomainList(multimodel_id,model_list); 
+          });    	 
+     }
+
+	 
+     function rqAddModels(multimodel_id,domain_id) {
+		var project_id = getProjectDataById(multimodel_id).project_id;
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += 'projects/' + project_id + '/multimodels/' + multimodel_id + "/domains/" + domain_id + "/models"; 
+    	 _cmd += '?';
+    	 _cmd += getE3ServiceSessionID();
+    	 var _body = null;
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+			 if (_status && _status != 200) { 
+				alert('Server error: ' + _status + ' (' + _data + ')'); 
+				return; 
+			 }
+        	var model_list = JSON.parse(_data);
+			//alert(JSON.stringify(model_list));
+			addModelList(multimodel_id,domain_id,model_list); 
+			mirrorJson(_cmd,_body,_data);
+          });    	 
+     }
+  
+     function rqDownloadModelByGuid(guid) {
+		 var _cmd = getE3ServiceURL();
+    	 _cmd += getE3Repository();
+    	 _cmd += '/models/' + guid;
+    	 _cmd += '?EDMSESSIONID=AUTO_LOGIN';
+    	 var _body = {};
+    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { 
+    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
+    		 	return; 
+    		 }
+        	 document.getElementById("content").innerHTML = '<h3>Model downloaded:</h3><br/><p>'+ _data + '</p>';
+          });    	 
+     }
+	 
+
+
+
+
+	function mirrorJson(url,jsonIn,jsonOut) {
+        html = '<table>'
+        	+	'<tr><td>URL</td><td>' + url + '</td></tr>'
+        	+	'<tr><td>jsonIn</td><td>' + jsonIn + '</td></tr>'
+        	+	'<tr><td>jsonOut</td><td>' + jsonOut + '</td></tr>'
+        	+	'</table>'
+        	;
+		document.getElementById("workdata_div").innerHTML = html;
+	}
+
+     
+     function init() {
+		 onMenu_HomeClick();
+     }
+    </script>
+    
+	<style>
+		.topmenu { width:110px;height:30px;overflow-y:hide;overflow-x:hide;   border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+		.zlink { backgroundcolor="yellow";background-color="yellow";border:1px solid}
+		#modelList { width:250px;height:500px;overflow-y:scroll;overflow-x:hide; border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+		#modelList ul { list-style-type: none; cursor: pointer; padding:0 0 0 0; margin:0 0 0 0; }
+		#modelList li { padding-left: 20px; cursor: pointer; }
+		#modelList>ul>li { padding-left: 0px; cursor: arrow; }
+		.modelaction  { width:250px;height:50px;overflow-y:scroll;overflow-x:hide;   border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+		#upload_div   { width:250px;height:150px;overflow-y:hide;  overflow-x:scroll; border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+		#content {                  height:500px;overflow-y:scroll;overflow-x:hide;   border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+		#workdata_div { 			height:200px;overflow-y:scroll;overflow-x:hide;   border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+	</style>
+
+   </head> 
+
+<!--
+<html>
+<form name="frm" action="http://localhost:8080/EDMWS//HttpFileTransfer?operation=upload" method="post" enctype="multipart/form-data">
+<input name='f1' type='file'>
+<input name='f2' type='submit'>
+</form>
+</html>
+-->
+   <body onLoad="init();">
+ 	<body> 
+     <table>
+		<tr>
+		<td><div class="topmenu" id="cmd_home" 				onClick="onMenu_HomeClick()")		>Home</div></td>
+		<td><div class="topmenu" id="cmd_list_projects" 		onClick="onMenu_ListProjectsClick()")>List Projects</div></td>
+		<td><div class="topmenu" id="cmd_list_multimodels" 		onClick="onMenu_ListMultimodelsClick()")>List Multimodels</div></td>
+		<td><div class="topmenu" id="cmd_list_domains" 		onClick="onMenu_ListDomainsClick()")	>List Domains</div></td>
+		<td><div class="topmenu" id="cmd_list_models" 		onClick="onMenu_ListModelsClick()")	>List Models</div></td>
+		<td><h2>eeEmbedded BIM API Server Browser #1</h2></td><td>  -- v2015.07.08 Jotne EPM Technology AS </td>
+		</tr>
+     </table>
+     <table>
+      <tr>
+       <td> 
+        <div id="modelList" onclick="onModelTreeClick(event)">Model Tree</div>
+       </td> 
+       <td> 
+        <div id="content" class="content_div" >
+        	<p>Page initial</p>
+        </div>
+       </td> 
+      </tr>
+      <tr>
+      	<td>
+ 		<div id="file_upload">
+			<form id="upload_form" name="upload_form"  method="post" enctype="multipart/form-data"
+				target="_blank"
+			>
+				<input name='f1' type='file'><br/>
+				<input name='f2' type='submit'>
+			</form>
+		</div>        
+     	</td>
+      	<td>
+        <div id="workdata_div" class="workdata_div" onclick="onWorkDataClick(event)">
+        	<table>
+        		<tr><td id="propname_1"></td><td id="propval_1"></td></tr>
+        		<tr><td id="propname_2"></td><td id="propval_2"></td></tr>
+        		<tr><td id="propname_3"></td><td id="propval_3"></td></tr>
+        	</table>
+        </div>
+      	</td>
+      </tr>
+     </table> 
+   </body>
+    
+</html> 
