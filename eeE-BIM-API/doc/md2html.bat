@@ -24,21 +24,22 @@ call %MD2_CMD% repository-services-01\a_schemata\README
 call %MD2_CMD% repository-services-01\a_schemata\attachment_meta_data
 call %MD2_CMD% repository-services-01\a_schemata\domain_meta_data
 call %MD2_CMD% repository-services-01\a_schemata\model_meta_data
+call %MD2_CMD% repository-services-01\a_schemata\model_upload_schema
 call %MD2_CMD% repository-services-01\a_schemata\multimodel_meta_data
 call %MD2_CMD% repository-services-01\a_schemata\project_meta_data
 
 call %MD2_CMD% repository-services-01\domain_service
+
 call %MD2_CMD% repository-services-01\model_service
+call %MD2_CMD% repository-services-01\model_service_create
+call %MD2_CMD% repository-services-01\model_service_delete
+call %MD2_CMD% repository-services-01\model_service_list
+call %MD2_CMD% repository-services-01\model_service_update
+call %MD2_CMD% repository-services-01\model_service_upload
+
 call %MD2_CMD% repository-services-01\multimodel_service
 call %MD2_CMD% repository-services-01\project_service
 
-call %MD2_CMD% repository-services-01\delete_model_service
-call %MD2_CMD% repository-services-01\download_model_service
-call %MD2_CMD% repository-services-01\list_model_service
-
-call %MD2_CMD% repository-services-01\upload_model_service
-call %MD2_CMD% repository-services-01\upload_model_schema
-call %MD2_CMD% repository-services-01\upload_model_example
 
 call %MD2_CMD% repository-services-01\delete_attachment_service
 call %MD2_CMD% repository-services-01\download_attachment_service
