@@ -121,20 +121,19 @@
 		+ "<p>This page uses REST/JSON API to exploit the <a href='https://github.com/GeorgDangl/eeE-BIM-API' target='_blank'>eeEmbedded Repository Services</a></p>"
 		+ "<p>The services are implemented on the EDMmodelServer by <a href='http://www.jotneit.no/' target='_blank'>Jotne EPM Technology</a></p>"
 		+ "<p>Please refer to the <a href='http://141.30.165.10/' target='_blank'/>eeEmbedded Project</a></p>"
-		+ "<p>For testing retrieval (GET) for all API classes with full URL got to <a href='browse1.html'>eeEmbedded Repository Services Browser #1 Test Page</a></p>"
+//		+ "<p>For testing retrieval (GET) for all API classes with full URL got to <a href='browse1.html'>eeEmbedded Repository Services Browser #1 Test Page</a></p>"
 		+ "<p>The current implementation is early and not complete, here are some lowlights:</p>"
 		+ "<ul>"
 		+ "<li>Access control is not implemented, anyone gets access by including parameter <b>?EDMSESSIONID=AUTO_LOGIN</b> in the URL</li>"
-		+ "<li>Upload is only supported by webform and by giving an external URL for IFC data source ('Fetch')</li>"
 		+ "<li>Meta-data fields 'Description' and 'Schema URL' are not fully supported yet</li>"
 		+ "<li>There is very little sanity checks on the parameters, so expect unexpected behaviour</li>"
 		+ "<li>Over all it is not much tested, so do not expect great stability and good behaviour!</li>"
-		+ "<li>The webpage does not look very nice, since the author is not focused on web design and HTML</li>"
 		+ "</ul>"
-		+ "<p>The source for this web page will be found at <a href='https://github.com/GeorgDangl/eeE-BIM-API' target='_blank'>GITHUB</a></p>"
-		+ "<p>The current path to services are <b><i>&lt;server&gt;/e3-bimapi-a/E3ReposServlet</i></b>, and version is <b><i>0.3</i></b></p>"
-		+ "<p>Example path:  <i>http://localhost:8080/e3-bimapi-a/E3ReposServlet/eee-repos/0.3/models/?EDMSESSIONID=AUTO_LOGIN</i></p>"
+		+ "<p>The source for this web page can be found at <a href='https://github.com/jotne-aet-git/eee-development/blob/master/ee1Server/webapps/e3-bimapi-a/index.html' target='_blank'>GITHUB</a></p>"
+		+ "<p>The current path to services are <b><i>&lt;server&gt;/e3-bimapi-a/E3ReposServlet</i></b>, and version is <b><i>0.4</i></b></p>"
+		+ "<p>Example path:  <i>http://localhost:8080/e3-bimapi-a/E3ReposServlet/eee-repos/0.4/models/?EDMSESSIONID=AUTO_LOGIN</i></p>"
 		+ "<h3>Select 'List Models' from top menu to get started :)</h3>"		
+		+ "<br/><pre>Reference BIM-API Version: 0.4 2015.07.15</pre>"		
 		;
 		
      function onMenu_HomeClick() {		
@@ -241,6 +240,7 @@
 				project.children = JSON.parse("[]");
 				tree.children[tree.children.length] = project;				
 			}
+/*			
 			var multimodel = getTreeNodeById(project,md.multimodel_id);
 			if (multimodel  == null) {
 				multimodel = JSON.parse("{}");
@@ -259,6 +259,26 @@
 				domain.children = JSON.parse("[]");
 				multimodel.children[multimodel.children.length] = domain;								
 			}
+*/			
+			var multimodel = getTreeNodeById(project,md.model_name);
+			if (multimodel  == null) {
+				multimodel = JSON.parse("{}");
+				multimodel.id = md.model_name;
+				multimodel.name = md.model_name;
+				multimodel.type = "multimodel";
+				multimodel.children = JSON.parse("[]");
+				project.children[project.children.length] = multimodel;				
+			}
+			var domain = getTreeNodeById(multimodel,md.domain_id);
+			if (domain == null) {
+				domain = JSON.parse("{}");
+				domain.id = md.domain_id;
+				domain.name = md.domain_name;
+				domain.type = "domain";
+				domain.children = JSON.parse("[]");
+				multimodel.children[multimodel.children.length] = domain;								
+			}
+
 			var model = JSON.parse("{}");
 			model.id = md.model_id;
 			model.name = md.model_version;
@@ -337,7 +357,7 @@
 	 }
 	 	 
 	 function getE3ServiceURL() {
-	      var url = '/e3-bimapi-a/E3ReposServlet/eee-repos/0.3/';
+	      var url = '/e3-bimapi-a/E3ReposServlet/eee-repos/0.4/';
 		  return url;
 	 }
 
@@ -704,7 +724,7 @@
 		<td><div class="topmenu" id="cmd_create_model" 		onClick="onMenu_CreateModelClick()")>Create New Model</div></td>
 		<td><div class="topmenu" id="cmd_upload_model" 		onClick="onMenu_UploadModelClick()")>Upload New Model</div></td>
 		<td><div class="topmenu" id="cmd_fetch_model" 		onClick="onMenu_FetchModelClick()")>Fetch New Model</div></td>
-		<td><h2>eeEmbedded BIM API Test page</h2></td><td>  -- v2015.07.08 Jotne EPM Technology AS </td>
+		<td><h2>eeEmbedded BIM API Test page</h2></td><td>  -- v2015.07.15 Jotne EPM Technology AS </td>
 		</tr>
      </table>
      <table>
