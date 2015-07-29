@@ -6,7 +6,11 @@
      <title>eeEmbedded BIMAPI Repository Services Test Page</title> 
 <!--     <script type='text/javascript' src='http://www.x3dom.org/download/x3dom.js'></script> --> 
      <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/x3dom.css'> 
-   
+<!--	 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
+-->
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>	
+	
     <script type="text/javascript">
 //     var _GetGeometryRequest = {"modelIds":[180388626560],"guidsPerModel":[[]],"geomType":"3D_SOLID_BODY","exportFileName":"munkPart.x3d","exportFileTreshold":10000000,"exportFormat":"X3D","texturesRef":null,"options":3}; 
 //     var _GetGeometryCmd = '/EDMWS/REST/QEX/GeometryProvider/GetGeometry?EDMSESSIONID=%EDMSESSIONID%&queryoptions=1&jsonstring=';
@@ -14,7 +18,79 @@
      var _GetDemoGeometryGetGeometryForSpaceCmd = '/EDMWS/REST/QEX/DemoGeometryProvider/GetGeometryForSpace?EDMSESSIONID=%EDMSESSIONID%&queryoptions=1&jsonstring=';
      var _EDMSESSIONID = "BasicAuth";  //"AUTO_LOGIN"; //"psuperuser_2_191155_1427382715346";
      var currModelId = null, currPropGuid = null, currGeom = null, currObj = null;
-     
+/*     
+		// original from Georg - multipart upload in JavaScript
+	     function iabiFileUpload() {
+	     	var ModelMetaData = {
+	     		repository_name : document.getElementById("ServerAddress")[document.getElementById("ServerAddress").selectedIndex].text,
+	     		model_name : $("#ModelName").val(),
+	     		model_type : $("#ModelType").val(),
+	     		model_version : $("#ModelVersion").val(),
+	     		schema_url : $("#SchemaURL").val(),
+	     		description : $("#Description").val(),
+	     		domain_name : $("#DomainName").val()
+	     	};
+
+	     	var ServerAdress = $("#ServerAddress").val();
+
+	     	var MyForm = new FormData();
+
+	     	MyForm.append("MetaData", JSON.stringify(ModelMetaData));
+	     	MyForm.append(document.getElementById("ModelFileSelector").files[0].name, document.getElementById("ModelFileSelector").files[0].name);
+
+	     	$.ajax({
+	     		url : ServerAdress,
+	     		data : MyForm,
+	     		cache : false,
+	     		contentType : false,
+	     		processData : false,
+	     		type : "POST",
+	     		success : function (data) {
+	     			$("#iabiResult").text(JSON.stringify(data, undefined, 2));
+	     		}
+	     	}).fail(function (data) {
+	     		$("#iabiResult").text(JSON.stringify(data, undefined, 2));
+	     	});
+	     }
+*/
+
+		// adapted multipart upload in JavaScript
+	     function testFileUpload() {
+	     	alert ("testFileUpload: " + document.getElementById("uu_file").files[0].name);
+	     	var ModelMetaData = {
+				project_name : document.getElementById("uu_project_name").value,
+				model_name 	 : document.getElementById("uu_model_name").value,
+				model_type   : document.getElementById("uu_model_type").value,
+				domain_name  : document.getElementById("uu_domain_name").value,
+			    description  : document.getElementById("uu_description").value,
+                schema_url   :  document.getElementById("uu_schema_url").value				
+	     	};
+
+			 var _cmd = getE3ServiceURL();
+			 _cmd += getE3Repository();
+			 _cmd += '/models';
+			 _cmd += '?';
+			 _cmd += getE3ServiceSessionID();
+
+	     	var MyForm = new FormData();
+
+	     	MyForm.append("MetaData", JSON.stringify(ModelMetaData));
+	     	MyForm.append(document.getElementById("uu_file").files[0].name, document.getElementById("uu_file").files[0]);
+	     	$.ajax({
+	     		url : _cmd,
+	     		body : MyForm,
+	     		cache : false,
+	     		contentType : false,
+	     		processData : false,
+	     		type : "POST",
+	     		success : function (data) {
+	     			alert ("Success: " + JSON.stringify(data, undefined, 2));
+	     		}
+	     	}).fail(function (data) {
+	     			alert ("Fail: " + JSON.stringify(data, undefined, 2));
+	     	});
+	     }
+	 
      function ajax(info) {
     	 var asyncObj; 
     	 try { 
@@ -567,7 +643,7 @@
 			_form = _form + '<form id="upload_model_form" name="upload_model_form"  method="post" enctype="multipart/form-data" target="_blank"'
 			_form = _form + ' onSubmit="fixformUploadModelFile()">';
 			_form = _form + '<table><tr><th></th><th><STRONG>Upload New Model</STRONG></th></tr>';
-			_form = _form + '<tr><td>File:</td><td><input name="file" type="file"></td></tr>';
+			_form = _form + '<tr><td>File:</td><td><input id= "uu_file" name="uu_file" type="file"></td></tr>';
 			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_name" name="project_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
@@ -577,7 +653,8 @@
 			_form = _form + '</table>';			
 			//_form = _form + '<input name="dummy" type="text" onClick="fixformUploadModelFile()" value="Click Here"/>';
 			_form = _form + '<input name="submit" type="submit"/>';
-			_form = _form + '</form>';     
+			_form = _form + '</form>'
+			_form = _form + '<button id="uu_test" name = "uu_test" value="uu_test" onClick="testFileUpload()">Test Multipart Upload</button>';     
         	 document.getElementById("content").innerHTML = _form;
 		
         	 var upload_url = '/e3-bimapi-a/E3ReposServlet/eee-repos/models'
