@@ -2,11 +2,11 @@ rem @echo off
 rem batch file for generating an SSL certificate for TOMCAT
 rem not very nice, improvement wanted
 rem
-cd C:\inetpub\ftproot\ee1Server
+rem cd C:\inetpub\ftproot\ee1Server
 call ee_environment.bat
 set TOUTPUT1=tm_certificate.inp
 call :input
-rem call :generate
+call :generate
 pause
 goto end
 
