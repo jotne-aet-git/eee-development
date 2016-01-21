@@ -1,6 +1,6 @@
 SET EDM_E3_HOME=%CD%
-rem set EDM_HOME_BIN=O:\edm\v6.0.xxx\output\x64\debug
-set EDM_HOME_BIN=%EDM_E3_HOME%\install-image\bin
+set EDM_HOME_BIN=O:\edm\v6.0.xxx\output\x64\debug
+rem set EDM_HOME_BIN=%EDM_E3_HOME%\install-image\bin
 set EDMSRV_HOME_BIN=%EDM_HOME_BIN%
 set EDMSRV_TRACE_HOME=%EDM_E3_HOME%\trace
 set EDMSRV_DB_PATH=%EDM_E3_HOME%\db
