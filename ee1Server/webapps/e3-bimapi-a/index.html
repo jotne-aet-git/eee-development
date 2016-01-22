@@ -61,6 +61,7 @@
 				project_name : document.getElementById("uu_project_name").value,
 				model_name 	 : document.getElementById("uu_model_name").value,
 				model_type   : document.getElementById("uu_model_type").value,
+				model_treat_as_binary   : document.getElementById("uu_model_treat_as_binary").value,
 				domain_name  : document.getElementById("uu_domain_name").value,
 			    description  : document.getElementById("uu_description").value,
                 schema_url   :  document.getElementById("uu_schema_url").value				
@@ -395,7 +396,7 @@
 
 	function fillModelTable0(filter1) {
 		 var data = g_model_list;
-		 var sdata = '<table><th>Project</th><th>Model</th><th>Type</th><th>Version</th><th>Domain</th><th>Schema</th><th>URL</th>';
+		 var sdata = '<table><th>Project</th><th>Model</th><th>Type</th><th>Binary</th><th>Version</th><th>Domain</th><th>Schema</th><th>URL</th>';
 		 sdata = sdata + '<th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Description</th></tr>';
 		 for (var i=0; i < data.length; i++) {
 			var model_url = data[i].model_url;
@@ -410,6 +411,7 @@
 			sdata += '<td>' + md.project_name + '</td>';
 			sdata += '<td>' + md.model_name + '</td>';
 			sdata += '<td>' + md.model_type + '</td>';
+			sdata += '<td>' + md.model_treat_as_binary + '</td>';
 			sdata += '<td>' + md.model_version + '</td>';
 			sdata += '<td>' + md.domain_name + '</td>';
 			sdata += '<td><a href=' + md.schema_url + ' target="blank">Schema</a></td>';
@@ -464,6 +466,7 @@
         mdIn.project_name	= document.getElementById("uu_project_name").value;
         mdIn.model_name		= document.getElementById("uu_model_name").value;
         mdIn.model_type		= document.getElementById("uu_model_type").value;
+        mdIn.model_treat_as_binary = document.getElementById("uu_model_treat_as_binary").value;
         mdIn.domain_name	= document.getElementById("uu_domain_name").value;
         mdIn.description	= document.getElementById("uu_description").value;
         mdIn.schema_url		= document.getElementById("uu_schema_url").value;
@@ -611,6 +614,7 @@
 			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_name" name="project_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
+			_form = _form + '<tr><td>Treat model as binary:</td><td><input id="uu_model_treat_as_binary" name="model_treat_as_binary" type="text" value=""></td></tr>';
 			_form = _form + '<tr><td>Domain:</td><td><input id="uu_domain_name" name="domain_name" type="text"></td></tr>';
 			_form = _form + '<tr><td>Description:</td><td><input id="uu_description" name="description" type="text"></td></tr>';
 			_form = _form + '<tr><td>Schema URL:</td><td><input id="uu_schema_url" name="schema_url" type="text"></td></tr>';
