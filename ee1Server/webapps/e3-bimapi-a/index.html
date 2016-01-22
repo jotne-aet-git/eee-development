@@ -210,7 +210,7 @@
 		+ "<p>The current path to services are <b><i>&lt;server&gt;/e3-bimapi-a/E3ReposServlet</i></b>, and version is <b><i>0.5</i></b></p>"
 		+ "<p>Example path:  <i>http://localhost:8080/e3-bimapi-a/E3ReposServlet/eee-repos/0.5/models/?EDMSESSIONID=AUTO_LOGIN</i></p>"
 		+ "<h3>Select 'List Models' from top menu to get started :)</h3>"		
-		+ "<br/><pre>Reference BIM-API Version: 0.4 2015.07.15</pre>"		
+		+ "<br/><pre>Reference BIM-API Version: 0.5 2016.01.22</pre>"		
 		;
 		
      function onMenu_HomeClick() {		
@@ -536,15 +536,14 @@
     		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
     		 	return; 
     		 }
-    		 
         	g_model_list = JSON.parse(_data);
 			fillModelList(); 
 			fillModelTable();
-        	 mirrorJson(_cmd,_body,_data);
-        	 var upload_url = '/e3-bimapi-a/E3ReposServlet/eee-transfers/upload_file?'
-        	 upload_url = upload_url + 'EDMSESSIONID=AUTO_LOGIN';
-        	 upload_url = upload_url + '&filename="default"';
-        	 document.getElementById("upload_form").action = upload_url;
+        	mirrorJson(_cmd,_body,_data);
+        	var upload_url = '/e3-bimapi-a/E3ReposServlet/eee-transfers/upload_file?'
+        	upload_url = upload_url + 'EDMSESSIONID=AUTO_LOGIN';
+        	upload_url = upload_url + '&filename="default"';
+        	document.getElementById("upload_form").action = upload_url;
           });    	 
      }
 
