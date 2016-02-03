@@ -17,8 +17,6 @@ Repository contains files related to the eeEmbedded EDM BIM Model Server.
 <meta name=Generator content="Microsoft Word 12 (filtered)">
 <title>Jotne eeEmbedded BIM Model Server</title>
 <style>
-<!--
- /* Font Definitions */
  @font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
@@ -43,7 +41,6 @@ Repository contains files related to the eeEmbedded EDM BIM Model Server.
 @font-face
 	{font-family:"\@Arial Unicode MS";
 	panose-1:2 11 6 4 2 2 2 2 2 4;}
- /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin-top:6.0pt;
 	margin-right:0cm;
@@ -892,12 +889,10 @@ span.bold
 	margin:72.0pt 2.0cm 2.0cm 77.95pt;}
 div.WordSection1
 	{page:WordSection1;}
- /* List Definitions */
  ol
 	{margin-bottom:0cm;}
 ul
 	{margin-bottom:0cm;}
--->
 </style>
 
 </head>
