@@ -4,9 +4,7 @@
 
 Version/Date: 2016.02.03 AET/EPM  API v0.1+ (in progress)
 
-### Classes 
-
-The following main classes are defined:
+Main classes are:
 
 * Model - a self-contained data set that is a legal populatiopn iof the IFC schema
 * Object - generalized object corresponding to IfcObject in IFC Schema
@@ -15,11 +13,12 @@ Schemata defining data structures can be found here: [IFC multimodel Services Sc
 
 ### Services for the classes 
 
+
 Service| Comment |
---|--|
+-------|---------|
 * [Merge Services](./merge_service.md) | Merge two models
 
-**IMPORTANT :**
+
 
 ### Navigating to an item in the server
 
@@ -46,10 +45,12 @@ The model identified in the URL is called the **primary model**. To identify mor
 
 Examples:
 
+
 URL | Result |
---|--|
+----|--------|
 *GET ../models/ABCD/mergehistory/* | retrieve list of all merge histories in model *ABCD*
 *GET ../models/ABCD/mergehistory/1234* | retrieve merge history for merge id #1234 in model *ABCD*
+
 
 
 ### Arguments/data in JSON Body versus in URL
@@ -58,13 +59,6 @@ In many cases you can find the same elements in the URL as in returned or sent J
 
 **In general, it is recommended to use the URL for navigating in the data when browsing.** Implementation of "LIST" filtering from JSON body is actually optional (!).
 
-
-### Services related to other object types
-
-
-TBD:
-
-* [IFC simple object oriented services](../ifcobject_oriented_service.md)
 
 
 
