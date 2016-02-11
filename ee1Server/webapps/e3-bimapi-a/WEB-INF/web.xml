@@ -51,7 +51,8 @@
     </description> 
   </context-param>
    
-  <servlet> 
+
+   <servlet> 
     <servlet-name>WSDLGenerator</servlet-name> 
     <description> 
       WSDL generator servlet 
@@ -108,8 +109,31 @@
     <description> 
       Servlet that is being developed now 
     </description> 
-    <servlet-class>edmws.webapp.servlets.E3ReposServlet</servlet-class> 
+    <servlet-class>edmws.webapp.servlets.E3RestServlet</servlet-class> 
     <load-on-startup>5</load-on-startup> 
+	
+	  <init-param> 
+		<param-name>e3.worker.classname</param-name> 
+		<param-value>edmws.webapp.servlets.E3BimApiActions</param-value> 
+		<description>The E3 Worker class for this servlet instance</description> 
+	  </init-param>
+	
+  </servlet> 
+
+  <servlet> 
+    <servlet-name>E3IfcApiServlet</servlet-name> 
+    <description> 
+      Servlet that is being developed now 
+    </description> 
+    <servlet-class>edmws.webapp.servlets.E3RestServlet</servlet-class> 
+    <load-on-startup>5</load-on-startup> 
+	
+	  <init-param> 
+		<param-name>e3.worker.classname</param-name> 
+		<param-value>edmws.webapp.servlets.E3IfcApiActions</param-value> 
+		<description>The E3 Worker class for this servlet instance</description> 
+	  </init-param>
+	
   </servlet> 
   
   <servlet-mapping> 
@@ -145,6 +169,11 @@
   <servlet-mapping> 
     <servlet-name>E3ReposServlet</servlet-name> 
     <url-pattern>/E3ReposServlet/*</url-pattern> 
+  </servlet-mapping> 
+ 
+ <servlet-mapping> 
+    <servlet-name>E3IfcApiServlet</servlet-name> 
+    <url-pattern>/E3IfcApiServlet/*</url-pattern> 
   </servlet-mapping> 
   
   <filter>
