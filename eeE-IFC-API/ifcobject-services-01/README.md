@@ -2,67 +2,102 @@
 
 [Level Up](../README.md)
 
-Version/Date: 2016.02.03 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.16 AET/EPM  API v0.1+ (in progress)
 
 ### Classes 
-
-The following main classes are defined:
-
-* Object - generlaized object corresponding to IfcObject in IFC Schema
 
 Schemata defining data structures can be found here: [IFCAPI Object Services Schemata](a_schemata/README.md)
 
 ### Services for the classes 
 
-* [IfcType Simple Services](./ifctype_service.md)
-
-Provides instace retrieval based on type 
-
-**IMPORTANT :**
-
-### Navigating to an item in the server
-
-By convention a RESTful interface often implement a list as:
-
-```
- GET  http(s)://<server>/rest_api/<path_to_items>
-```
-
-The general eeE IFC-API URL pattern for simple object targeted services is
-
-```
-GET <path-to-service>/models/<model_id>/<ifctypename>/[globalid]/[subfunction]/[subfunction_id] 
-```
-
-Where:
-
-* Each element contained in <> is mandatory
-* Each element contained in [] can be present or not
-* If **_id** part is present in the last element return data for indicated item
-* If **_id** part is not present in the last element return data for all matching items
-
-Examples:
-
-URL | Result |
+Service kit| Description|
 --|--|
-*GET ../models/ABCD/ifcbuilding/* | retrieve list of all buildings in model *ABCD*
-*GET ../models/ABCD/ifcbuilding/1234/ifcpropertysets* | retrieve list of all property sets for building *1234* in model *ABCD*
+[IfcObject Services](./ifctype_service.md)| Provides instance retrieval based on object type 
+[IfcProperty Services](./ifcproperty_service.md)| Provides property retrieval and update for simple properties
+[IfcRelation Oriented Services](./ifcrelation_service.md)| Provides retrieval of relations between objects
 
 
-### Arguments/data in JSON Body versus in URL
-
-In many cases you can find the same elements in the URL as in returned or sent JSON body. In case the same elements are found both places, arguments given as part of URL will take precedence.
-
-**In general, it is recommended to use the URL for navigating in the data when browsing.** Implementation of "LIST" filtering from JSON body is actually optional (!).
+## Services from original spec that is not understood or superfluous
 
 
-### Services related to other object types
+3.2	Metadata Functions
 
+###Data types
 
-TBD:
+Basic JSON types are IfcObject and IfcClass. 
 
-* [IFC Relation oriented services](ifcrelation_service.md)
+IfcObject
 
+```
+Synopsis 	Return a representation of an IFC object. 
+	The object is labelled with an ifcObjectType indication its class, 
+	for example IfcBuilding or IfcWindow.
+Schema 	TODO 
+JSON example: 
+{   “IfcType”:”IfcBuilding”
+    “GlobalId”:”abcd”,
+    “Name”:”Bierhaus”,
+    “<attrname>”:”<value>,
+    ...
+}
+```
+
+IfcClass
+
+```
+Synopsis 	Representation of an IFC entity type. 
+		The entity is identifiable with a single string corresponding to its class, 
+		for example “IfcBuilding” or” IfcWindow”.
+Schema 	TODO 
+JSON example: 
+{   “IfcClass”:”IfcBuilding”,”exact”:”true” }    “exact” is optional
+
+Java early binding example: 
+className := IfcBuilding.getClass().name;   // “exact” not possible to express here
+```
+
+###Services
+
+AET Comment: it is not Entities we “get”, it is objects. So probably better naming is: “getObjectsOf”, “getObjectsOfExactType” etc. However, I have kept naming as original proposal for the moment.
+getEntitiesOf (IfcClass) : List of IfcObject
+getEntitiesOfExactType (IfcClass) : List of IfcObject
+
+```
+Synopsis 	Returns an entity array containing all instances of the specified entity data type. 
+	For getEntitiesOfExactType the instances of subtype of the specified entity data type are not included, 
+	for getEntitiesOfType the subtypes are included. 
+
+This function can be useful e.g. to select all building storeys or all “standard case” walls 
+in a given building complex, regardless of the number of buildings and respective BIM files used to model it. 
+
+Input 	A single IfcClass 
+Output 	Array of matching objects ( IfcObject []) 
+REST/JSON query example	GET <url-to-model>/<prefix>/ifcentity/
+    {“IfcClass”:”IfcBuildingStorey”, “exact”:”true”}
+  --or—
+GET <url-to-model>/<prefix>/ifcentity/IfcBuildingStorey/exact
+JSON Return example 	[
+ {“IfcType”:“IfcBuildingStorey”,”GlobalID”:”ABCD”,“Name”:”01”,..},
+ {“IfcType”:“IfcBuildingStorey”,”GlobalID”:”EF12”,“Name”:”02”,..}
+]
+Code example:
+Depends on programming language
+```
+
+getInstancesOf (IfcClass) : List of IfcObject
+AET Comment: is this different from getEntitiesOf?
+existInstancesOf (IfcClass) : true | false
+AET Comment: can be built on top of getEntitiesOf, at least until we get a performance problem….
+
+getAttributes (IfcObjectID) : Array of Attributes
+getAttribute (IfcObjectID) : AttributeValue
+AET Comment: with my interpretation of “IfcObject” simple attributes like name, comment, description etc are always returned, the object attributes like IfcOwnerHistory is neglected. Do we need them? 
+getReferences (IfcObjectID, refAttribute) : List of IfcObject
+AET Comment: for relations, which is most central, I created a service set in section further down. I hope we do not need those references that are not going through any relations. 
+union (List of IfcObject1, List of IfcObject2) : List of IfcObject 
+AET Comment: this one was too advanced for me right now… 
+
+3.2.3	Basic IFC Related Functions 
 
 
 

@@ -1,4 +1,4 @@
-## eeE IFCAPI Services Schemata : IFC Object Meta Data ##
+## eeE IFCAPI Services Schemata : IFC Object Data ##
 
 * [Level Up](../README.md)
 * [Overview](./README.md)
@@ -6,7 +6,7 @@
 Version/Date: 2016.02.03 AET/EPM  API v0.1+ (in progress)
 
 
-## IFC Object Meta Data
+## IFC Object Data
 
 For now only preliminary sketch. Real implementation must follow IFC schema, with additional API sspecific field(s)
 
