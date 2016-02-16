@@ -19,6 +19,8 @@ The following main classes are defined:
 
 **Resource URL**: *GET /ifc-api/{version}/models/{model_id}/{ifctype}/{globalid}/properties
 
+Request: Optional JSONArray in body according to spec further down (proposal prototype)
+
 element | explanation
 --------|-----------|
 *ifc-api*	|Shorthand for eeEmbedded Repository Services |
@@ -54,8 +56,37 @@ Response:
 }]
 ```
 
+### Optional filter spec in JSON body 
 
 
+***1) List across multiple models, same object GUID ***
+
+```
+GET https://example.com/ifc-api/0.4/models/ifcbuildingstorey/ABCD1/properties
+JSON Body:
+[
+{"model_id":"id1"},
+{"model_id":"id2"},
+{"model_id":"id3"},
+...
+]
+```
+
+***2) List across multiple models, different object GUID ***
+
+```
+GET https://example.com/ifc-api/0.4/models/ifcbuildingstorey/properties
+JSON Body:
+[
+{"model_id":"id1","ifcbuildingstorey":"ABDC1"},
+{"model_id":"id2","ifcbuildingstorey":"EFAA3"},
+{"model_id":"id3","ifcbuildingstorey":"17E7F"},
+...
+]
+```
+
+
+## From original spec
 
 
 ```

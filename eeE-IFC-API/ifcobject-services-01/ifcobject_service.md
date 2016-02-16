@@ -3,21 +3,36 @@
 * [Level Up](../README.md)
 * [Overview](./README.md)
 
-Version/Date: 2016.02.16 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.16 AET/EPM  API v0.2+ (in progress)
+
+### Classes 
+
+The following main classes are defined:
+
+* [Object - corresponding to Ifc object in IFC Schema](a_schemata/ifcobject_data.md)
+* [Relation - corresponding to Ifc relation in IFC Schema](a_schemata/ifcrelation_data.md)
 
 ## List Objects by type
 
-**Resource URL**: *GET /ifc-api/{version}/models/{model_id}/{ifctype}
+**Resource URL**: *GET /ifc-api/{version}/models/{model_id}/{ifctype}/{globalid}
+
+Request: Optional JSONArray in body according to **[todo]**, see example further down.
 
 element | explanation
 --------|-----------|
 *ifc-api*	|Shorthand for eeEmbedded Repository Services |
 *version*	|States version of the API to use, allowing multiple versions of API for upgrading |
-*model_id*	|Identifies which model top look into |
+*model_id*	|Identifies which model to look into |
 *ifctype*	|Identifies which ifc type to look for |
+*globalid*	|Identifies which ifc object to look for, if data is wanted for a single object only |
 
-Returns list of [ifcobject_data](./schemata/ifcobject_data.md) for the found objects. 
-To control whether exact types or types with subtypes is retturned use larguments in JSON body or URL {filter} 
+Returns:
+
+* If objects are subtypes of IfcRelationship list of [ifcrelation_data](./a_schemata/ifcrelation_data.md) for the found objects.
+* If objects are subtypes of IfcTypeObject of list of [ifcobject_data](./a_schemata/ifcobject_data.md) for the found typeobjects.
+* If objects are subtypes of IfcObjectDefinition list of [ifcobject_data](./a_schemata/ifcobject_data.md) for the found objects.
+* For other types nothing is returned
+
 
 **Example:**
 
@@ -30,17 +45,63 @@ Request: none
 
 Response:
 [{
+    "model_id":"12324",
     "globalid": "ABCD1",
     "name": "U1",
     "description": "Cellar",
+    "url":"https://example.com/ifc-api/0.4/models/12324/ifcbuildingstorey/ABCD1"
 },
 {
+    "model_id":"12324",
     "globalid": "ABCD2",
     "name": "01",
     "description": "Ground floor",
+    "url":"https://example.com/ifc-api/0.4/models/12324/ifcbuildingstorey/ABCD2"
 }]
 ```
 
+### List objects across models
+
+This is achieved using filter spec in JSON body:
+
+
+```
+GET https://example.com/ifc-api/0.4/models/ifcbuildingstorey
+
+Request: [
+{"model_id":"12324"},
+{"model_id":"66543"}
+]
+
+Response:
+[{  "model_id":"12324",
+    "globalid": "ABCD1",
+    "name": "U1",
+    "description": "Cellar",
+    "url":"https://example.com/ifc-api/0.4/models/12324/ifcbuildingstorey/ABCD1"
+},
+{   "model_id":"12324",
+    "globalid": "ABCD2",
+    "name": "01",
+    "description": "Ground floor",
+    "url":"https://example.com/ifc-api/0.4/models/12324/ifcbuildingstorey/ABCD2"
+},
+{   "model_id":"66543",
+    "globalid": "ABCD1",
+    "name": "U1",
+    "description": "Cellar, alternate version",
+    "url":"https://example.com/ifc-api/0.4/models/66543/ifcbuildingstorey/ABCD1"
+},
+{   "model_id":"66543",
+    "globalid": "ABCD2",
+    "name": "01",
+    "description": "Ground floor, alternate version",
+    "url":"https://example.com/ifc-api/0.4/models/66543/ifcbuildingstorey/ABCD2"
+}]
+
+```
+
+Note that when listing across models, GlobalID is no longer necessarily unique.
 
 ## From original spec
 

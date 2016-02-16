@@ -2,7 +2,7 @@
 
 [Level Up](../README.md)
 
-Version/Date: 2016.02.03 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.16 AET/EPM  API v0.2+ (in progress)
 
 ###Schemata defined:
 

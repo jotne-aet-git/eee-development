@@ -1,6 +1,7 @@
 ## eeE IFCAPI Ifc Object Services ##
 
 [Level Up](../README.md)
+[Overview](./README.md)
 
 Version/Date: 2016.02.16 AET/EPM  API v0.1+ (in progress)
 
@@ -9,6 +10,7 @@ Version/Date: 2016.02.16 AET/EPM  API v0.1+ (in progress)
 Schemata defining data structures can be found here: [IFCAPI Object Services Schemata](a_schemata/README.md)
 
 ### Services for the classes 
+
 
 Service kit| Description|
 --|--|
