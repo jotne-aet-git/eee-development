@@ -12,6 +12,6 @@ Here is the services so far:
  
  Services | Comment |
 ----------|---------|
-[IFC Object Services](ifcobject-services-01/README.md) | Simple retrieval if IFC objects from single model
-[IFC Multimodel Services](multimodel-services-01/README.md) | Services operating on multiple IFC models
-[Not Yet Categorized Services](TODO-services/README.md) | Services not yet elaborated
+[IFC Object Services](ifcobject-services-01/README.md) | Simple retrieval if IFC objects 
+[IFC Multimodel Services](multimodel-services-01/README.md) | Services for manipulating and creating multiple IFC models
+

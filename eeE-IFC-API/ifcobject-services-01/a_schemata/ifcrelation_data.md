@@ -3,7 +3,7 @@
 * [Level Up](../README.md)
 * [Overview](./README.md)
 
-Version/Date: 2016.02.16 AET/EPM  API v0.2+ (in progress)
+Version/Date: 2016.02.20 AET/EPM  API v0.2+ (in progress)
 
 
 ## IFC Relation Data
@@ -47,7 +47,7 @@ url |String| Reference æto an object as a cloud resource
 	"description": "Schema for ifc relation data, eeE REST API.",
 	"type": "object",
 	"properties": {
-		"model_id":    {"type": ["string","null"]},
+		"ifcmodel_id":    {"type": ["string","null"]},
 		"ifctype":    {"type": ["string","null"]},
 		"globalid":    {"type": ["string","null"]},
 		"name":        {"type": ["string","null"]},
@@ -78,7 +78,7 @@ url |String| Reference æto an object as a cloud resource
 ```
 JSON example: 
 {
-    “model_id”:”12345”
+    “ifcmodel_id”:”12345”
     “ifctype”:”IfcConnectsInSpatialStructure”
     “globalid”:”abcd”,
     “name”:”ConnectBuildingToStoreys”,

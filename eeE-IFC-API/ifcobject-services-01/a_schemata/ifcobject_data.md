@@ -3,7 +3,7 @@
 * [Level Up](../README.md)
 * [Overview](./README.md)
 
-Version/Date: 2016.02.16 AET/EPM  API v0.2+ (in progress)
+Version/Date: 2016.02.19 AET/EPM  API v0.2+ (in progress)
 
 
 ## IFC Object Data
@@ -31,7 +31,7 @@ ifcproperty |Array | Optional list af properties for this object, see [ifcproper
 	"description": "Schema for object data, eeE REST API.",
 	"type": "object",
 	"properties": {
-		"model_id":    {"type": ["string","null"]},
+		"ifcmodel_id": {"type": ["string","null"]},
 		"globalid":    {"type": ["string","null"]},
 		"name":        {"type": ["string","null"]},
 		"description": {"type": ["string","null"]},
@@ -40,14 +40,14 @@ ifcproperty |Array | Optional list af properties for this object, see [ifcproper
 		    "title": "ifcproperty"
 		    "type": ["array","null"],
 			"properties": {
-				"ifcpropertyset.globalid":    {"type": ["string","null"]},
-				"ifcpropertyset.name":        {"type": ["string","null"]},
-				"ifcpropertyset.description": {"type": ["string","null"]},
-				"ifcproperty.name":           {"type": ["string","null"]},
-				"ifcproperty.description":    {"type": ["string","null"]},
-				"ifcproperty.type":           {"type": ["string","null"]},
-				"ifcproperty.unit":           {"type": ["string","null"]},
-				"ifcproperty.value":          {"type": ["string","null"]},
+				"ifcpropertyset_globalid":    {"type": ["string","null"]},
+				"ifcpropertyset_name":        {"type": ["string","null"]},
+				"ifcpropertyset_description": {"type": ["string","null"]},
+				"ifcproperty_name":           {"type": ["string","null"]},
+				"ifcproperty_description":    {"type": ["string","null"]},
+				"ifcproperty_type":           {"type": ["string","null"]},
+				"ifcproperty_unit":           {"type": ["string","null"]},
+				"ifcproperty_value":          {"type": ["string","null"]},
 				"url":          {"type": ["string","null"]},
 			}
 	    }

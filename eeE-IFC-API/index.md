@@ -119,7 +119,7 @@ the eeEmbedded project, see section below.</span></p>
 
 <p class=MsoNormal><span lang=EN-US>The interface is presented as a set of web
 services using REST and JSON as design foundations. The services are documented
-<a href="doc/README.md">here</a></span></p>
+<a href="./README.md">here</a></span></p>
 
 </div>
 

@@ -3,7 +3,7 @@
 * [Level Up](../README.md)
 * [Overview](./README.md)
 
-Version/Date: 2016.02.16 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.19 AET/EPM  API v0.2+ (in progress)
 
 ### Classes 
 
@@ -17,15 +17,15 @@ The following main classes are defined:
 
 ###List Properties
 
-**Resource URL**: *GET /ifc-api/{version}/models/{model_id}/{ifctype}/{globalid}/properties
+**Resource URL**: *GET /ifc-api/{version}/ifcmodel/{model_id}/{ifctype}/{globalid}/properties
 
-Request: Optional JSONArray in body according to spec further down (proposal prototype)
+Request: Optional JSONArray in body according to [filter data](a_schemata/filter_data.md), see example further down
 
 element | explanation
 --------|-----------|
 *ifc-api*	|Shorthand for eeEmbedded Repository Services |
 *version*	|States version of the API to use, allowing multiple versions of API for upgrading |
-*model_id*	|Identifies which model top look into |
+*ifcmodel_id*	|Identifies which model top look into |
 *ifctype*	|Identifies which ifc type to look for |
 
 Returns list of [ifcproperty_data](./schemata/ifcproperty_data.md) for the found objects. 
@@ -39,7 +39,7 @@ For single objects, the *type* of the object is in principle superfluous, since 
 *List all building storeys in the model*
 
 ```
-GET https://example.com/ifc-api/0.4/models/12324/ifcbuildingstorey/ABCD1/properties
+GET https://example.com/ifc-api/0.4/ifcmodel/12324/ifcbuildingstorey/ABCD1/properties
 
 Request: none
 
@@ -62,12 +62,12 @@ Response:
 ***1) List across multiple models, same object GUID ***
 
 ```
-GET https://example.com/ifc-api/0.4/models/ifcbuildingstorey/ABCD1/properties
+GET https://example.com/ifc-api/0.4/ifcmodel/ifcbuildingstorey/ABCD1/properties
 JSON Body:
 [
-{"model_id":"id1"},
-{"model_id":"id2"},
-{"model_id":"id3"},
+{"ifcmodel_id":"id1"},
+{"ifcmodel_id":"id2"},
+{"ifcmodel_id":"id3"},
 ...
 ]
 ```
@@ -75,67 +75,78 @@ JSON Body:
 ***2) List across multiple models, different object GUID ***
 
 ```
-GET https://example.com/ifc-api/0.4/models/ifcbuildingstorey/properties
+GET https://example.com/ifc-api/0.4/ifcmodel/ifcbuildingstorey/properties
 JSON Body:
 [
-{"model_id":"id1","ifcbuildingstorey":"ABDC1"},
-{"model_id":"id2","ifcbuildingstorey":"EFAA3"},
-{"model_id":"id3","ifcbuildingstorey":"17E7F"},
+{"ifcmodel_id":"id1","ifcbuildingstorey":"ABDC1"},
+{"ifcmodel_id":"id2","ifcbuildingstorey":"EFAA3"},
+{"ifcmodel_id":"id3","ifcbuildingstorey":"17E7F"},
 ...
 ]
 ```
 
 
-## From original spec
+## From previous spec
 
 
+### getPropertySets(IfcObject) : List of IfcPropertySet
+### getPropertySets (IfcObject, List of PropertySetName) : List of IfcPropertySet
+
+Returns an object array containing named property sets for an IFC instance. If not found, an error condition is raised. 
+
 ```
-getPropertySets(IfcObject) : List of IfcPropertySet
-getPropertySets (IfcObject, List of PropertySetName) : List of IfcPropertySet
-```
-Synopsis 	Returns an object array containing named property sets for an IFC instance. If not found, an error condition is raised. 
 Input 	List of property set names. If not given, all property sets are returned.
 Output 	Array of matching property sets for the found object. 
-REST/JSON query example	GET <url-to-model>/<prefix>/ifcentity/<guid>/ifcpropertyset
-[ {“Name”:”ABCD”}, {“Name”:”EF12”} ]
-JSON Return example 	[
+
+REST/JSON query example	
+    GET <url-to-model>/<prefix>/ifcentity/<guid>/ifcpropertyset
+    [ {“Name”:”ABCD”}, {“Name”:”EF12”} ]
+
+JSON Return example 
+[
  {”GlobalID”:”ABCD”,“Name”:”01”,..},
  {”GlobalID”:”EF12”,“Name”:”02”,..}
 ]
-Code example: 
-Depends on programming language
+
+Code example: Depends on programming language
+```
+
+###getProperties (IfcPropertySet) : List of IfcProperty
+
+Returns an object array containing named properties in an IFC property set. If not found, an error condition is raised. 
 
 ```
-getProperties (IfcPropertySet) : List of IfcProperty
-```
-Synopsis 	Returns an object array containing named properties in an IFC property set. If not found, an error condition is raised. 
 Input 	List of property names. If not given, all properties are returned.
 Output 	Array of matching property sets for the found object. 
-REST/JSON query example	GET <url-to-model>/<prefix>/ifcpropertyset/<guid>/ifcproperty
-[ {“Name”:”ABCD”}, {“Name”:”EF12”} ]
-JSON Return example 	[
- {“IfcType”:”IfcRealProperty”,”GlobalID”:”ABCD”,“Name”:”01”,..},
- {“IfcType”:”IfcRealProperty”,”GlobalID”:”EF01”,“Name”:”02”,..},
+REST/JSON query example	
+    GET <url-to-model>/<prefix>/ifcpropertyset/<guid>/ifcproperty
+    [ {“Name”:”ABCD”}, {“Name”:”EF12”} ]
+
+JSON Return example 	
+[
+  {“IfcType”:”IfcRealProperty”,”GlobalID”:”ABCD”,“Name”:”01”,..},
+  {“IfcType”:”IfcRealProperty”,”GlobalID”:”EF01”,“Name”:”02”,..},
 ]
-Code example: 
-Depends on programming language
+
+Code example: Depends on programming language
+```
+
+###getPropertyValues (List of IfcObjectId) : List Of IfcPropertyValue
+
+Returns an object array containing property values for identified IFC properties. If not found, an error condition is raised. Function is intended for a compact transfer of property values.
 
 ```
-getPropertyValues (List of IfcObjectId) : List Of IfcPropertyValue
-```
-Synopsis 	Returns an object array containing property values for identified IFC properties. If not found, an error condition is raised. Function is intended for a compact transfer of property values.
 Input 	List of property ids as list of IfcObjectIds. If not given, empty list is returned.
 Output 	Array of matching property values for the found objects. 
-REST/JSON query example	GET <url-to-model>/<prefix>/ifcproperty
-[ {“GlobalId”:”ABCD”}, {“GlobalId”:”EF12”} ]
-JSON Return example 	[ 
+REST/JSON query example	
+    GET <url-to-model>/<prefix>/ifcproperty
+    [ {“GlobalId”:”ABCD”}, {“GlobalId”:”EF12”} ]
+
+JSON Return example 	
+[ 
  {“IfcType”:”IfcRealValue”,”Value”:”3.14”,“Unit”:”Radians”,..},
  {“IfcType”:”IfcRealValue”,”Value”:”3.14”,“Unit”:”Radians”,..},
 ]
 AET Comment: should values be identified by property global id?
-Code example: 
-Depends on programming language
-
-
-
--- BELOW HERE IS NOT RELEVANT YET --
+Code example: Depends on programming language
+```
