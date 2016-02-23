@@ -2,7 +2,7 @@
 
 [Level Up](../README.md)
 
-Version/Date: 2016.02.20 AET/EPM  API v0.2+ (in progress)
+Version/Date: 2016.02.23 AET/EPM  API v0.2+ (in progress)
 
 ###Schemata defined:
 
@@ -14,6 +14,7 @@ Schema | Description
 * [Ifc Relation Data](ifcrelation_data.md) | Data for an ifc relation in the server
 * [Ifc Property Data](ifcproperty_data.md) | Data for ifc property objects in the server
 * [Filter Data](filter_data.md)            | Request body arguments default layout
+* [Filter in URL](filter_url.md)           | URL filter arguments default layout
 
 
 
