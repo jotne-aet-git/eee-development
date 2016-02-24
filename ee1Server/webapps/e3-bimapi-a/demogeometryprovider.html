@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html> 
+   <head>
+ 
+     <meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+     <title>Test EDMWS.GetGeometry</title> 
+     <script type='text/javascript' src='http://www.x3dom.org/download/x3dom.js'></script> 
+     <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/x3dom.css'> 
+   
+    <script type="text/javascript">
+//     var _GetGeometryRequest = {"modelIds":[180388626560],"guidsPerModel":[[]],"geomType":"3D_SOLID_BODY","exportFileName":"munkPart.x3d","exportFileTreshold":10000000,"exportFormat":"X3D","texturesRef":null,"options":3}; 
+//     var _GetGeometryCmd = '/EDMWS/REST/QEX/GeometryProvider/GetGeometry?EDMSESSIONID=%EDMSESSIONID%&queryoptions=1&jsonstring=';
+     var _GetDemoGeometryGetDemoObjectsTreeRequest = {"modelId":null,"objGuid":null,"recursive":true};
+     var _GetDemoGeometryGetDemoObjectsTreeCmd = '/EDMWS/REST/QEX/DemoGeometryProvider/GetDemoObjectsTree?EDMSESSIONID=%EDMSESSIONID%&jsonstring=';
+     var _GetDemoGeometryGetPropertiesRequest = {"modelId":null,"objGuid":null};
+     var _GetDemoGeometryGetPropertiesCmd = '/EDMWS/REST/QEX/DemoGeometryProvider/GetDemoProperties?EDMSESSIONID=%EDMSESSIONID%&jsonstring=';
+     var _GetDemoGeometryGetGeometryForSpaceRequest = {"modelId":null,"spaceGuid":null,"geomType":"3D_SOLID_BODY","exportFileName":"munkPart.x3d","exportFileTreshold":10000000,"exportFormat":"X3D","texturesRef":null,"options":4}; 
+     var _GetDemoGeometryGetGeometryForSpaceCmd = '/EDMWS/REST/QEX/DemoGeometryProvider/GetGeometryForSpace?EDMSESSIONID=%EDMSESSIONID%&queryoptions=1&jsonstring=';
+     var _EDMSESSIONID = "BasicAuth";  //"AUTO_LOGIN"; //"psuperuser_2_191155_1427382715346";
+     var currModelId = null, currPropGuid = null, currGeom = null, currObj = null;
+     function ajax(info) {
+    	 var asyncObj; try { asyncObj = new XMLHttpRequest(); } catch (e1) { try { asyncObj = new ActiveXObject("Microsoft.XMLHTTP"); } catch (e2) { asyncObj = new ActiveXObject("Msxml2.XMLHTTP"); } }
+         return { 'asyncObj':asyncObj, 'method':info.method, 'url':info.url, 'done':function(_call){
+        	 this.asyncObj.onreadystatechange = function(){ if (this.readyState == 4) _call(this.responseText,this.status); };  this.asyncObj.open(this.method, this.url, true);  this.asyncObj.send();  
+         } };		
+     }
+     function onGeometryItemClick(ev) {
+    	 var guid = ev.target.getAttribute("DEF").substring(1);  
+    	 if (currGeom) currGeom.highlight(false, '1 0 0'); currGeom = ev.target; currPropGuid = guid; currGeom.highlight(true, '1 0 0');
+    	 loadAndFillProps(guid);
+     }
+     function onObjTreeClick(e) {
+    	if (!e) e = window.event; var src = e.target || e.srcElement;
+    	if (src && src.id && (src.id.substring(0,1) == "O")) {
+    		var guid = src.id.substring(1);  
+    		if (currObj) currObj.style.fontWeight = 200;  currObj = src;  currObj.style.fontWeight = 700; 
+    		currModelId = src.parentElement.parentElement.id.substring(1);  currGeom = null;  currPropGuid = guid;
+    	 	loadAndFillProps(guid);  loadAndShowGeometry(guid);
+     	}
+     }
+     function on3DFinishedLoading() {
+    	 //x3domruntime.showAll();
+    	 //x3dom.runtime.resetView();
+     }
+     function loadAndShowGeometry(guid) {
+    	 if (!guid) { document.getElementById("mainBox").setAttribute("url","/EDMWS/nothing.x3d"); return; }
+    	 _GetDemoGeometryGetGeometryForSpaceRequest["modelId"] = currModelId;
+    	 _GetDemoGeometryGetGeometryForSpaceRequest["spaceGuid"] = guid;
+    	 var _cmd = _GetDemoGeometryGetGeometryForSpaceCmd.replace('%EDMSESSIONID%', _EDMSESSIONID) + JSON.stringify(_GetDemoGeometryGetGeometryForSpaceRequest); 
+    	 document.getElementById("mainBox").setAttribute("url",_cmd); // async - how do detect finish ?
+	 }
+     function loadAndFillProps(guid) {
+    	 _GetDemoGeometryGetPropertiesRequest["modelId"] = currModelId;
+    	 _GetDemoGeometryGetPropertiesRequest["objGuid"] = guid;
+    	 var _cmd = _GetDemoGeometryGetPropertiesCmd.replace('%EDMSESSIONID%', _EDMSESSIONID) + JSON.stringify(_GetDemoGeometryGetPropertiesRequest); 
+    	 ajax({method:"GET", url:_cmd}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { alert('Server error: ' + _status + ' (' + _data + ')'); return; }
+        	 var data = JSON.parse(_data), sdata = '<table>';
+        	 for (var i=0; i < data[0].length; i++) {
+                 sdata += '<tr><td colspan="2"><b>' + data[0][i].Name + '</b></td></tr>';
+                 if (data[0][i].Properties) for (var j=0; j < data[0][i].Properties.length; j++) {
+                	 sdata += '<tr><td>' + data[0][i].Properties[j].Name + '</td><td><i>' + data[0][i].Properties[j].PValue + '</i></td></tr>';
+                 }
+        	 }
+        	 document.getElementById("props").innerHTML = sdata + '</table>';
+          });    	 
+     }
+     function loadAndfillObjtree() {
+    	 var _cmd = _GetDemoGeometryGetDemoObjectsTreeCmd.replace('%EDMSESSIONID%', _EDMSESSIONID) + JSON.stringify(_GetDemoGeometryGetDemoObjectsTreeRequest);
+    	 ajax({method:"GET", url:_cmd}).done(function(_data,_status) {
+    		 if (_status && _status != 200) { alert('Server error: ' + _status + ' (' + _data + ')'); return; }
+        	 var data = JSON.parse(_data), sdata = '<ul>';
+        	 for (var i=0; i < data[0].length; i++) {
+        		 sdata += '<li id="M'+ data[0][i].Id +'">' + data[0][i].Name + '<ul>';
+                 if (data[0][i].Children) for (var j=0; j < data[0][i].Children.length; j++) {
+                	 sdata += '<li id="O'+ data[0][i].Children[j].Id +'">' + data[0][i].Children[j].Name + '</li>';
+                 }
+                 sdata += '</ul></li>';
+        	 }
+        	 document.getElementById("objtree").innerHTML = sdata + '</ul>';
+          });    	 
+     }
+     function init() {
+		 loadAndfillObjtree();
+     }
+    </script>
+    
+	<style>
+		#objtree { width:250px;height:200px;overflow-y:scroll;overflow-x:hide; border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+		#objtree ul { list-style-type: none; cursor: pointer; padding:0 0 0 0; margin:0 0 0 0; }
+		#objtree li { padding-left: 20px; cursor: pointer; }
+		#objtree>ul>li { padding-left: 0px; cursor: arrow; }
+		#props { width:250px;height:200px;overflow-y:scroll;overflow-x:hide; border:1px solid; padding:5px 5px 5px 5px; margin:5px 5px 5px 5px; }
+	</style>
+
+   </head> 
+	
+   <body onLoad="init();"> 
+     <table>
+      <tr>
+       <td> 
+        <div id="objtree" onclick="onObjTreeClick(event)">&nbsp;</div>
+        <div id="props">&nbsp;</div>
+       </td> 
+       <td> 
+        <div id="content" class="content">
+	     <x3d class="content"  showStat="false"  width='600px' height='425px'> 
+            <scene id="mainScene">
+<!--			<Viewpoint position='0 0 400' orientation="0 0 0 1" /> -->
+<!--			<Background skyColor='0.05 0.12 0.23'/> -->
+			    <Transform translation='0 0 0' >
+                	<inline id="mainBox" mapDEFToID="true" onload="on3DFinishedLoading()" url="" onclick="onGeometryItemClick(event)"> </inline>
+				</Transform>
+<!-- 			<Inline Center="0.0 0.0 0.0" bboxSize="10.5 10.5 10.5" url='"../common/coordinates.x3d" "http://tecfa.unige.ch/guides/x3d/ex/common/coordinates.x3d"'/>  -->
+            </scene> 
+         </x3d>        
+        </div>
+       </td> 
+      </tr>
+     </table> 
+   </body>
+    
+</html> 
