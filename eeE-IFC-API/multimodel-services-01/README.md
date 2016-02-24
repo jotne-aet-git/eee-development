@@ -2,11 +2,11 @@
 
 [Level Up](../README.md)
 
-Version/Date: 2016.02.03 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.24 AET/EPM  API v0.2+ (in progress)
 
 Main classes are:
 
-* Model - a self-contained data set that is a legal populatiopn iof the IFC schema
+* Model - a self-contained data set that is a legal population of the IFC schema
 * Object - generalized object corresponding to IfcObject in IFC Schema
 
 Schemata defining data structures can be found here: [IFC multimodel Services Schemata](a_schemata/README.md)
@@ -16,7 +16,7 @@ Schemata defining data structures can be found here: [IFC multimodel Services Sc
 
 Service| Comment |
 -------|---------|
-* [Merge Services](./merge_service.md) | Merge two models
+* [Merge Services](./merge_service.md) | Merge models into a new model / model version
 
 
 
@@ -31,7 +31,7 @@ By convention a RESTful interface often implement a list as:
 The general eeE IFC-API URL pattern for multi-model targeted services is
 
 ```
-GET <path-to-service>/models/<model_id>/<subfunction>/[subfunction_id] <JSON body>
+GET <path-to-service>/multimodels/[model_id]/<subfunction>/[subfunction_id] <JSON body>
 ```
 
 Where:
