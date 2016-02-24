@@ -3,9 +3,9 @@
 * [Level Up](../README.md)
 * [Overview](./README.md)
 
-Version/Date: 2016.02.03 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.24 AET/EPM  API v0.2+ (in progress)
 
-## List Merge history
+## List Merge History
 
 **Resource URL**: *GET /ifc-api/{version}/multimodels/{model_id}/mergehistory
 
@@ -15,64 +15,83 @@ element | explanation
 *version*	|States version of the API to use, allowing multiple versions of API for upgrading |
 *model_id*	|Identifies which model to look into |
 
-Returns list of [merge_meta_data](./schemata/merge_meta_data.md) for the found objects. 
+Returns list of [merge_history_data](./a_schemata/merge_history_data.md) for the found objects. 
 
 
-**Example:**
+**Example:** see [merge_history_data](./a_schemata/merge_history_data.md)
 
-*List all building storeys in the model*
-
-```
-GET https://example.com/ifc-api/0.4/multimodels/12324/mergehistory
-
-Request: none
-
-Response:
-[{
-    "todo": "TODO",
-},
-{
-    "todo": "TODO",
-}]
-```
 
 
 
 ## Merge into new version of model
 
-**Purpose**: Merge a secondary model with a primary model  yielding result as a new versiopn of the primary model
+**Purpose**: Merge one or more secondary model(s) with a primary model yielding result as a new version of the primary model
 
-**Resource URL**: *GET /ifc-api/{version}/multimodels/{model_id}/merge {JSON body in request}
+**Resource URL**: *POST /ifc-api/{version}/multimodels/{model_id}/merge {JSON body in request}
 
 
 URL element | explanation
 --------|-----------|
 *ifc-api*	|Shorthand for eeEmbedded Repository Services |
 *version*	|States version of the API to use, allowing multiple versions of API for upgrading |
-*model_id*	|Identifies which model to look into |
+*model_id*	|Identifies primary model. Alternatively given as part of JSON body argument |
 
 <br/>
 
-JSON body element | explanation
-------------------|-----------
-*second_model_id* |Id of second model to use 
-*<TODO>*	  |check merge service in EDM and finmd arguments
+For actual layout of JSON argument body see [merge_argument_data](./a_schemata/merge_argument_data.md)
+
+<br/>
+
+JSON body element| type  | explanation
+-----------------|-------|----
+*source_models*   |object|List of source models. **model_id** mandatory 
+*target_model*    |object|Target model, if **model_id** is supplied then it will override primary model id given in URL.
+*todo_argument*	  |string|TODO: necessary arguments to be identified
 
 
-Returns a list containing single element [merge_meta_data](./schemata/merge_meta_data.md){project_url, {project_meta_data}}. JSON Schema not shown (trivial).
+Returns a list containing single element [merge_history_data](./a_schemata/merge_history_data.md)
 
+**Example:** see [merge_history_data](./a_schemata/merge_history_data.md)
 
-**Example:**
+EDM mapped query:
 
 ```
-POST https://example.com/ifc-api/0.4/multimodels/12324/merge 
-{
-    "secondary_model_id": "3939"
-}
+QUERY_FUNCTION MergeModelsForWarehouse(	FromModels : Aggregate Of Generic;
+		       	     				ToModel	: Generic;
+			     				Options : Integer;
+							Arguments : Aggregate Of Generic) : Aggregate Of Generic;
 
-Response:
-[{
-    "todo": "TODO",
-}]
 ```
 
+## Delete Merge History
+
+**Purpose**: Delete merge history record(s) for a model
+
+**Resource URL**: *DELETE /ifc-api/{version}/multimodels/model_id/merge {JSON body in request}
+
+
+URL element | explanation
+--------|-----------|
+*ifc-api*	|Shorthand for eeEmbedded Repository Services |
+*version*	|States version of the API to use, allowing multiple versions of API for upgrading |
+*model_id*	|Identifies primary model |
+
+
+## Update Merge History
+
+**Purpose**: Update merge history record(s) for a model  
+
+**Resource URL**: *PUT /ifc-api/{version}/multimodels/model_id/merge {JSON body in request}
+
+
+URL element | explanation
+--------|-----------|
+*ifc-api*	|Shorthand for eeEmbedded Repository Services |
+*version*	|States version of the API to use, allowing multiple versions of API for upgrading |
+*model_id*	|Identifies primary model |
+
+ONly last merge history can be adapted. In this version only merge history **Description** attribute can be written, meaning following JSON request body is relevant:
+
+```
+{"merge_result":{"description":"The New Value For Attribute"}}
+```

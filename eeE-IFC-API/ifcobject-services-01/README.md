@@ -3,7 +3,7 @@
 [Level Up](../README.md)
 [Overview](./README.md)
 
-Version/Date: 2016.02.16 AET/EPM  API v0.1+ (in progress)
+Version/Date: 2016.02.24 AET/EPM  API v0.2+ (in progress)
 
 ### Classes 
 
@@ -16,6 +16,7 @@ Service kit| Description|
 --|--|
 [IfcObject Services](./ifcobject_service.md)| Provides instance retrieval based on object type 
 [IfcProperty Services](./ifcproperty_service.md)| Provides property retrieval and update for simple properties
+[IfcQuantity Services](./ifcquantity_service.md)| Provides quantity retrieval and update for simple quantities (IfcElementQuantity)
 [IfcRelation Oriented Services](./ifcrelation_service.md)| Provides retrieval of relations between objects
 
 
