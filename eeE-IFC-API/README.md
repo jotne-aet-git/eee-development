@@ -2,6 +2,7 @@
 
 [Level Up](../README.md)
 
+Version/Date: 2016.03.03 AET/EPM  API v0.30+ (in progress)
 
 The purpose if the eeE-IFC-API is to provide a general web interface for accessing IFC model server functionality. It is sponsored and developed as a part of the [eeEmbedded project]().
 
@@ -12,6 +13,6 @@ Here is the services so far:
  
  Services | Comment |
 ----------|---------|
-[IFC Object Services](ifcobject-services-01/README.md) | Simple retrieval if IFC objects 
-[IFC Multimodel Services](multimodel-services-01/README.md) | Services for manipulating and creating multiple IFC models
+[Basic IFC Services](10-basic-ifc-services/README.md) | Basic retrieval and manipulation of IFC objects 
+[Extended IFC Services](20-extended-ifc-services/README.md) | Extended services for manipulating and creating IFC objects and IFC models
 

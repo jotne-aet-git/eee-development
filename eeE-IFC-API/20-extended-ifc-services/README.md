@@ -1,15 +1,15 @@
-## eeE IFCAPI Ifc Multimodel Services ##
+## eeE IFCAPI Extended Services ##
 
 [Level Up](../README.md)
 
-Version/Date: 2016.02.24 AET/EPM  API v0.2+ (in progress)
+Version/Date: 2016.03.03 AET/EPM  API v0.30+ (in progress)
 
 Main classes are:
 
 * Model - a self-contained data set that is a legal population of the IFC schema
 * Object - generalized object corresponding to IfcObject in IFC Schema
 
-Schemata defining data structures can be found here: [IFC multimodel Services Schemata](a_schemata/README.md)
+Schemata defining data structures can be found here: [IFC Extended Services Schemata](a_schemata/README.md)
 
 ### Services for the classes 
 
@@ -17,7 +17,7 @@ Schemata defining data structures can be found here: [IFC multimodel Services Sc
 Service| Comment |
 -------|---------|
 * [Merge Services](./merge_service.md) | Merge models into a new model / model version
-
+* [Extract Services](./extract_service.md) | Extract partial models from a model
 
 
 ### Navigating to an item in the server
