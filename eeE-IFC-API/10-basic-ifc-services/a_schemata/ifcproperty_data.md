@@ -58,7 +58,7 @@ The attributes are mandatory or optional depending on the service used.
 				"ifcproperty_type":           {"type": ["string","null"]},
 				"ifcproperty_unit":           {"type": ["string","null"]},
 				"ifcproperty_value":          {"type": ["string","null"]},
-				"url":          {"type": ["string","null"]},
+				"url":                        {"type": ["string","null"]},
 				},
 			}
 	}
