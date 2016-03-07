@@ -2,7 +2,7 @@
 
 [Level Up](../README.md)
 
-Version/Date: 2016.03.03 AET/EPM  API v0.30+ (in progress)
+Version/Date: 2016.03.07 AET/EPM  API v0.30+ (in progress)
 
 Main classes are:
 
@@ -16,6 +16,7 @@ Schemata defining data structures can be found here: [IFC Extended Services Sche
 
 Service| Comment |
 -------|---------|
+* [Conversion Services](./convert_service.md) | Convert models between IFC4 and IFC2x3
 * [Merge Services](./merge_service.md) | Merge models into a new model / model version
 * [Extract Services](./extract_service.md) | Extract partial models from a model
 
