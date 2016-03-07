@@ -3,7 +3,7 @@
 * [Level Up](../README.md)
 * [Overview](./README.md)
 
-Version/Date: 2016.03.04 AET/EPM  API v0.30+ (in progress)
+Version/Date: 2016.03.07 AET/EPM  API v0.30+ (in progress)
 
 ### Classes 
 
@@ -55,7 +55,7 @@ element | explanation
 
 
 
-**Example:** *see [Examples](./ifcproperty_service_examples.md)
+**Example:** *see [Examples](./ifcproperty_service_example.md)
 
 
 ### Optional filter spec in JSON body 
