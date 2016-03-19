@@ -61,8 +61,7 @@ public class E3Tests02 {
 	
 	@BeforeClass
 	public static void beforeClass() throws Exception {
-		EDMInterface.initMultiThread();
-		testlib.setServerProperties();
+		testlib.initWebServiceTest(null);
 		E3RestServlet servlet = new E3RestServlet();  
 		E3AccessUtil carrier = new E3AccessUtil(servlet,null,null);
 		if(!skipInit) {

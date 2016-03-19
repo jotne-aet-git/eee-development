@@ -29,12 +29,28 @@ public class E3TestBase extends Thread {
 	public static String    userName			= "superuser";
 	public static String    groupName		   	= "";
 	public static String    userPass			= "db1";
-	public        String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
+	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
 
-	public void setServerProperties() {
+	public void initDirectTest() {
+		EDMInterface.initMultiThread();
 		commType			= "TCP";  
 		hostName            = "localhost";
 		portName            = "4590";
+		userName			= "superuser";
+		groupName		   	= "";
+		userPass			= "db1";
+		webServerRoot 		= "";
+	}
+	
+
+	/**
+	 * 
+	 * @param url - url to BIM_API service root, for example ""http://localhost:8080/e3-bimapi-a"
+	 */
+	public void initWebServiceTest(String url) {
+		commType			= "TCP";  
+		hostName            = "localhost";
+		portName            = "0000";
 		userName			= "superuser";
 		groupName		   	= "";
 		userPass			= "db1";
@@ -42,6 +58,9 @@ public class E3TestBase extends Thread {
 		String tmp = System.getProperty("e3test.webServerRoot");
 		if (tmp != null) {
 			webServerRoot = tmp;
+		}
+		if (url != null) {
+			webServerRoot = url;			
 		}
 	}
 	
@@ -136,15 +155,36 @@ public class E3TestBase extends Thread {
 	}
 
 	
+    private EDMLogger trace = null;
     public void startTrace(String testName) throws Exception {
-    	log(E3Logger.INFO,testName + " -- start test");
+    	if (this.useWebService()) {
+        	log(E3Logger.INFO,testName + " -- start test");    		
+    	} else {
+	    	trace = EDMInterface.getEDMTrace();
+	    	trace.setLogFileName(this.getOutputPath() + "/"+ testName + "_trace.txt");
+	    	long condition 	= TraceOptions.TRACE_ARGS
+							| TraceOptions.TRACE_CALLS
+							| TraceOptions.TRACE_RETURNS
+							;
+	    	trace.setOptions(condition);
+	    	trace.start(); 
+	    	trace.write(testName + " -- start test");
+    	}
     }
     
     public void writeTrace(String msg ) throws Exception {
-    	log(E3Logger.INFO," -- " + msg);
+    	if (this.useWebService()) {
+        	log(E3Logger.INFO," -- " + msg);
+    	} else {
+    		if(trace!= null) trace.write(msg);
+    	}
     }
     
     public void stopTrace() {
+    	try {
+	    	if(trace!= null) trace.close();
+	    	trace = null;
+    	} catch(Exception ex) {}
     }
     
     
