@@ -29,7 +29,7 @@ public class E3TestBase extends Thread {
 	public static String    userName			= "superuser";
 	public static String    groupName		   	= "";
 	public static String    userPass			= "db1";
-	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
+	public static String    webServerRoot       = "http://bim-api.xyz/e3-bimapi-a";
 
 	public void initDirectTest() {
 		EDMInterface.initMultiThread();
