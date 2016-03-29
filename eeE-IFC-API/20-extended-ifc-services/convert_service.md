@@ -73,11 +73,7 @@ Response:
         {"message":
           {"description":"1127 ifcObjects cobnverted to target model "}
         }]
-},
-{"conversion_result":...}
-]
-```
-
+}
 ```
 
 ## Delete Conversion History
