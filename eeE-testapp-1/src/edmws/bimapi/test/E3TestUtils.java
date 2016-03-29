@@ -7,14 +7,8 @@ import org.json.JSONObject;
 
 import edmws.webapp.servlets.E3AccessUtil;
 import edmws.webapp.servlets.E3ApiActions;
-import edmws.webapp.servlets.E3BimApiActions;
 import edmws.webapp.servlets.E3BimApiResourcePath;
-import edmws.webapp.servlets.E3Constants;
 import edmws.webapp.servlets.E3Logger;
-
-
-
-import edmws.webapp.servlets.IE3ResourcePath;
 
 public class E3TestUtils {
 
@@ -63,9 +57,9 @@ public class E3TestUtils {
 		JSONArray jresult = new JSONArray(result);
 		for(int i0 = 0; i0 < jresult.length(); i0++) {
 			JSONObject md = jresult.getJSONObject(i0);
-			String model_name = md.getJSONObject(E3Constants.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_NAME);
+			String model_name = md.getJSONObject(E3BimApiResourcePath.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_NAME);
 			if (model_name.equals(testModelName)) {
-				model_guid = md.getJSONObject(E3Constants.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_ID);
+				model_guid = md.getJSONObject(E3BimApiResourcePath.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_ID);
 				break;
 			}
 		}
@@ -78,11 +72,11 @@ public class E3TestUtils {
 			ta.urlArgs.put(E3BimApiResourcePath.MDF_MODEL_TYPE,"IFC2X3");
 
 			if(testlib.useWebService()) {
-				ta.urlArgs.put(E3Constants.MUF_MODEL_IS_EXTERNAL,"false");
+				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"false");
 				ta.set_file_input(testlib.inputPath + "/0000-Referansebygg.ifc");
 			} else {
-				ta.urlArgs.put(E3Constants.MUF_MODEL_IS_EXTERNAL,"true");
-				ta.urlArgs.put(E3Constants.MUF_MODEL_CONTENT,testlib.inputPath + "/0000-Referansebygg.ifc");
+				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"true");
+				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_CONTENT,testlib.inputPath + "/0000-Referansebygg.ifc");
 			}
 			
 			result = this.runBimApiService(ta);
@@ -105,13 +99,13 @@ public class E3TestUtils {
 		JSONArray jresult = new JSONArray(result);
 		for(int i0 = 0; i0 < jresult.length(); i0++) {
 			JSONObject md = jresult.getJSONObject(i0);
-			String model_name = md.getJSONObject(E3Constants.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_NAME);
+			String model_name = md.getJSONObject(E3BimApiResourcePath.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_NAME);
 			if (model_name.equals(testModelName)) {
 				ta = BimApiArgs();
 				ta.restOp = "DELETE";
 				ta.urlArgs = null;
 				ta.bodyArgs = null;				
-				ta.setModelGuid(md.getJSONObject(E3Constants.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_ID));
+				ta.setModelGuid(md.getJSONObject(E3BimApiResourcePath.MUF_MODEL_META_DATA).getString(E3BimApiResourcePath.MDF_MODEL_ID));
 				//ta.url = "/eee-repos/0.5/models/" + ta.model_guid;
 				toDelete.add(ta);
 			}
