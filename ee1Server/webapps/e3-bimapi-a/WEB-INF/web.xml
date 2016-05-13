@@ -117,6 +117,22 @@
 		<param-value>edmws.webapp.servlets.E3BimApiActions</param-value> 
 		<description>The E3 Worker class for this servlet instance</description> 
 	  </init-param>
+	  
+	  <init-param> 
+		<param-name>e3.autologin.username</param-name> 
+		<param-value>superuser</param-value> 
+		<description>autologin param</description> 
+	  </init-param>
+	  <init-param> 
+		<param-name>e3.autologin.groupname</param-name> 
+		<param-value></param-value> 
+		<description>autologin param</description> 
+	  </init-param>
+	  <init-param> 
+		<param-name>e3.autologin.password</param-name> 
+		<param-value>db1</param-value> 
+		<description>autologin param</description> 
+	  </init-param>
 	
   </servlet> 
 
