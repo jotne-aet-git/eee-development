@@ -3,22 +3,19 @@ SET EDM_LM_HOME=%CD%
 set B3CONFIG=%1
 if "%B3CONFIG%"=="" set B3CONFIG=debug
 
-rem set EDM_HOME_BIN=O:\edm\v6.0.xxx\output\x64\%B3CONFIG%
-rem set EDM_HOME_BIN=O:\edm\v6.0.xxx\output\x64\release
-set EDM_HOME_BIN=%EDM_LM_HOME%\install-image\bin
+rem set EDM_HOME_BIN=%EDM_LM_HOME%\install-image\bin
 rem set EDM_HOME_BIN=C:\edm\EDMSix-2.100.04\bin
-
+set EDM_HOME_BIN=%EDM_LM_HOME%\edm-bin
 set EDMSRV_HOME_BIN=%EDM_HOME_BIN%
 set EDMSRV_TRACE_HOME=%EDM_LM_HOME%\trace
 set EDMSRV_DB_PATH=%EDM_LM_HOME%\db
 set EDMSRV_DB_NAME=db1
 set EDMSRV_DB_PWD=Db1$123
-rem set EDMSRV_DB_PWD=db1
 set EDMSRV_APPSERVERS=1
 set EDMSRV_PORT=4590
 set EDMSRV_LIC_ID=10007
 set EDM_EXTENDED_NAME_CHARACTERS="0123456789!#$%%&'*+-/=?^`{|}~@._Ê¯Â∆ÿ≈"
-set EDM_SERVER_CLIENTS_FILES_PATH=C:/temp
+set EDM_SERVER_CLIENTS_FILES_PATH=%EDM_LM_HOME%/temp
 
 SET JAVA_HOME=C:\apps\Java\jdk1.8.0_45
 SET CATALINA_HOME=C:\apps\apache-tomcat-8.0.22

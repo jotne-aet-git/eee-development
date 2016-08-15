@@ -1,4 +1,4 @@
-@echo off
+rem @echo off
 call lm_environment.bat %2
 set THIS_NAME=lm_worker
 set REPORT_FILE_04=%cd%\%THIS_NAME%.out
@@ -36,9 +36,7 @@ if "%1"=="init_work_db" set B3WORKER=%1
 
 
 if "%B3WORKER%"=="" goto usage
-echo *USAGE FAIL* >>%REPORT_FILE_04%
-echo --- %THIS_NAME% worker: %B3WORKER% 
-echo --- %THIS_NAME% worker: %B3WORKER% >>%REPORT_FILE_04%
+
 goto %B3WORKER%
 goto usage
 
@@ -227,13 +225,13 @@ call :start_tomcat_debug
 goto end
 
 :start_tomcat_normal
-set THE_COMMANDLINE_04=start_tomcat normal
-call :do_commandline_04
+@echo on
+cmd /c  start_tomcat normal
 goto end
 
 :start_tomcat_debug
-set THE_COMMANDLINE_04=start_tomcat debug
-call :do_commandline_04
+@echo on
+cmd /c  start_tomcat debug
 goto end
 
 
@@ -252,9 +250,7 @@ cmd /k  %B3TEMP2%
 goto end
 
 :stop_tomcat
-rem call %CATALINA_HOME%\bin\catalina.bat stop
-set THE_COMMANDLINE_04=%CATALINA_HOME%\bin\catalina.bat stop
-call :do_commandline_04
+call %CATALINA_HOME%\bin\catalina.bat stop
 timeout /T 5
 goto end
 
@@ -279,11 +275,6 @@ echo --- %THIS_NAME% %EDM_HOME_BIN%\edms %EDM_SCRIPT_01%
 %EDM_HOME_BIN%\edms %EDM_SCRIPT_01%
 goto end
 
-:do_commandline_04
-echo *** %THIS_NAME% %THE_COMMANDLINE_04% >>%REPORT_FILE_04%
-echo *** %THIS_NAME% %THE_COMMANDLINE_04%
-cmd/c %THE_COMMANDLINE_04%
-goto end
 
 
 :end
