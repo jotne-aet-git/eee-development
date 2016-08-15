@@ -3,7 +3,7 @@
    <head>
  
      <meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
-     <title>eeEmbedded BIMAPI Repository Services Test Page</title> 
+     <title>eeEmbedded Repository Services Test Page</title> 
 <!--     <script type='text/javascript' src='http://www.x3dom.org/download/x3dom.js'></script> --> 
      <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/x3dom.css'> 
 <!--	 
@@ -14,83 +14,9 @@
     <script type="text/javascript">
 //     var _GetGeometryRequest = {"modelIds":[180388626560],"guidsPerModel":[[]],"geomType":"3D_SOLID_BODY","exportFileName":"munkPart.x3d","exportFileTreshold":10000000,"exportFormat":"X3D","texturesRef":null,"options":3}; 
 //     var _GetGeometryCmd = '/EDMWS/REST/QEX/GeometryProvider/GetGeometry?EDMSESSIONID=%EDMSESSIONID%&queryoptions=1&jsonstring=';
-     var _GetDemoGeometryGetGeometryForSpaceRequest = {"modelId":null,"spaceGuid":null,"geomType":"3D_SOLID_BODY","exportFileName":"munkPart.x3d","exportFileTreshold":10000000,"exportFormat":"X3D","texturesRef":null,"options":4}; 
-     var _GetDemoGeometryGetGeometryForSpaceCmd = '/EDMWS/REST/QEX/DemoGeometryProvider/GetGeometryForSpace?EDMSESSIONID=%EDMSESSIONID%&queryoptions=1&jsonstring=';
      var _EDMSESSIONID = "BasicAuth";  //"AUTO_LOGIN"; //"psuperuser_2_191155_1427382715346";
      var currModelId = null, currPropGuid = null, currGeom = null, currObj = null;
-/*     
-		// original from Georg - multipart upload in JavaScript
-	     function iabiFileUpload() {
-	     	var ModelMetaData = {
-	     		repository_name : document.getElementById("ServerAddress")[document.getElementById("ServerAddress").selectedIndex].text,
-	     		model_name : $("#ModelName").val(),
-	     		model_type : $("#ModelType").val(),
-	     		model_version : $("#ModelVersion").val(),
-	     		schema_url : $("#SchemaURL").val(),
-	     		description : $("#Description").val(),
-	     		domain_name : $("#DomainName").val()
-	     	};
 
-	     	var ServerAdress = $("#ServerAddress").val();
-
-	     	var MyForm = new FormData();
-
-	     	MyForm.append("MetaData", JSON.stringify(ModelMetaData));
-	     	MyForm.append(document.getElementById("ModelFileSelector").files[0].name, document.getElementById("ModelFileSelector").files[0].name);
-
-	     	$.ajax({
-	     		url : ServerAdress,
-	     		data : MyForm,
-	     		cache : false,
-	     		contentType : false,
-	     		processData : false,
-	     		type : "POST",
-	     		success : function (data) {
-	     			$("#iabiResult").text(JSON.stringify(data, undefined, 2));
-	     		}
-	     	}).fail(function (data) {
-	     		$("#iabiResult").text(JSON.stringify(data, undefined, 2));
-	     	});
-	     }
-*/
-
-		// adapted multipart upload in JavaScript
-	     function testFileUpload() {
-	     	alert ("testFileUpload: " + document.getElementById("uu_file").files[0].name);
-	     	var ModelMetaData = {
-				project_name : document.getElementById("uu_project_name").value,
-				model_name 	 : document.getElementById("uu_model_name").value,
-				model_type   : document.getElementById("uu_model_type").value,
-				model_treat_as_binary   : document.getElementById("uu_model_treat_as_binary").value,
-				domain_name  : document.getElementById("uu_domain_name").value,
-			    description  : document.getElementById("uu_description").value,
-                schema_url   :  document.getElementById("uu_schema_url").value				
-	     	};
-
-			 var _cmd = getE3ServiceURL();
-			 _cmd += getE3Repository();
-			 _cmd += '/models';
-			 _cmd += '?';
-			 _cmd += getE3ServiceSessionID();
-
-	     	var MyForm = new FormData();
-
-	     	MyForm.append("MetaData", JSON.stringify(ModelMetaData));
-	     	MyForm.append(document.getElementById("uu_file").files[0].name, document.getElementById("uu_file").files[0]);
-	     	$.ajax({
-	     		url : _cmd,
-	     		body : MyForm,
-	     		cache : false,
-	     		contentType : false,
-	     		processData : false,
-	     		type : "POST",
-	     		success : function (data) {
-	     			alert ("Success: " + JSON.stringify(data, undefined, 2));
-	     		}
-	     	}).fail(function (data) {
-	     			alert ("Fail: " + JSON.stringify(data, undefined, 2));
-	     	});
-	     }
 	 
      function ajax(info) {
     	 var asyncObj; 
@@ -119,64 +45,22 @@
 		};		
      }
      
-     function onGeometryItemClick(ev) {
-    	 var guid = ev.target.getAttribute("DEF").substring(1);  
-    	 if (currGeom) currGeom.highlight(false, '1 0 0'); currGeom = ev.target; currPropGuid = guid; currGeom.highlight(true, '1 0 0');
-    	 loadAndFillProps(guid);
-     }
-
-	 
-     var _UploadModelCmd = '/EDMWS/REST/QEX/DemoGeometryProvider/GetDemoProperties?EDMSESSIONID=%EDMSESSIONID%';
-     var _UploadModelRequest = {"modelId":null,"objGuid":null};
-     function loadAndFillProps(guid) {
-    	 _UploadModelRequest["modelId"] = currModelId;
-    	 _UploadModelRequest["objGuid"] = guid;
-    	 var _cmd = _UploadModelCmd.replace('%EDMSESSIONID%', _EDMSESSIONID) 
-    	 var _body =  JSON.stringify(_UploadModelRequest);
-    	 ajax({method:"POST", url:_cmd, body: _body}).done(function(_data,_status) {
-    		 if (_status && _status != 200) { 
-    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
-    		 	return; 
-    		 }
-        	 var data = JSON.parse(_data), sdata = '<table>';
-        	 for (var i=0; i < data[0].length; i++) {
-                 sdata += '<tr><td colspan="2"><b>' + data[0][i].Name + '</b></td></tr>';
-                 if (data[0][i].Properties) for (var j=0; j < data[0][i].Properties.length; j++) {
-                	 sdata += '<tr><td>' + data[0][i].Properties[j].Name + '</td><td><i>' + data[0][i].Properties[j].PValue + '</i></td></tr>';
-                 }
-        	 }
-        	 document.getElementById("props").innerHTML = sdata + '</table>';
-        	 document.getElementById("content").innerHTML = '<p>Model uploaded</p>';
-          });    	 
-     }
 
 	 var g_selected_model = null;
-     function onModelTreeClick(e) {
+     function onLeftMenuClick(e) {
     	if (!e) e = window.event; var src = e.target || e.srcElement;
 		// find the relevant model data  in global list
 		// display in properties window
 		if(src.id) {
 			var pos = src.id.search("_") + 1;
-			if(src.id.search("tree_") == 0) {
-				fillModelTable0(null);
-			} else if(src.id.search("repository_") == 0) {
-				var filter = {};
-				filter.project_id = src.id.slice(pos);
-				fillModelTable0(filter);
-			} else if(src.id.search("model_") == 0) {
-				var filter = {};
-				filter.model_name = src.id.slice(pos);
-				fillModelTable0(filter);
-			} else if(src.id.search("domain_") == 0) {
-				var filter = {};
-				filter.domain_name = src.id.slice(pos);
-				fillModelTable0(filter);
-			} else if(src.id.search("version_") == 0) {
-				var filter = {};
-				filter.model_id = src.id.slice(pos);
-				fillModelTable0(filter);
+			if(src.id.search("cmd_home") == 0) {
+				alert('Go to home page');
+			} else if(src.id.search("cmd_bimapi") == 0) {
+				alert('Please use the hyperlinks in the main area for opening BIMAPI test page in new tab');
+			} else if(src.id.search("cmd_ifcapi") == 0) {
+				alert('Please use the hyperlinks in the main area for opening IFCAPI test page in new tab');
 			} else {
-				alert('haha:' + src.id);
+				alert('*Unknown command:' + src.id);
 			}
 		} else {
 			alert('koko');
@@ -187,41 +71,32 @@
 	function eeMenu(selitem) {
 		var bgcolor = 'white';
 		document.getElementById("cmd_home").style.backgroundColor=bgcolor;
-		document.getElementById("cmd_list_models").style.backgroundColor=bgcolor;
-		document.getElementById("cmd_create_model").style.backgroundColor=bgcolor;
-		document.getElementById("cmd_upload_model").style.backgroundColor=bgcolor;
-		document.getElementById("cmd_fetch_model").style.backgroundColor=bgcolor;
+		document.getElementById("cmd_bimapi").style.backgroundColor=bgcolor;
+		document.getElementById("cmd_ifcapi").style.backgroundColor=bgcolor;
 		selitem.style.backgroundColor='yellow';
 	}
 
-	var _homepage = "<h2>Welcome to the eeEmbedded BIM API test page</h2>"
-		+ "<p>This page uses REST/JSON API to exploit the <a href='https://github.com/GeorgDangl/eeE-BIM-API' target='_blank'>eeEmbedded Repository Services</a></p>"
-		+ "<p>The services are implemented on the EDMmodelServer by <a href='http://www.jotneit.no/' target='_blank'>Jotne EPM Technology</a></p>"
-		+ "<p>Please refer to the <a href='http://141.30.165.10/' target='_blank'/>eeEmbedded Project</a></p>"
-//		+ "<p>For testing retrieval (GET) for all API classes with full URL got to <a href='browse1.html'>eeEmbedded Repository Services Browser #1 Test Page</a></p>"
-		+ "<p>The current implementation is early and not complete, here are some lowlights:</p>"
-		+ "<ul>"
-		+ "<li>Access control is not implemented, anyone gets access by including parameter <b>?EDMSESSIONID=AUTO_LOGIN</b> in the URL</li>"
-		+ "<li>Meta-data fields 'Description' and 'Schema URL' are not fully supported yet</li>"
-		+ "<li>There is very little sanity checks on the parameters, so expect unexpected behaviour</li>"
-		+ "<li>Over all it is not much tested, so do not expect great stability and good behaviour!</li>"
-		+ "</ul>"
+	var _homepage = "<h2>Welcome to the eeEmbedded EDM Repository Server</h2>"
+		+ "<p>This server provides access to BIM data using REST/JSON API</p>"
+		+ "<p>The services are implemented on the EDMmodelServer by <a href='http://www.jotneit.no/' target='_blank'>Jotne EPM Technology</a> as a contribution to the <a href='http://141.30.165.10/' target='_blank'/>eeEmbedded Project</a></p>"
+		+ "<p>For exploring the BIM-API go to <a href='bimapi-test.html' target='new'>BIMAPI Test Page</a></p>"
+		+ "<p>For exploring the IFC-API go to <a href='ifcapi-test.html' target='new'>IFCAPI Test Page</a></p>"
 		+ "<p>The source for this web page can be found at <a href='https://github.com/jotne-aet-git/eee-development/blob/master/ee1Server/webapps/e3-bimapi-a/index.html' target='_blank'>GITHUB</a></p>"
-		+ "<p>The current path to services are <b><i>&lt;server&gt;/e3-bimapi-a/E3ReposServlet</i></b>, and version is <b><i>0.5</i></b></p>"
-		+ "<p>Example path:  <i>http://localhost:8080/e3-bimapi-a/E3ReposServlet/eee-repos/0.5/models/?EDMSESSIONID=AUTO_LOGIN</i></p>"
-		+ "<h3>Select 'List Models' from top menu to get started :)</h3>"		
-		+ "<br/><pre>Reference BIM-API Version: 0.5 2016.01.22</pre>"		
 		;
 		
      function onMenu_HomeClick() {		
     	eeMenu(document.getElementById("cmd_home"));
-		document.getElementById("modelList").innerHTML='<p>No tree</p>';
+//		document.getElementById("modelList").innerHTML='<p>No treezzz</p>';
 		document.getElementById("content").innerHTML=_homepage;
-		document.getElementById("workdata_div").innerHTML='<p>No action</p>';
      }
 	
-     function onMenu_ListModelsClick() {		
-    	eeMenu(document.getElementById("cmd_list_models"));
+     function onMenu_BimApiClick() {		
+    	eeMenu(document.getElementById("cmd_bimapi"));
+		rqListModels();
+     }
+	 
+     function onMenu_IfcApiClick() {		
+    	eeMenu(document.getElementById("cmd_ifcapi"));
 		rqListModels();
      }
 	 
@@ -230,300 +105,7 @@
 		formCreateModel();
      }
 	 
-     function onMenu_UploadModelClick(e) {		
-    	eeMenu(document.getElementById("cmd_upload_model"));
-		formUploadModelFile();
-     }
-
-     function onMenu_FetchModelClick(e) {		
-    	eeMenu(document.getElementById("cmd_fetch_model"));
-		formFetchModelFile();
-     }
-
-      function onModelClick(e) {
-    	if (!e) e = window.event; var src = e.target || e.srcElement;
-		// find the relevant model data  in global list
-		// display in properties window
-		if(src.id) {
-			var pos = src.id.search("_") + 1;
-			var guid = src.id.slice(pos);
-			if(src.id.search("download_") == 0) {
-				alert('Download guid=' + guid);
-				rqDownloadModelByGuid(guid);
-			} else
-			if(src.id.search("delete_") == 0) {
-				alert('Delete guid=' + guid);
-				rqDeleteModelByGuid(guid);
-			} else 
-			if(src.id.search("update_") == 0) {
-				//alert('update guid='  + guid);
-				formUpdateModelVersion(getModelData(guid));
-				//rqUpdateModelByGuid(guid);
-			} else 
-			if(src.id.search("upload_") == 0) {
-				alert('upload new version guid='  + guid);
-				formUploadModelVersionFile(getModelData(guid));
-				//rqUploadModelVersionByGuid(guid);
-			} else 
-			if(src.id.search("fetch_") == 0) {
-				alert('fetch new version guid='  + guid);
-				formFetchModelVersionFile(getModelData(guid));
-				//rqUploadModelVersionByGuid(guid);
-			} else {
-				//alert('haha:' + src.id);
-			}
-		} else {
-			//alert('koko');
-		}
-	}
-
-
 	 
-	var g_model_list = JSON.parse("[]");
-	var g_model_tree = JSON.parse("{}");
-	
-	function getTreeNodeById(tree,id) {
-		var leaf = null;
-		if (tree.children != null ) {
-			for (var i2=0; i2 < tree.children.length; i2++) {
-				if(tree.children[i2].id  == id) {
-					leaf = tree.children[i2];
-					break;
-				}
-				if (leaf == null ) {
-					leaf = getTreeNodeById(tree.children[i2],id);
-				}
-			}
-		}
-		return leaf;
-	}
-	
-	
-	 function makeModelTree(model_list) {
-		var data = model_list;
-		var tree = JSON.parse("{}");
-		tree.type="tree";
-		tree.name="Model Tree";
-		tree.id = "";	
-		tree.children = JSON.parse("[]");
-		for (var i=0; i < data.length; i++) {
-			var md = data[i].model_meta_data;
-			var project = getTreeNodeById(tree,md.project_id);
-			if (project == null) {
-				project = JSON.parse("{}");
-				project.id = md.project_id;
-				project.name = md.project_name;
-				project.type = "project";
-				project.children = JSON.parse("[]");
-				tree.children[tree.children.length] = project;				
-			}
-/*			
-			var multimodel = getTreeNodeById(project,md.multimodel_id);
-			if (multimodel  == null) {
-				multimodel = JSON.parse("{}");
-				multimodel.id = md.multimodel_id;
-				multimodel.name = md.multimodel_name;
-				multimodel.type = "multimodel";
-				multimodel.children = JSON.parse("[]");
-				project.children[project.children.length] = multimodel;				
-			}
-			var domain = getTreeNodeById(multimodel,md.domain_id);
-			if (domain == null) {
-				domain = JSON.parse("{}");
-				domain.id = md.domain_id;
-				domain.name = md.domain_name;
-				domain.type = "domain";
-				domain.children = JSON.parse("[]");
-				multimodel.children[multimodel.children.length] = domain;								
-			}
-*/			
-			var multimodel = getTreeNodeById(project,md.model_name);
-			if (multimodel  == null) {
-				multimodel = JSON.parse("{}");
-				multimodel.id = md.model_name;
-				multimodel.name = md.model_name;
-				multimodel.type = "multimodel";
-				multimodel.children = JSON.parse("[]");
-				project.children[project.children.length] = multimodel;				
-			}
-			var domain = getTreeNodeById(multimodel,md.domain_id);
-			if (domain == null) {
-				domain = JSON.parse("{}");
-				domain.id = md.domain_id;
-				domain.name = md.domain_name;
-				domain.type = "domain";
-				domain.children = JSON.parse("[]");
-				multimodel.children[multimodel.children.length] = domain;								
-			}
-
-			var model = JSON.parse("{}");
-			model.id = md.model_id;
-			model.name = md.model_version;
-			model.type = "model";
-			model.children = JSON.parse("[]")
-			domain.children[domain.children.length] = model;
-		}
-		return tree;
-	}
-
-	function fillModelTreeNode(node) {
-		var sdata = '';
-		sdata += '<li id ="' + node.type + '_' + node.id + '">' + node.name;
-		if(node.children != null) {
-			sdata += '<ul>';
-			for (var i4=0; i4 < node.children.length; i4++) {
-				var child = node.children[i4];
-				sdata += fillModelTreeNode(child);
-			}
-			sdata += '</ul>';
-		}
-		sdata += '</li>';
-		return sdata;
-	}
-	
-	function fillModelList() {
-		var data = g_model_list;
-		g_model_tree = makeModelTree(g_model_list);
-		var sdata = '<ul>';
-		sdata += fillModelTreeNode(g_model_tree);
-		sdata += '</ul>';
-		document.getElementById("modelList").innerHTML = sdata;     
-	 }
-
-	function fillModelTable() {
-		fillModelTable0(null)
-	}
-
-	function fillModelTable0(filter1) {
-		 var data = g_model_list;
-		 var sdata = '<table><th>Project</th><th>Model</th><th>Type</th><th>Binary</th><th>Version</th><th>Domain</th><th>Schema</th><th>URL</th>';
-		 sdata = sdata + '<th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Act</th><th>Description</th></tr>';
-		 for (var i=0; i < data.length; i++) {
-			var model_url = data[i].model_url;
-			var md = data[i].model_meta_data;
-			if (filter1 != null) {
-				if( (filter1.project_id != null) && (filter1.project_id != md.project_id)) continue;
-				if( (filter1.model_name != null) && (filter1.model_name != md.model_name)) continue;
-				if( (filter1.domain_name != null) && (filter1.domain_name != md.domain_name)) continue;
-				if( (filter1.model_id != null) && (filter1.model_id != md.model_id)) continue;
-			}
-			sdata += '<tr>';
-			sdata += '<td>' + md.project_name + '</td>';
-			sdata += '<td>' + md.model_name + '</td>';
-			sdata += '<td>' + md.model_type + '</td>';
-			sdata += '<td>' + md.model_treat_as_binary + '</td>';
-			sdata += '<td>' + md.model_version + '</td>';
-			sdata += '<td>' + md.domain_name + '</td>';
-			sdata += '<td><a href=' + md.schema_url + ' target="blank">Schema</a></td>';
-			sdata += '<td><a href=' + model_url + ' target="blank">URL</a></td>';
-			sdata += '<td onclick="onModelClick(event)" class="zlink" id="download_' + md.model_id + '">Download</td>';
-			sdata += '<td onclick="onModelClick(event)" class="zlink" id="delete_' + md.model_id + '">Delete</td>';
-			sdata += '<td onclick="onModelClick(event)" class="zlink" id="update_' + md.model_id + '">Update Meta Data</td>';
-			sdata += '<td onclick="onModelClick(event)" class="zlink" id="upload_' + md.model_id + '">Upload Version</td>';
-			sdata += '<td onclick="onModelClick(event)" class="zlink" id="fetch_'  + md.model_id + '">Fetch Version</td>';
-			sdata += '<td>' + md.description + '</td>';
-/*				
-			 sdata += '<li id="M'+ data[0][i].Id +'">' + data[0][i].Name + '<ul>';
-			 if (data[0][i].Children) for (var j=0; j < data[0][i].Children.length; j++) {
-				 sdata += '<li id="O'+ data[0][i].Children[j].Id +'">' + data[0][i].Children[j].Name + '</li>';
-			 }
-*/				 
-			sdata += '</tr>';
-		 }
-		 sdata += '</table>';
-		 document.getElementById("content").innerHTML = sdata;
-	 }
-	 	 
-	 function getE3ServiceURL() {
-	      var url = '/e3-bimapi-a/E3ReposServlet/eee-repos/0.5/';
-		  return url;
-	 }
-
- 	function getE3Repository(){
-    	//var result = 'rep1';
-    	var result = '';
-		return result;
-	}
-
-	 function getE3ServiceSessionID() {
-	      var sid  = 'EDMSESSIONID=AUTO_LOGIN';
-		  return sid;
-	 }
-
-	function getModelData(id) {
-		 var data = g_model_list;
-		 for (var i=0; i < data.length; i++) {
-			var model_url = data[i].model_url;
-			var md = data[i].model_meta_data;
-			if (id == md.model_id) return md;
-		}
-		return {};
-	 }
-	 
-	function rqCreateModel() {
-        var form = document.getElementById("upload_model_form");
-        var mdIn = {};
-        mdIn.project_name	= document.getElementById("uu_project_name").value;
-        mdIn.model_name		= document.getElementById("uu_model_name").value;
-        mdIn.model_type		= document.getElementById("uu_model_type").value;
-        mdIn.model_treat_as_binary = document.getElementById("uu_model_treat_as_binary").value;
-        mdIn.domain_name	= document.getElementById("uu_domain_name").value;
-        mdIn.description	= document.getElementById("uu_description").value;
-        mdIn.schema_url		= document.getElementById("uu_schema_url").value;
- /*
-		var jrq = {};
-		jrq.model_meta_data = mdIn;
-		jrq.model_is_external = true;
-		jrq.model_content = document.getElementById("uu_model_content").value;
-*/		
- 		var _cmd = getE3ServiceURL();
-    	_cmd += 'models'; 
-    	_cmd += '?';
-    	_cmd += getE3ServiceSessionID();
-    	var _body = JSON.stringify(mdIn); // jrq);		
-        alert(_cmd + " <= " + _body);
-		ajax({method:"POST", url:_cmd, body: _body}).done(function(_data,_status) {
-    		 if (_status && _status != 200) { 
-    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
-    		 	return; 
-    		 }
-			 //alert(_data);
-         	 mirrorJson(_cmd,_body,_data);
-			 document.getElementById("content").innerHTML = _data;
-          });    	 
-     }
-	 
-
-	function rqFetchModel() {
-        var form = document.getElementById("upload_model_form");
-        var mdIn = {};
-        mdIn.project_name	= document.getElementById("uu_project_name").value;
-        mdIn.model_name		= document.getElementById("uu_model_name").value;
-        mdIn.model_type		= document.getElementById("uu_model_type").value;
-        mdIn.domain_name	= document.getElementById("uu_domain_name").value;
-        mdIn.description	= document.getElementById("uu_description").value;
-        mdIn.schema_url		= document.getElementById("uu_schema_url").value;
- 
-		var jrq = {};
-		jrq.model_meta_data = mdIn;
-		jrq.model_is_external = true;
-		jrq.model_content = document.getElementById("uu_model_content").value;
- 		var _cmd = getE3ServiceURL();
-    	_cmd += 'models'; 
-    	_cmd += '?';
-    	_cmd += getE3ServiceSessionID();
-    	var _body = JSON.stringify(jrq);
-        alert(_cmd + " <= " + _body);
-		ajax({method:"POST", url:_cmd, body: _body}).done(function(_data,_status) {
-    		 if (_status && _status != 200) { 
-    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
-    		 	return; 
-    		 }
-			 //alert(_data);
-         	 mirrorJson(_cmd,_body,_data);
-			 document.getElementById("content").innerHTML = _data;
-          });    	 
-     }
 	 
      function rqListModels() {
 		 var _cmd = getE3ServiceURL();
@@ -547,212 +129,7 @@
           });    	 
      }
 
-     //var _eeeDeleteModelRequest = {"filter1":null,"filter2":null,"recursive":true};     
-     function rqDeleteModelByGuid(guid) {
-		 var _cmd = getE3ServiceURL();
-    	 _cmd += getE3Repository();
-    	 _cmd += '/models/' + guid;
-    	 _cmd += '?';
-    	 _cmd += getE3ServiceSessionID();
-    	 var _body = {};
-    	 //var _body = JSON.stringify(_eeeDeleteModelRequest);
-    	 ajax({method:"DELETE", url:_cmd, body: _body}).done(function(_data,_status) {
-    		 if (_status && _status != 200) { 
-    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
-    		 	return; 
-    		 }
-        	 mirrorJson(_cmd,_body,_data);
-        	 document.getElementById("content").innerHTML = '<p>Model deleted</p><br/><p>'+ _data + '</p>';
-          });    	 
-     }
 
-  
-     function rqDownloadModelByGuid(guid) {
-		 var _cmd = getE3ServiceURL();
-    	 _cmd += getE3Repository();
-    	 _cmd += '/models/' + guid;
-    	 _cmd += '?EDMSESSIONID=AUTO_LOGIN';
-    	 var _body = {};
-    	 ajax({method:"GET", url:_cmd, body: _body}).done(function(_data,_status) {
-    		 if (_status && _status != 200) { 
-    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
-    		 	return; 
-    		 }
-        	 document.getElementById("content").innerHTML = '<h3>Model downloaded:</h3><br/><p>'+ _data + '</p>';
-          });    	 
-     }
-	 
- 	function rqUpdateModelVersion() {
-        var form = document.getElementById("update_model_form");
-        var mdIn = {};
-        mdIn.description	= document.getElementById("uu_description").value;
-        mdIn.schema_url		= document.getElementById("uu_schema_url").value;
-		var guid			= document.getElementById("uu_model_id").value;
- 
- 		var _cmd = getE3ServiceURL();
-		_cmd += '/models/' + guid;
-    	_cmd += '?';
-    	_cmd += getE3ServiceSessionID();
-    	var _body = JSON.stringify(mdIn);
-        alert(_cmd + " <= " + _body);
-		ajax({method:"PUT", url:_cmd, body: _body}).done(function(_data,_status) {
-    		 if (_status && _status != 200) { 
-    		 	alert('Server error: ' + _status + ' (' + _data + ')'); 
-    		 	return; 
-    		 }
-			 //alert(_data);
-         	 mirrorJson(_cmd,_body,_data);
-			 document.getElementById("content").innerHTML = _data;
-          });    	 
-     }
-
-     function formCreateModel() {
-			var _form    = ''
-			_form = _form + '<form id="fetch_model_form" name="fetch_model_form"  method="post">'
-			_form = _form + '<table><tr><th></th><th><STRONG>Create New Model</STRONG></th></tr>';
-			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_name" name="project_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
-			_form = _form + '<tr><td>Treat model as binary:</td><td><input id="uu_model_treat_as_binary" name="model_treat_as_binary" type="text" value=""></td></tr>';
-			_form = _form + '<tr><td>Domain:</td><td><input id="uu_domain_name" name="domain_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Description:</td><td><input id="uu_description" name="description" type="text"></td></tr>';
-			_form = _form + '<tr><td>Schema URL:</td><td><input id="uu_schema_url" name="schema_url" type="text"></td></tr>';
-			_form = _form + '</table>';	
-			_form = _form + '<input type="button" value="Submit" onClick="rqCreateModel()"/>';
-			_form = _form + '</form>';     
-        	 document.getElementById("content").innerHTML = _form;
-     }
-	 
-	 
-     function formUpdateModelVersion(md) {
-			var _form    = ''
-			_form = _form + '<form id="update_model_form" name="update_model_form"  method="post">'
-			_form = _form + '<table><tr><th></th><th><STRONG>Update Model Version</STRONG> (only description editable)</th></tr>';
-			_form = _form + '<tr><td>Model guid	:</td><td><input id="uu_model_id"     name="guid"     	type="text" readonly value="' + md.model_id +     '"></td></tr>';
-			_form = _form + '<tr><td>Project	:</td><td><input id="uu_project_id" 	name="project_id" 	type="text" readonly value="' + md.project_id +     '"></td></tr>';
-			_form = _form + '<tr><td>Model		:</td><td><input id="uu_model_name" 	name="model_name" 	type="text" readonly value="' + md.model_name +     '"></td></tr>';
-			_form = _form + '<tr><td>Model Type	:</td><td><input id="uu_model_type" 	name="model_type" 	type="text" readonly value="' + md.model_type +     '"></td></tr>';
-			_form = _form + '<tr><td>Domain		:</td><td><input id="uu_domain_name" 	name="domain_name" 	type="text" readonly value="' + md.domain_name+     '"></td></tr>';
-			_form = _form + '<tr><td>Description:</td><td><input id="uu_description"    name="description"  type="text"          value="' + md.description+     '"></td></tr>';
-			_form = _form + '<tr><td>Schema URL :</td><td><input id="uu_schema_url"     name="schema_url"   type="text" 		 value="' + md.schema_url +     '"></td></tr>';
-			_form = _form + '</table>';	
-			_form = _form + '<input type="button" value="Submit" onClick="rqUpdateModelVersion()"/>';
-			_form = _form + '</form>';     
-        	 document.getElementById("content").innerHTML = _form;
-     }
-   
-    function formUploadModelFile() {
-			var _form    = ''
-			_form = _form + '<form id="upload_model_form" name="upload_model_form"  method="post" enctype="multipart/form-data" target="_blank"'
-			_form = _form + ' onSubmit="fixformUploadModelFile()">';
-			_form = _form + '<table><tr><th></th><th><STRONG>Upload New Model</STRONG></th></tr>';
-			_form = _form + '<tr><td>File:</td><td><input id= "uu_file" name="uu_file" type="file"></td></tr>';
-			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_name" name="project_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
-			_form = _form + '<tr><td>Domain:</td><td><input id="uu_domain_name" name="domain_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Description:</td><td><input id="uu_description" name="description" type="text"></td></tr>';
-			_form = _form + '<tr><td>Schema URL:</td><td><input id="uu_schema_url" name="schema_url" type="text"></td></tr>';
-			_form = _form + '</table>';			
-			//_form = _form + '<input name="dummy" type="text" onClick="fixformUploadModelFile()" value="Click Here"/>';
-			_form = _form + '<input name="submit" type="submit"/>';
-			_form = _form + '</form>'
-			_form = _form + '<button id="uu_test" name = "uu_test" value="uu_test" onClick="testFileUpload()">Test Multipart Upload</button>';     
-        	 document.getElementById("content").innerHTML = _form;
-		
-        	 var upload_url = '/e3-bimapi-a/E3ReposServlet/eee-repos/models'
-        	 document.getElementById("upload_model_form").action = upload_url;			   	 
-     }
-     function fixformUploadModelFile() {
-        var form = document.getElementById("upload_model_form");
-        var action = form.action;
-        action = action + '?EDMSESSIONID=AUTO_LOGIN'
-        //action = action + '&webform=upload_model_file'
-        action = action + '&project_name=' + document.getElementById("uu_project_name").value;
-        action = action + '&model_name='  + document.getElementById("uu_model_name").value;
-        action = action + '&model_type='  + document.getElementById("uu_model_type").value;
-        action = action + '&domain_name=' + document.getElementById("uu_domain_name").value;
-        action = action + '&description=' + document.getElementById("uu_description").value;
-        action = action + '&schema_url='  + document.getElementById("uu_schema_url").value;
-        form.action = action;
-        //alert(action);
-     }
-
-
-    function formUploadModelVersionFile(md) {
-			var _form    = ''
-			_form = _form + '<form id="upload_model_form" name="upload_model_form"  method="post" enctype="multipart/form-data" target="_blank"'
-			_form = _form + ' onSubmit="fixformUploadModelFile()">';
-			_form = _form + '<table><tr><th></th><th><STRONG>Upload New Model Version</STRONG></th></tr>';
-			_form = _form + '<tr><td>File:       	</td><td><input id="uu_file"            name="file"            type="file">                                            </td></tr>';
-			_form = _form + '<tr><td>Project id: 	</td><td><input id="uu_project_id" 		name="project_id" 		type="text" readonly value="' + md.project_id + '"></td></tr>';
-			_form = _form + '<tr><td>Project name: 	</td><td><input id="uu_project_name" 	name="project_id" 		type="text" readonly value="' + md.project_name + '"></td></tr>';
-			_form = _form + '<tr><td>Domain id:    	</td><td><input id="uu_domain_id"     	name="domain_name"    	type="text" readonly value="' + md.domain_id +     '"></td></tr>';
-			_form = _form + '<tr><td>Domain name:  	</td><td><input id="uu_domain_name"     name="domain_name"     	type="text" readonly value="' + md.domain_name +     '"></td></tr>';
-			_form = _form + '<tr><td>Model id:     	</td><td><input id="uu_model_id"      	name="model_name"      	type="text" readonly value="' + md.model_id +      '"></td></tr>';
-			_form = _form + '<tr><td>Model name:   	</td><td><input id="uu_model_name"      name="model_name"      	type="text" readonly value="' + md.model_name +      '"></td></tr>';
-			_form = _form + '<tr><td>Model Type: 	</td><td><input id="uu_model_type"      name="model_type"      	type="text"          value="IFC2x3">                    </td></tr>';
-			_form = _form + '<tr><td>Description:	</td><td><input id="uu_description"     name="description"     	type="text"         value="' + md.description +     '"></td></tr>';
-			_form = _form + '<tr><td>Schema URL: 	</td><td><input id="uu_schema_url"      name="schema_url"      	type="text"  		value="' + md.schema_url +      '"></td></tr>';
-			_form = _form + '</table>';			
-			_form = _form + '<input name="submit" type="submit"/>';
-			_form = _form + '</form>';     
-        	 document.getElementById("content").innerHTML = _form;
-		
-        	 var upload_url = '/e3-bimapi-a/E3ReposServlet/eee-repos/models'
-        	 document.getElementById("upload_model_form").action = upload_url;			   	 
-     }
-	 
-     function fixformUploadModelVersionFile() {
-        var form = document.getElementById("upload_model_form");
-        var action = form.action;
-        action = action + '?EDMSESSIONID=AUTO_LOGIN'
-        //action = action + '&webform=upload_model_file'
-        action = action + '&model_id=' + document.getElementById("uu_model_id").value;
-        action = action + '&model_type='  + document.getElementById("uu_model_type").value;
-        action = action + '&description=' + document.getElementById("uu_description").value;
-        action = action + '&schema_url='  + document.getElementById("uu_schema_url").value;
-        form.action = action;
-        //alert(action);
-     }
-
-	 
-     function formFetchModelFile() {
-			var _form    = ''
-			_form = _form + '<form id="fetch_model_form" name="fetch_model_form"  method="post">'
-			_form = _form + '<table><tr><th></th><th><STRONG>Fetch New Model</STRONG></th></tr>';
-			_form = _form + '<tr><td>Data URL:</td><td><input id="uu_model_content" name="model_content" type="text"></td></tr>';
-			_form = _form + '<tr><td>Project:</td><td><input id="uu_project_name" name="project_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Model:</td><td><input id="uu_model_name" name="model_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Model Type:</td><td><input id="uu_model_type" name="model_type" type="text" value="IFC2x3"></td></tr>';
-			_form = _form + '<tr><td>Domain:</td><td><input id="uu_domain_name" name="domain_name" type="text"></td></tr>';
-			_form = _form + '<tr><td>Description:</td><td><input id="uu_description" name="description" type="text"></td></tr>';
-			_form = _form + '<tr><td>Schema URL:</td><td><input id="uu_schema_url" name="schema_url" type="text"></td></tr>';
-			_form = _form + '</table>';	
-			_form = _form + '<input type="button" value="Submit" onClick="rqFetchModel()"/>';
-			_form = _form + '</form>';     
-        	 document.getElementById("content").innerHTML = _form;
-     }
-
-    function formFetchModelVersionFile(md) {
-			var _form    = ''
-			_form = _form + '<form id="fetch_model_form" name="fetch_model_form"  method="post">'
-			_form = _form + '<table><tr><th></th><th><STRONG>Fetch New Model Version</STRONG></th></tr>';
-			_form = _form + '<tr><td>Data URL:</td><td><input id="uu_model_content" name="model_content" type="text"></td></tr>';
-			_form = _form + '<tr><td>Project id: 	</td><td><input id="uu_project_id" 		name="project_id" 		type="text" readonly value="' + md.project_id + '"></td></tr>';
-			_form = _form + '<tr><td>Project name: 	</td><td><input id="uu_project_name" 	name="project_id" 		type="text" readonly value="' + md.project_name + '"></td></tr>';
-			_form = _form + '<tr><td>Domain id:    	</td><td><input id="uu_domain_id"     	name="domain_name"    	type="text" readonly value="' + md.domain_id +     '"></td></tr>';
-			_form = _form + '<tr><td>Domain name:  	</td><td><input id="uu_domain_name"     name="domain_name"     	type="text" readonly value="' + md.domain_name +     '"></td></tr>';
-			_form = _form + '<tr><td>Model id:     	</td><td><input id="uu_model_id"      	name="model_name"      	type="text" readonly value="' + md.model_id +      '"></td></tr>';
-			_form = _form + '<tr><td>Model name:   	</td><td><input id="uu_model_name"      name="model_name"      	type="text" readonly value="' + md.model_name +      '"></td></tr>';
-			_form = _form + '<tr><td>Model Type: 	</td><td><input id="uu_model_type"      name="model_type"      	type="text"          value="IFC2x3">                    </td></tr>';
-			_form = _form + '<tr><td>Description:	</td><td><input id="uu_description"     name="description"     	type="text"         value="' + md.description +     '"></td></tr>';
-			_form = _form + '<tr><td>Schema URL: 	</td><td><input id="uu_schema_url"      name="schema_url"      	type="text"  		value="' + md.schema_url +      '"></td></tr>';
-			_form = _form + '</table>';	
-			_form = _form + '<input type="button" value="Submit" onClick="rqFetchModel()"/>';
-			_form = _form + '</form>';     
-        	 document.getElementById("content").innerHTML = _form;
-     }
 
 
 
@@ -799,45 +176,29 @@
  	<body> 
      <table>
 		<tr>
-		<td><div class="topmenu" id="cmd_home" 				onClick="onMenu_HomeClick()")		>Home</div></td>
-		<td><div class="topmenu" id="cmd_list_models" 		onClick="onMenu_ListModelsClick()")	>List Models</div></td>
-		<td><div class="topmenu" id="cmd_create_model" 		onClick="onMenu_CreateModelClick()")>Create New Model</div></td>
-		<td><div class="topmenu" id="cmd_upload_model" 		onClick="onMenu_UploadModelClick()")>Upload New Model</div></td>
-		<td><div class="topmenu" id="cmd_fetch_model" 		onClick="onMenu_FetchModelClick()")>Fetch New Model</div></td>
-		<td><h2>eeEmbedded BIM API Test page</h2></td><td>  -- v2015.07.15 Jotne EPM Technology AS </td>
+		<td><h2>eeEmbedded Repository Services Test pages</h2></td><td>  -- v2016.08.15 Jotne EPM Technology AS </td>
 		</tr>
      </table>
      <table>
       <tr>
        <td> 
-        <div id="modelList" onclick="onModelTreeClick(event)">Model Tree</div>
+        <div id="modelList" onclick="onLeftMenuClick(event)">
+		<table>
+			<tr>
+			<td><div class="topmenu" id="cmd_home" 			onClick="onMenu_HomeClick()")	>Home</div></td>
+			</tr><tr>
+			<td><div class="topmenu" id="cmd_bimapi" 		onClick="onMenu_BimAPIClick()")	>Explore BIM-API</div></td>
+			</tr><tr>
+			<td><div class="topmenu" id="cmd_ifcapi" 		onClick="onMenu_IfcAPIClick()")	>Explore IFC-API</div></td>
+			</tr>
+		</table>
+		</div>
        </td> 
        <td> 
         <div id="content" class="content_div" >
         	<p>Page initial</p>
         </div>
        </td> 
-      </tr>
-      <tr>
-      	<td>
- 		<div id="file_upload">
-			<form id="upload_form" name="upload_form"  method="post" enctype="multipart/form-data"
-				target="_blank"
-			>
-				<input name='f1' type='file'><br/>
-				<input name='f2' type='submit'>
-			</form>
-		</div>        
-     	</td>
-      	<td>
-        <div id="workdata_div" class="workdata_div" onclick="onWorkDataClick(event)">
-        	<table>
-        		<tr><td id="propname_1"></td><td id="propval_1"></td></tr>
-        		<tr><td id="propname_2"></td><td id="propval_2"></td></tr>
-        		<tr><td id="propname_3"></td><td id="propval_3"></td></tr>
-        	</table>
-        </div>
-      	</td>
       </tr>
      </table> 
    </body>
