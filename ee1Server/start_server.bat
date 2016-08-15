@@ -135,7 +135,7 @@ if defined TRACE_APPSERVER_HEADERS set appserver_command=%appserver_command% -t
 if defined TRACE_APPSERVER_BODY set appserver_command=%appserver_command% -w
 if defined TRACE_APPSERVER_BRIEF set appserver_command=%appserver_command% -tb
 if defined TRACE_APPSERVER_FILE set appserver_command=%appserver_command% -tf%TRACE_APPSERVER_FILE%_%APPSRV_PORT%.log
-
+rem timeout /T 4
 echo Starting EDMapplicationServer : %appserver_command%
 rem set WINTITLE=EDMappServer (%APPSRV_PORT%) - %0%
 pushd %EDMSRV_HOME_BIN%
