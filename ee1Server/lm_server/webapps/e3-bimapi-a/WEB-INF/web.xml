@@ -10,7 +10,7 @@
  
   <context-param> 
     <param-name>soap.input.file</param-name> 
-    <param-value>O:/__jotne/ee-tomcat/temp/soapMessageFromClient.xml</param-value> 
+    <param-value>C:/temp/soapMessageFromClient.xml</param-value> 
     <description> 
       Every soap message from the clients are copied to this file 
     </description> 
@@ -18,7 +18,7 @@
       
   <context-param> 
     <param-name>soap.output.file</param-name> 
-    <param-value>O:/__jotne/ee-tomcat/temp/soapMessageToClient.xml</param-value> 
+    <param-value>C:/temp/soapMessageToClient.xml</param-value> 
     <description> 
       Every soap message from the server returned to a client is copied to this file 
     </description> 
@@ -26,7 +26,7 @@
  
   <context-param> 
     <param-name>log.directory</param-name> 
-    <param-value>O:/__jotne/ee-tomcat/logs</param-value> 
+    <param-value>C:/temp/logs</param-value> 
     <description> 
       The directory where log files are created.  
       If not defined, "java.io.tmpdir" is used as log directory 
@@ -51,6 +51,10 @@
     </description> 
   </context-param>
    
+	<context-param> 
+		<param-name>rest.cache.path</param-name> 
+		<param-value>C:/temp</param-value> 
+	</context-param>
 
    <servlet> 
     <servlet-name>WSDLGenerator</servlet-name> 
@@ -130,7 +134,7 @@
 	  </init-param>
 	  <init-param> 
 		<param-name>e3.autologin.password</param-name> 
-		<param-value>db1</param-value> 
+		<param-value>Db1$123</param-value> 
 		<description>autologin param</description> 
 	  </init-param>
 	
