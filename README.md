@@ -4,7 +4,8 @@ Repository contains files related to the eeEmbedded EDM BIM Model Server.
 
 
 * [documentation](documentation/README.md) is a collection of documents of various relevance and quality
-* [ee1Server](ee1Server/README.md) is an image of the eeE EDM BIM Model Server installation (bim-api.xyz)
+* [edm_validate](edm_validate/README.md) is C++ source code for an IFC4 validator
+* [ee1Server](ee1Server/README.md) is an image of the eeE EDM BIM Model Server installation (bim-api.jotne.com)
 * [eeE-BIM-API](eeE-BIM-API/README.md) is a work version of the official [BIM-API](https://github.com/BIMit/ModelAPI)
 * [eeE-IFC-API](eeE-IFC-API/README.md) contains description of the IFC services implemented by bim-api.xyz server
 * [xampp](xampp/README.md) is an image of the apache front-end (proxy) used for bim-api.xyz server
