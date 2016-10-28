@@ -162,7 +162,7 @@
 	  </init-param>
 	  <init-param> 
 		<param-name>e3.autologin.password</param-name> 
-		<param-value>db1</param-value> 
+		<param-value>Db1$123</param-value> 
 		<description>autologin param</description> 
 	  </init-param>
 	
