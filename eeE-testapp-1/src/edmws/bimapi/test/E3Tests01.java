@@ -16,8 +16,6 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
 
-
-
 //import edmws.webapp.servlets.E3AccessUtil;
 import edmws.webapp.servlets.E3BimApiActions;
 import edmws.webapp.servlets.E3BimApiResourcePath;
@@ -506,7 +504,6 @@ public class E3Tests01 extends E3Tests00 {
 	}
 	
 
-	@SuppressWarnings("static-access")
 	@Test
 	public void T25JSONUploadModel() throws Exception 
 	{
@@ -532,8 +529,8 @@ public class E3Tests01 extends E3Tests00 {
 */			
 			JSONArray jresult = this.makeModelList(result);
 			assertTrue("Return was not 1 model",jresult.length() == 1);
+			/*			
 			JSONObject md = jresult.getJSONObject(0);
-/*			
 			assertMdFieldEqual(md,ta.urlArgs,E3BimApiResourcePath.MDF_PROJECT_NAME);
 			assertMdFieldEqual(md,ta.urlArgs,E3BimApiResourcePath.MDF_DOMAIN_NAME);
 			assertMdFieldEqual(md,ta.urlArgs,E3BimApiResourcePath.MDF_MODEL_NAME);

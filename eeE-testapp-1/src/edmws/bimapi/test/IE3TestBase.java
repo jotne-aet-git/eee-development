@@ -17,6 +17,7 @@ public interface IE3TestBase {
 	public static final String CASE_PROJECT_NAME_1 = "eeEmbedded";
 	public static final String TEST_PROJECT_NAME_2 = "test-create-project";
 
+	
 	/**
 	 * 
 	 * @param url - url to BIM_API service root, for example ""http://localhost:8080/e3-bimapi-a"
@@ -29,6 +30,7 @@ public interface IE3TestBase {
 	 * Default input path for test data files. These files are shared for several samples.
 	 */
 	public abstract String getInputPath();
+	public abstract String getInputPathIfc4();
 	
 	/**
 	 * Output path for files generated during sample runs. This includes data files, log files and diagnostic files.

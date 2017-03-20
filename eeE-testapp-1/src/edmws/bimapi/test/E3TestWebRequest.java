@@ -275,7 +275,7 @@ DKR:
 	
 				
 				
-		private static String webRequest99(String restOp,String targetURL, String urlParameters) {
+		protected static String webRequest99(String restOp,String targetURL, String urlParameters) {
 			  HttpURLConnection connection = null;  
 			  try {
 			    //Create connection

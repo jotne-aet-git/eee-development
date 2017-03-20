@@ -25,7 +25,13 @@ public class E3TestBaseTCP extends Thread implements IE3TestBase {
 		logger.log(severity, msg);
 	}
 	
-	public static String examplesRoot = "O:/edm_dev/EDMeXtensions/edom3/test/";
+//	private static String    	schemaName    	= "ifc2x3_final";
+	private static String edm_dev_root = "C:/home/aet/dev_tree/trunk/";
+	private static String examplesRoot = edm_dev_root + "EDMeXtensions/lm_test/";
+	private static String    	inputPath   	= examplesRoot + "data/ifc2x3/";
+	private static String    	inputPathIfc4   = examplesRoot + "data/ifc4/";
+	private static String    	outputPath   	= examplesRoot + "output";
+
 	public static String    commType			= "TCP";
 	public static String    hostName            = "localhost";
 	public static String    portName            = "4590";
@@ -42,12 +48,12 @@ public class E3TestBaseTCP extends Thread implements IE3TestBase {
 //	 test data parameters	
 	
 	protected static String    	schemaName    	= "ifc2x3_final";
-	private static String    	inputPath   	= examplesRoot + "data/ifc2x3/";
-	private static String    	outputPath   	= examplesRoot + "output";
 
 	
 	@Override
 	public String getInputPath() {return inputPath;}
+	@Override
+	public String getInputPathIfc4() {return inputPathIfc4;}
 	@Override
 	public String getOutputPath() {return outputPath;}
 	

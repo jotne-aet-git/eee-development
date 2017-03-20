@@ -1,8 +1,6 @@
-package edmws.bimapi.test;
+	package edmws.bimapi.test;
 
 import org.json.JSONObject;
-
-import edmws.webapp.servlets.E3IfcApiResourcePath;
 
 public class E3TestArgs {
 	protected String serverUrl = "";

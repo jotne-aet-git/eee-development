@@ -224,11 +224,9 @@ public class E3Tests02 extends E3Tests00{
 	}
 
 	
-
-	private final String EEE_ED_A3_ARCH_Filename =  "O:/edm_dev/EDMeXtensions/test/eee-data/ED_ARCH_IFC_A3.ifc";
-	private final String EEE_ED_A3_HVAC_Filename_nospaces =  "O:/edm_dev/EDMeXtensions/test/eee-data/ED_HVAC_IFC_A3.ifc";
-	private final String EEE_ED_A3_HVAC_Filename_withspaces =  "O:/edm_dev/EDMeXtensions/test/eee-data/ED_HVAC_IFC_A3_Including spaces.ifc";
-	private final String EEE_ED_A3_main_Filename =  "O:/edm_dev/EDMeXtensions/test/eee-data/ED_main_A3_";
+	private final String EEE_ED_A3_ARCH_Filename =  testlib.getInputPathIfc4() + "/ED_Arch_A3F1WD06.ifc";
+	private final String EEE_ED_A3_HVAC_Filename =  testlib.getInputPathIfc4() + "/ED_HVAC1_A3.ifc";
+	private final String EEE_ED_A3_main_Filename =  testlib.getOutputPath() + "/ED_main_A3_";
 
 	public void DownloadModelToFile(String modelName,String filename) throws Exception 
 	{
@@ -244,12 +242,12 @@ public class E3Tests02 extends E3Tests00{
 
 	
 	@Test
-	public void T12Merge_EDA3HvacNospaces() throws Exception 
+	public void T12Merge_EDA3Hvac() throws Exception 
 	{
 		try {
-			String model_main_guid = loadCaseModelIFC4("All",this.getQualifiedTestName() + "_main",EEE_ED_A3_HVAC_Filename_nospaces,"eeE Early Design case main");
+			String model_main_guid = loadCaseModelIFC4("All",this.getQualifiedTestName() + "_main",EEE_ED_A3_HVAC_Filename,"eeE Early Design case main");
 			String model_arch_guid = loadCaseModelIFC4("Arch",this.getQualifiedTestName() + "_arch",EEE_ED_A3_ARCH_Filename,"eeE Early Design case Arch");
-			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename_nospaces,"eeE Early Design case HVAC");
+			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename,"eeE Early Design case HVAC");
 			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_main_guid + "/merge");
 			ta.bodyArgs = new JSONObject();
 			
@@ -282,104 +280,8 @@ public class E3Tests02 extends E3Tests00{
 	@Test
 	public void T13Merge_EDA3HvacWithSpaces() throws Exception 
 	{
-		try {
-			String model_main_guid = loadCaseModelIFC4("All",this.getQualifiedTestName() + "_main",EEE_ED_A3_HVAC_Filename_withspaces,"eeE Early Design case main");
-			String model_arch_guid = loadCaseModelIFC4("Arch",this.getQualifiedTestName() + "_arch",EEE_ED_A3_ARCH_Filename,"eeE Early Design case Arch");
-			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename_withspaces,"eeE Early Design case HVAC");
-			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_main_guid + "/merge");
-			ta.bodyArgs = new JSONObject();
-			
-			JSONArray jSources = new JSONArray().put(new JSONObject().put("model_id", model_arch_guid));			
-			ta.bodyArgs.put("source_models", jSources);
-			
-			JSONObject jTarget = new JSONObject().put("model_id",model_main_guid);
-			ta.bodyArgs.put("target_model", jTarget);
-
-			JSONArray jArguments= new JSONArray();
-			jArguments.put(new JSONObject().put("merge_into_new_version",true));			
-			ta.bodyArgs.put("arguments", jArguments);
-
-			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
-			assertTrue("Nothing returned...",jresult.length() > 0);
-			
-			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
-			this.DownloadModelToFile(this.getQualifiedTestName() + "_main",EEE_ED_A3_main_Filename + this.getQualifiedTestName() + ".ifc");
-			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
-		}
-		catch(Exception ex)	{
-			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
-			testlib.writeTrace(ex.toString());
-			throw ex;
-		}
 	}
 	
-	@Test
-	public void T14Merge_EDA3ArchNospaces() throws Exception 
-	{
-		try {
-			String model_main_guid = loadCaseModelIFC4("All",this.getQualifiedTestName() + "_main",EEE_ED_A3_ARCH_Filename,"eeE Early Design case main");
-			String model_arch_guid = loadCaseModelIFC4("Arch",this.getQualifiedTestName() + "_arch",EEE_ED_A3_ARCH_Filename,"eeE Early Design case Arch");
-			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename_nospaces,"eeE Early Design case HVAC");
-			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_main_guid + "/merge");
-			ta.bodyArgs = new JSONObject();
-			
-			JSONArray jSources = new JSONArray().put(new JSONObject().put("model_id", model_hvac_guid));			
-			ta.bodyArgs.put("source_models", jSources);
-			
-			JSONObject jTarget = new JSONObject().put("model_id",model_main_guid);
-			ta.bodyArgs.put("target_model", jTarget);
-
-			JSONArray jArguments= new JSONArray();
-			jArguments.put(new JSONObject().put("merge_into_new_version",true));			
-			ta.bodyArgs.put("arguments", jArguments);
-
-			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
-			assertTrue("Nothing returned...",jresult.length() > 0);
-			
-			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
-			this.DownloadModelToFile(this.getQualifiedTestName() + "_main",EEE_ED_A3_main_Filename + this.getQualifiedTestName() + ".ifc");
-			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
-		}
-		catch(Exception ex)	{
-			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
-			testlib.writeTrace(ex.toString());
-			throw ex;
-		}
-	}
-
-	@Test
-	public void T15Merge_EDA3ArchWithspaces() throws Exception 
-	{
-		try {
-			String model_main_guid = loadCaseModelIFC4("All",this.getQualifiedTestName() + "_main",EEE_ED_A3_ARCH_Filename,"eeE Early Design case main");
-			String model_arch_guid = loadCaseModelIFC4("Arch",this.getQualifiedTestName() + "_arch",EEE_ED_A3_ARCH_Filename,"eeE Early Design case Arch");
-			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename_withspaces,"eeE Early Design case HVAC");
-			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_main_guid + "/merge");
-			ta.bodyArgs = new JSONObject();
-			
-			JSONArray jSources = new JSONArray().put(new JSONObject().put("model_id", model_hvac_guid));			
-			ta.bodyArgs.put("source_models", jSources);
-			
-			JSONObject jTarget = new JSONObject().put("model_id",model_main_guid);
-			ta.bodyArgs.put("target_model", jTarget);
-
-			JSONArray jArguments= new JSONArray();
-			jArguments.put(new JSONObject().put("merge_into_new_version",true));			
-			ta.bodyArgs.put("arguments", jArguments);
-
-			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
-			assertTrue("Nothing returned...",jresult.length() > 0);
-			
-			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
-			this.DownloadModelToFile(this.getQualifiedTestName() + "_main",EEE_ED_A3_main_Filename + this.getQualifiedTestName() + ".ifc");
-			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
-		}
-		catch(Exception ex)	{
-			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
-			testlib.writeTrace(ex.toString());
-			throw ex;
-		}
-	}
 
 	@Test
 	public void T21JSONListExtractEndpoints() throws Exception 
