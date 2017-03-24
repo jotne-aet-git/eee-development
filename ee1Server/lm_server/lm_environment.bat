@@ -1,11 +1,22 @@
 SET EDM_LM_HOME=%CD%
-
+pushd ..\..
+SET EDM_DEV_ROOT=%CD%
+popd
 set B3CONFIG=%1
 if "%B3CONFIG%"=="" set B3CONFIG=debug
 
-rem set EDM_HOME_BIN=%EDM_LM_HOME%\install-image\bin
-rem set EDM_HOME_BIN=C:\edm\EDMSix-2.100.04\bin
+if not exist %EDM_DEV_ROOT%\output\x64\%B3CONFIG%\edmappserver.exe goto try_prod_binaries
+:try_dev_binaries
+pushd ..\..\output\x64\%B3CONFIG%
+set EDM_HOME_BIN=%CD%
+popd
+goto set23
+
+:try_prod_binaries
 set EDM_HOME_BIN=%EDM_LM_HOME%\edm-bin
+goto set23
+
+:set23
 set EDMSRV_HOME_BIN=%EDM_HOME_BIN%
 set EDMSRV_TRACE_HOME=%EDM_LM_HOME%\trace
 set EDMSRV_DB_PATH=%EDM_LM_HOME%\db
