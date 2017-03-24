@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 call lm_environment.bat %2
 set THIS_NAME=lm_worker
 set REPORT_FILE_04=%cd%\%THIS_NAME%.out
@@ -36,7 +36,8 @@ if "%1"=="init_work_db" set B3WORKER=%1
 
 
 if "%B3WORKER%"=="" goto usage
-
+echo --- %THIS_NAME% worker: %B3WORKER% 
+echo --- %THIS_NAME% worker: %B3WORKER% >>%REPORT_FILE_04%
 goto %B3WORKER%
 goto usage
 
@@ -109,6 +110,12 @@ call start_server.bat
 timeout /T 5
 goto end
 
+:start_server_special
+call start_server.bat
+timeout /T 5
+pause --- adjust server instances ????
+goto end
+
 :stop_server
 SET EDM_SCRIPT_02=%WORK_DIR%\stop_server.EDMscript
 type %EDMSCRIPT_DIR%\define_context.EDMscript > %EDM_SCRIPT_02%
@@ -124,6 +131,7 @@ SET EDM_SCRIPT_02=%WORK_DIR%\compile_express_schemata.EDMscript
 echo Aux$gt$History$gt$Start($MSM_DATA_TEMP$\compile_express_schemata.EDMscript.log, START_HISTORY_TO_FILE) > %EDM_SCRIPT_02%
 type %EDMSCRIPT_DIR%\define_context.EDMscript >> %EDM_SCRIPT_02%
 type %EDMSCRIPT_DIR%\prepare_compile.EDMscript >> %EDM_SCRIPT_02%
+for %%n in (%MSM_DATA_ROOT%\Schemata\EDM_RAW_XML\*.exp) DO echo RemoteSystems$gt$Expressschema$gt$Define(super, %%n, %%n.dia, $, "STORING_SOURCE,DELETING_EXISTING_SCHEMAS,TC2,EDM_EXPRESS_EXTENSION") >>%EDM_SCRIPT_02%
 for %%n in (%MSM_DATA_ROOT%\Schemata\EnterpriseSchema\*.exp) DO echo RemoteSystems$gt$Expressschema$gt$Define(super, %%n, %%n.dia, $, "STORING_SOURCE,DELETING_EXISTING_SCHEMAS,TC2,EDM_EXPRESS_EXTENSION") >>%EDM_SCRIPT_02%
 for %%n in (%MSM_DATA_ROOT%\Schemata\Ifc2x3\*.exp) DO echo RemoteSystems$gt$Expressschema$gt$Define(super, %%n, %%n.dia, $, "STORING_SOURCE,DELETING_EXISTING_SCHEMAS,TC2,EDM_EXPRESS_EXTENSION") >>%EDM_SCRIPT_02%
 for %%n in (%MSM_DATA_ROOT%\Schemata\Ifc4\*.exp) DO echo RemoteSystems$gt$Expressschema$gt$Define(super, %%n, %%n.dia, $, "STORING_SOURCE,DELETING_EXISTING_SCHEMAS,TC2,EDM_EXPRESS_EXTENSION") >>%EDM_SCRIPT_02%
@@ -140,6 +148,7 @@ SET EDM_SCRIPT_02=%WORK_DIR%\compile_query_schemata.EDMscript
 echo Aux$gt$History$gt$Start($MSM_DATA_TEMP$\compile_query_schemata.EDMscript.log, START_HISTORY_TO_FILE) > %EDM_SCRIPT_02%
 type %EDMSCRIPT_DIR%\define_context.EDMscript >> %EDM_SCRIPT_02%
 type %EDMSCRIPT_DIR%\prepare_compile.EDMscript >> %EDM_SCRIPT_02%
+for %%n in (..\Install\Schemata\EDM_RAW_XML\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 for %%n in (..\Install\Schemata\EnterpriseSchema\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 for %%n in (..\Install\Schemata\Ifc2x3\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 for %%n in (..\Install\Schemata\Ifc4\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
@@ -158,6 +167,7 @@ type %EDMSCRIPT_DIR%\define_context.EDMscript >> %EDM_SCRIPT_02%
 type %EDMSCRIPT_DIR%\prepare_compile.EDMscript >> %EDM_SCRIPT_02%
 for %%n in (%B3TEST_DATA_DIR%\Schemata\EnterpriseSchema\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 for %%n in (%B3TEST_DATA_DIR%\Schemata\Ifc2x3\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
+for %%n in (%B3TEST_DATA_DIR%\Schemata\Ifc4\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 for %%n in (%B3TEST_DATA_DIR%\Schemata\PLUGINQUERYSCHEMA_DUMMYSCHEMA\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 for %%n in (%B3TEST_DATA_DIR%\Schemata\Work_Orders\*.qex) DO echo RemoteSystems$gt$Queryschema$gt$Define(super,%%n , %%n.dia, DELETING_EXISTING_SCHEMAS) >>%EDM_SCRIPT_02%
 type %EDMSCRIPT_DIR%\exit.EDMscript >> %EDM_SCRIPT_02%
@@ -225,13 +235,13 @@ call :start_tomcat_debug
 goto end
 
 :start_tomcat_normal
-@echo on
-cmd /c  start_tomcat normal
+set THE_COMMANDLINE_04=start_tomcat normal
+call :do_commandline_04
 goto end
 
 :start_tomcat_debug
-@echo on
-cmd /c  start_tomcat debug
+set THE_COMMANDLINE_04=start_tomcat debug
+call :do_commandline_04
 goto end
 
 
@@ -250,7 +260,9 @@ cmd /k  %B3TEMP2%
 goto end
 
 :stop_tomcat
-call %CATALINA_HOME%\bin\catalina.bat stop
+rem call %CATALINA_HOME%\bin\catalina.bat stop
+set THE_COMMANDLINE_04=%CATALINA_HOME%\bin\catalina.bat stop
+call :do_commandline_04
 timeout /T 5
 goto end
 
@@ -275,6 +287,11 @@ echo --- %THIS_NAME% %EDM_HOME_BIN%\edms %EDM_SCRIPT_01%
 %EDM_HOME_BIN%\edms %EDM_SCRIPT_01%
 goto end
 
+:do_commandline_04
+echo *** %THIS_NAME% %THE_COMMANDLINE_04% >>%REPORT_FILE_04%
+echo *** %THIS_NAME% %THE_COMMANDLINE_04%
+cmd/c %THE_COMMANDLINE_04%
+goto end
 
 
 :end

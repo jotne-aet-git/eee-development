@@ -131,6 +131,7 @@ set /A APPSERVER_NO=APPSERVER_NO+1
 set /A APPSRV_PORT=EDMSRV_PORT+APPSERVER_NO
 set appserver_command=%EDMSRV_HOME_BIN%\edmappserver.exe
 set appserver_command=%appserver_command% -s%EDMSRV_PORT%
+set appserver_command=%appserver_command% -nm
 if defined TRACE_APPSERVER_HEADERS set appserver_command=%appserver_command% -t
 if defined TRACE_APPSERVER_BODY set appserver_command=%appserver_command% -w
 if defined TRACE_APPSERVER_BRIEF set appserver_command=%appserver_command% -tb
