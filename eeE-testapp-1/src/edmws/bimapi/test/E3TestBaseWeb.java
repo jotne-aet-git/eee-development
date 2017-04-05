@@ -36,11 +36,11 @@ public class E3TestBaseWeb extends Thread implements IE3TestBase {
 
 
 //	private static String    	schemaName    	= "ifc2x3_final";
-	private static String edm_dev_root = "C:/home/aet/dev_tree/trunk/";
-	private static String examplesRoot = edm_dev_root + "EDMeXtensions/lm_test/";
+//	private static String edm_dev_root = "C:/home/aet/proj_dev/eeE/eee-development/";
+	private static String examplesRoot = "C:/home/aet/proj_dev/eeE";
 	private static String    	inputPath   	= examplesRoot + "data/ifc2x3/";
-	private static String    	inputPathIfc4   = examplesRoot + "data/eeE-ifc4/";
-	private static String    	outputPath   	= examplesRoot + "output";
+	private static String    	inputPathIfc4   = "C:/home/aet/proj_dev/eeE/jotnesvn/swdevelopment/testdata/ED2";
+	private static String    	outputPath   	= "C:/home/aet/proj_dev/eeE/jotnesvn/swdevelopment/output";
 	
 	@Override
 	public String getInputPath() {return inputPath;}
