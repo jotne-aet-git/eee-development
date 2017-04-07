@@ -107,13 +107,18 @@ public class E3Tests02 extends E3Tests00{
 
 	public String loadTestModel(String testModelName) throws Exception{
 		E3Tests01 helper = new E3Tests01();
+/*		
 		String guid = helper.getModelGuidFromName(testModelName);
 		if (guid == null) {
 			String projectName = IE3TestBase.TEST_PROJECT_NAME_0; // "FM";
-			String filename = testlib.getInputPath() + "/0000-Referansebygg.ifc";
-			helper.uploadModelIFC2x3(projectName, "test",testModelName, "testModel", filename);
+			String filename = testlib.getInputPathIfc4() + "/Z3_ARCH_output/Z3-FASSADE.ifc";
+			helper.uploadModelIFC4(projectName, "test",testModelName, "testModel", filename);
 		}
 		guid = helper.getModelGuidFromName(testModelName);
+*/		
+		String guid = loadCaseModelIFC4("test",this.getQualifiedTestName() + "_main",EEE_ED_A3_ARCH_Filename,"eeE Early Design case main");
+
+		
 		return guid;
 	}
 
@@ -149,7 +154,7 @@ public class E3Tests02 extends E3Tests00{
 			String result = this.runIfcApiService(ta);
 			//log(E3Logger.DEBUG,result);
 			JSONArray jresult = new JSONArray(result);
-			assertTrue("Wrong number of stories",jresult.length() == 3);
+			assertTrue("Wrong number of stories",jresult.length() == 2);
 			String guid = "none";
 			for(int i0 = 0; i0 < jresult.length(); i0++) {
 				JSONObject md = jresult.getJSONObject(i0);
@@ -177,7 +182,7 @@ public class E3Tests02 extends E3Tests00{
 			String model_guid = loadTestModel(TEST_MODEL_NAME);
 			E3TestArgs ta = new E3TestArgs("GET",BASE_URL);
 			ta.setModelGuid(model_guid);
-			ta.setIfcType("ifcspace","2MU61$8Yb0MvanC6CZFwZ0"); // TODO better id for test object
+			ta.setIfcType("ifcspace","1Yh4xzCt995QKyjO2qdZY6"); // TODO better id for test object
 			ta.setIfcSubType("ifcproperty");
 			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
 			assertTrue("Didn't find any properties",jresult.length() > 0);
@@ -224,8 +229,8 @@ public class E3Tests02 extends E3Tests00{
 	}
 
 	
-	private final String EEE_ED_A3_ARCH_Filename =  testlib.getInputPathIfc4() + "/ED_Arch_A3F1WD06.ifc";
-	private final String EEE_ED_A3_HVAC_Filename =  testlib.getInputPathIfc4() + "/ED_HVAC1_A3.ifc";
+	private final String EEE_ED_A3_ARCH_Filename =  testlib.getInputPathIfc4() + "/testbase/ED_Arch_A3F1WD06.ifc";
+	private final String EEE_ED_A3_HVAC_Filename =  testlib.getInputPathIfc4() + "/testbase/ED_HVAC1_A3.ifc";
 	private final String EEE_ED_A3_main_Filename =  testlib.getOutputPath() + "/ED_main_A3_";
 
 	public void DownloadModelToFile(String modelName,String filename) throws Exception 
@@ -277,12 +282,6 @@ public class E3Tests02 extends E3Tests00{
 	}
 
 	
-	@Test
-	public void T13Merge_EDA3HvacWithSpaces() throws Exception 
-	{
-	}
-	
-
 	@Test
 	public void T21JSONListExtractEndpoints() throws Exception 
 	{
