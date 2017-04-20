@@ -2,9 +2,6 @@ package edmws.bimapi.test;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.Writer;
 
 import org.json.JSONArray;
@@ -18,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
+
 //import edmws.webapp.servlets.E3AccessUtil;
 import edmws.webapp.servlets.E3BimApiActions;
 import edmws.webapp.servlets.E3BimApiResourcePath;
@@ -88,8 +86,7 @@ public class E3Tests03 extends E3Tests00{
 	}
 
 	private String runIfcApiService(E3TestArgs args) throws Exception {
-		String result = E3TestUtils.createE3TestUtils(testlib).runE3Service("E3IfcApiServlet", "edmws.webapp.servlets.E3IfcApiActions", args,null);
-		return result;
+		return this.runIfcApiService(args, null);
 	}
 
 

@@ -27,6 +27,7 @@ import org.junit.runners.MethodSorters;
 
 
 
+
 //import edmws.webapp.servlets.E3AccessUtil;
 import edmws.webapp.servlets.E3BimApiActions;
 import edmws.webapp.servlets.E3IfcApiResourcePath;
@@ -96,8 +97,7 @@ public class E3Tests02 extends E3Tests00{
 	}
 
 	private String runIfcApiService(E3TestArgs args) throws Exception {
-		String result = E3TestUtils.createE3TestUtils(testlib).runE3Service("E3IfcApiServlet", "edmws.webapp.servlets.E3IfcApiActions", args,null);
-		return result;
+		return this.runIfcApiService(args, null);
 	}
 
 
@@ -106,8 +106,8 @@ public class E3Tests02 extends E3Tests00{
 	}
 
 	public String loadTestModel(String testModelName) throws Exception{
-		E3Tests01 helper = new E3Tests01();
 /*		
+		E3Tests01 helper = new E3Tests01();
 		String guid = helper.getModelGuidFromName(testModelName);
 		if (guid == null) {
 			String projectName = IE3TestBase.TEST_PROJECT_NAME_0; // "FM";
@@ -240,6 +240,7 @@ public class E3Tests02 extends E3Tests00{
 		E3TestArgs ta = new E3TestArgs("GET",IE3TestBase.BIMAPI_MODELS_URL + "/" + mGuid);
 	    File outFile = new File(filename);
 	    BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));
+		@SuppressWarnings("unused")
 		String result = helper.runBimApiService(ta,writer);
 		log(E3Logger.DEBUG,"   completed writing to file " + filename);			
 	    writer.close();						
@@ -252,7 +253,7 @@ public class E3Tests02 extends E3Tests00{
 		try {
 			String model_main_guid = loadCaseModelIFC4("All",this.getQualifiedTestName() + "_main",EEE_ED_A3_HVAC_Filename,"eeE Early Design case main");
 			String model_arch_guid = loadCaseModelIFC4("Arch",this.getQualifiedTestName() + "_arch",EEE_ED_A3_ARCH_Filename,"eeE Early Design case Arch");
-			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename,"eeE Early Design case HVAC");
+			//String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",EEE_ED_A3_HVAC_Filename,"eeE Early Design case HVAC");
 			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_main_guid + "/merge");
 			ta.bodyArgs = new JSONObject();
 			

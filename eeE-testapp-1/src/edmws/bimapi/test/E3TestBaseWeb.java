@@ -25,8 +25,8 @@ public class E3TestBaseWeb extends Thread implements IE3TestBase {
 	public static String    userName			= "superuser";
 	public static String    groupName		   	= "";
 	public static String    userPass			= "Db1$123";
-	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
-//	public static String    webServerRoot       = "http://bim-api.jotne.com:8080/e3-bimapi-a";
+//	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
+	public static String    webServerRoot       = "http://bim-api.jotne.com:8080/e3-bimapi-a";
 
 //	for local context mode 
 /*	

@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edmws.webapp.servlets.E3AccessUtil;
-import edmws.webapp.servlets.E3ApiActions;
-import edmws.webapp.servlets.E3BimApiActions;
 import edmws.webapp.servlets.E3BimApiResourcePath;
 import edmws.webapp.servlets.E3Logger;
 import edmws.webapp.servlets.E3RestServlet;
