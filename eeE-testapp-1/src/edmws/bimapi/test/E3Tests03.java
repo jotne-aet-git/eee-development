@@ -37,7 +37,6 @@ public class E3Tests03 extends E3Tests00{
 	}
 
 	private static final String TEST_MODEL_NAME = "E3Tests03";
-	private static final String TEST_MODEL_NAME_32 = "E3Tests03_T32";
 	private static final String BASE_URL = "/ifc-api/0.5/" + E3IfcApiResourcePath.MR_IFCMODEL;
 	
 
@@ -94,21 +93,59 @@ public class E3Tests03 extends E3Tests00{
 		E3TestUtils.createE3TestUtils(testlib).deleteAllTestModels1(prefix);
 	}
 
-		
-	
-	@Test
-	public void T31HVACSAppend() throws Exception 
+	private void ESIMAppend(String testModelName,String filename_ifc,String filename_csv,String filename_out ) throws Exception 
 	{
-		try {
-			String TEST_FILESET_HVAC = "/HVAC_output/SystemDraftBoilerWithPump";
-			String testModelName = TEST_MODEL_NAME;
-			String filename_ifc = testlib.getInputPathIfc4() + "/" +  TEST_FILESET_HVAC + ".ifc";
-			String filename_xml = testlib.getInputPathIfc4() + "/" + TEST_FILESET_HVAC + ".xml";
+			//String testModelName = TEST_MODEL_NAME_32;
+			//String filename_ifc = testlib.getInputPathIfc4() + "/ESIM_output/20160926_eeE_TestCase_UD_ifc_A3.ifc";
+			//String filename_csv = testlib.getInputPathIfc4() + "/ESIM_output/KPs-as-is_concept.csv";
+			String file_type = "csv";
+			String merge_function = "E3MergeSIM1";
+			
+			E3Tests01 helper = new E3Tests01();
+			String model_guid = helper.getModelGuidFromName(testModelName);
+			if (model_guid != null) {
+				helper.deleteModelByGuid(model_guid);
+				model_guid = null;
+			}			
+			if (model_guid == null) {
+				String projectName = IE3TestBase.TEST_PROJECT_NAME_0; // "FM";
+				helper.uploadModelIFC4(projectName, "HVAC",testModelName, "testModel", filename_ifc);
+			}
+			model_guid = helper.getModelGuidFromName(testModelName);
+			
+			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_guid + "/" + E3IfcApiResourcePath.MR_IFCFUNCTION_APPEND_FILE);
+			
+			ta.urlArgs = new JSONObject();
+			ta.urlArgs.put(E3IfcApiResourcePath.IAF_FILE_TYPE, file_type);
+			ta.urlArgs.put(E3IfcApiResourcePath.IAF_MERGE_FUNCTION, merge_function);
+			ta.bodyArgs = new JSONObject();
+			if(testlib.useWebService()) {
+				ta.bodyArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"false");
+				ta.set_file_input(filename_csv);
+			} else {
+				ta.bodyArgs.put(E3IfcApiResourcePath.IAF_EXTERNAL_LINK,filename_csv);
+			}
+			
+			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
+			assertTrue("Nothing returned...",jresult.length() > 0);			
+			assertTrue("Missing completion message", jresult.toString().contains(merge_function + " interior completed"));
+//			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
+			helper.DownloadModelToFile(testModelName, filename_out);
+			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
+	}
+
+	
+	private void HVACAppend(String testModelName,String filename_ifc,String filename_xml,String filename_out ) throws Exception 
+	{
 			String file_type = "xml";
 			String merge_function = "E3MergeBACS1";
 			
 			E3Tests01 helper = new E3Tests01();
 			String model_guid = helper.getModelGuidFromName(testModelName);
+			if (model_guid != null) {
+				helper.deleteModelByGuid(model_guid);
+				model_guid = null;
+			}			
 			if (model_guid == null) {
 				String projectName = IE3TestBase.TEST_PROJECT_NAME_0; // "FM";
 				helper.uploadModelIFC4(projectName, "HVAC",testModelName, "testModel", filename_ifc);
@@ -165,61 +202,20 @@ public class E3Tests03 extends E3Tests00{
 			assertTrue("Missing completion message", jsonString.contains("E3MergeBACS1 interior completed"));
 			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
 */			
+			helper.DownloadModelToFile(testModelName, filename_out);
 			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
-		}
-		catch(Exception ex)	{
-			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
-			testlib.writeTrace(ex.toString());
-			throw ex;
-		}
 	}
 	
+	
 	@Test
-	public void T32ESIMAppend() throws Exception 
+	public void T31HVACSAppend() throws Exception 
 	{
 		try {
-			String testModelName = TEST_MODEL_NAME_32;
-			String filename_ifc = testlib.getInputPathIfc4() + "/ESIM_output/20160926_eeE_TestCase_UD_ifc_A3.ifc";
-			String filename_csv = testlib.getInputPathIfc4() + "/ESIM_output/KPs-as-is_concept.csv";
-			String file_type = "csv";
-			String merge_function = "E3MergeSIM1";
-			
-			E3Tests01 helper = new E3Tests01();
-			String model_guid = helper.getModelGuidFromName(testModelName);
-			if (model_guid == null) {
-				String projectName = IE3TestBase.TEST_PROJECT_NAME_0; // "FM";
-				helper.uploadModelIFC4(projectName, "HVAC",testModelName, "testModel", filename_ifc);
-			}
-			model_guid = helper.getModelGuidFromName(testModelName);
-			
-			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_guid + "/" + E3IfcApiResourcePath.MR_IFCFUNCTION_APPEND_FILE);
-			
-			ta.urlArgs = new JSONObject();
-			ta.urlArgs.put(E3IfcApiResourcePath.IAF_FILE_TYPE, file_type);
-			ta.urlArgs.put(E3IfcApiResourcePath.IAF_MERGE_FUNCTION, merge_function);
-/*			
-			if(testlib.useWebService()) {
-				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"false");
-				ta.set_file_input(filename);
-			} else {
-				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"true");
-				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_CONTENT,filename);
-			}
-*/			
-			
-			ta.bodyArgs = new JSONObject();
-			if(testlib.useWebService()) {
-				ta.bodyArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"false");
-				ta.set_file_input(filename_csv);
-			} else {
-				ta.bodyArgs.put(E3IfcApiResourcePath.IAF_EXTERNAL_LINK,filename_csv);
-			}
-			
-			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
-			assertTrue("Nothing returned...",jresult.length() > 0);			
-			assertTrue("Missing completion message", jresult.toString().contains(merge_function + " interior completed"));
-//			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
-			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
+			String testModelName = "E3Tests03_T31";
+			String filename_ifc = testlib.getInputPathIfc4() + "/testbase/SystemDraftBoilerWithPump.ifc";
+			String filename_xml = testlib.getInputPathIfc4() + "/testbase/SystemDraftBoilerWithPump.xml";
+			String filename_out = testlib.getOutputPath() + "/HVAC_merge_" + testModelName + ".ifc";
+			this.HVACAppend(testModelName, filename_ifc, filename_xml,filename_out);
 		}
 		catch(Exception ex)	{
 			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
@@ -228,4 +224,41 @@ public class E3Tests03 extends E3Tests00{
 		}
 	}
 
+	//@Test
+	public void T32ESIMAppend() throws Exception 
+	{
+		try {
+			String testModelName = "E3Tests03_T32";
+			String filename_ifc = testlib.getInputPathIfc4() + "/ESIM_output/20160926_eeE_TestCase_UD_ifc_A3.ifc";
+			String filename_csv = testlib.getInputPathIfc4() + "/ESIM_output/KPs-as-is_concept.csv";
+			String filename_out = testlib.getOutputPath() + "/ESIM_merge_" + testModelName + ".ifc";
+			this.ESIMAppend(testModelName, filename_ifc, filename_csv,filename_out);
+		}
+		catch(Exception ex)	{
+			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
+			testlib.writeTrace(ex.toString());
+			throw ex;
+		}
+	}
+	
+	//@Test
+	public void T33ESIMAppend() throws Exception 
+	{
+		try {
+			String testModelName = "E3Tests03_T33";
+			String filename_ifc = testlib.getInputPathIfc4() + "/testbase/20170516_BAM_Pilot_Project_UD_Alternative_1.ifc";
+			String filename_csv = testlib.getInputPathIfc4() + "/testbase/KP-as-is_no_samples_no_units.csv";
+			String filename_out = testlib.getOutputPath() + "/ESIM_merge_" + testModelName + ".ifc";
+			this.ESIMAppend(testModelName, filename_ifc, filename_csv,filename_out);
+		}
+		catch(Exception ex)	{
+			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
+			testlib.writeTrace(ex.toString());
+			throw ex;
+		}
+	}
+	
+
+	
+	
 }

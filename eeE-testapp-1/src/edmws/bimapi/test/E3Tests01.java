@@ -2,6 +2,9 @@ package edmws.bimapi.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.Writer;
 
 import org.json.JSONArray;
@@ -15,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
+
 
 //import edmws.webapp.servlets.E3AccessUtil;
 import edmws.webapp.servlets.E3BimApiActions;
@@ -349,6 +353,19 @@ public class E3Tests01 extends E3Tests00 {
 		return result;
 	}
 
+	public void DownloadModelToFile(String modelName,String filename) throws Exception 
+	{
+		String mGuid = this.getModelGuidFromName(modelName);
+		E3TestArgs ta = new E3TestArgs("GET",IE3TestBase.BIMAPI_MODELS_URL + "/" + mGuid);
+	    File outFile = new File(filename);
+	    BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));
+		@SuppressWarnings("unused")
+		String result = this.runBimApiService(ta,writer);
+		log(E3Logger.DEBUG,"   completed writing to file " + filename);			
+	    writer.close();						
+	}
+	
+	
 	protected String uploadModel(String projectName, String domainName,String schemaName,String modelName,String description,String filename) throws Exception 
 	{
 		E3TestArgs ta = new E3TestArgs("POST",IE3TestBase.BIMAPI_MODELS_URL);
