@@ -82,7 +82,9 @@ public abstract class E3ApiActions {
   	    	nL++;
   	    	if (null==row) continue;
   	    	pw.print("<row n=\"" + String.valueOf(nL) + "\" >");
-  	    	String[] cells = row.split(";");
+  	    	String sep = ","; // eeE uses ',' in CSV
+  	    	if(row.contains(";")) sep = ";";
+  	    	String[] cells = row.split(sep);
   	    	int nC = 0;
   	    	for(String cell : cells) 
   	    	{

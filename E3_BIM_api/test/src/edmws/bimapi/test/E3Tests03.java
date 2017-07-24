@@ -231,4 +231,58 @@ public class E3Tests03 extends E3Tests00{
 		}
 	}
 
+	@Test
+	public void T33ESIMAppend() throws Exception 
+	{
+		try {
+			String testModelName = TEST_MODEL_NAME_32;
+			String filename_ifc = testlib.getInputPathIfc4() + "/ESIM_output/20160926_eeE_TestCase_UD_ifc_A3.ifc";
+			String filename_csv = testlib.getInputPathIfc4() + "/ESIM_output/KPs-as-is_concept_commaseparated.csv";
+			String file_type = "csv";
+			String merge_function = "E3MergeSIM1";
+			
+			E3Tests01 helper = new E3Tests01();
+			String model_guid = helper.getModelGuidFromName(testModelName);
+			if (model_guid == null) {
+				String projectName = IE3TestBase.TEST_PROJECT_NAME_0; // "FM";
+				helper.uploadModelIFC4(projectName, "HVAC",testModelName, "testModel", filename_ifc);
+			}
+			model_guid = helper.getModelGuidFromName(testModelName);
+			
+			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_guid + "/" + E3IfcApiResourcePath.MR_IFCFUNCTION_APPEND_FILE);
+			
+			ta.urlArgs = new JSONObject();
+			ta.urlArgs.put(E3IfcApiResourcePath.IAF_FILE_TYPE, file_type);
+			ta.urlArgs.put(E3IfcApiResourcePath.IAF_MERGE_FUNCTION, merge_function);
+/*			
+			if(testlib.useWebService()) {
+				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"false");
+				ta.set_file_input(filename);
+			} else {
+				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"true");
+				ta.urlArgs.put(E3BimApiResourcePath.MUF_MODEL_CONTENT,filename);
+			}
+*/			
+			
+			ta.bodyArgs = new JSONObject();
+			if(testlib.useWebService()) {
+				ta.bodyArgs.put(E3BimApiResourcePath.MUF_MODEL_IS_EXTERNAL,"false");
+				ta.set_file_input(filename_csv);
+			} else {
+				ta.bodyArgs.put(E3IfcApiResourcePath.IAF_EXTERNAL_LINK,filename_csv);
+			}
+			
+			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
+			assertTrue("Nothing returned...",jresult.length() > 0);			
+			assertTrue("Missing completion message", jresult.toString().contains(merge_function + " interior completed"));
+//			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
+			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
+		}
+		catch(Exception ex)	{
+			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
+			testlib.writeTrace(ex.toString());
+			throw ex;
+		}
+	}
+	
 }
