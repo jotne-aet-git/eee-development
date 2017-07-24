@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<project name="test_e3_bim_api" default="all" basedir=".">
+    <description>Builds, tests, and runs the project</description>
+
+<!--  <property file="build.properties"/>-->
+  <property name="app.name"      value="eeEBimAPITest"/>
+  <property name="app.version"   value="1.0.0"/>
+  <property name="build.home"    value="bin"/>
+  <property name="dist.home"     value="dist"/>
+  <property name="doc.home"      value="doc"/>
+  <property name="src.home"      value="src"/>
+  <property name="web.home"      value="webapps/examples" />
+  <property name="edm.lib.dir"   value="../../../../output/x64/jar"/>
+  <property name="eee.lib.dir"   value="../../../../output/x64/jar"/>
+  <property name="lib.dir"       value="./lib"/>
+
+<!--  ==================== Compilation Control Options ==================== -->
+
+<!--
+
+  These properties control option settings on the Javac compiler when it
+  is invoked using the <javac> task.
+
+  compile.debug        Should compilation include the debug option?
+
+  compile.deprecation  Should compilation include the deprecation option?
+
+  compile.optimize     Should compilation include the optimize option?
+
+-->
+
+  <property name="compile.debug"       value="true"/>
+  <property name="compile.deprecation" value="false"/>
+  <property name="compile.optimize"    value="true"/>
+
+
+
+
+<!-- ==================== Compilation Classpath =========================== -->
+
+<!--
+
+  Rather than relying on the CLASSPATH environment variable, Ant includes
+  features that makes it easy to dynamically construct the classpath you
+  need for each compilation.  The example below constructs the compile
+  classpath to include the servlet.jar file, as well as the other components
+  that Tomcat makes available to web applications automatically, plus anything
+  that you explicitly added.
+
+-->
+
+  <path id="compile.classpath">
+    
+    <fileset dir="${lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${eee.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${edm.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+
+  </path>
+
+
+  <path id="run.classpath">
+    <pathelement path="./bin"/>
+   <fileset dir="${lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${eee.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${edm.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+<!-- ==================== All Target ====================================== -->
+
+<!--
+
+  The "all" target is a shortcut for running the "clean" target followed
+  by the "compile" target, to force a complete recompile.
+
+-->
+
+  <target name="all" depends="clean,compile"
+   description="Clean build and dist, then compile"/>
+
+
+
+<!-- ==================== Clean Target ==================================== -->
+
+<!--
+
+  The "clean" target deletes any previous "build" and "dist" directory,
+  so that you can be ensured the application can be built from scratch.
+
+-->
+
+  <target name="clean"
+   description="Clean build and dist directories">
+    <delete dir="${build.home}"/>
+    <delete dir="${dist.home}"/>
+  </target>
+
+
+
+<!-- ==================== Compile Target ================================== -->
+
+<!--
+
+  The "compile" target transforms source files (from your "src" directory)
+  into object files in the appropriate location in the build directory.
+  This example assumes that you will be including your classes in an
+  unpacked directory hierarchy under "{build.home}".
+
+-->
+
+  <target name="compile" depends="prepare"
+   description="Compile Java sources">
+
+    <!-- Compile Java classes as necessary -->
+    <mkdir    dir="${build.home}"/>
+    <javac srcdir="${src.home}"
+          destdir="${build.home}"
+           debug="${compile.debug}"
+     deprecation="${compile.deprecation}"
+        optimize="${compile.optimize}">
+        <classpath refid="compile.classpath"/>
+    </javac>
+
+    <!-- Copy associated resource files -->
+    <copy  todir="${build.home}/library/classes">
+    <fileset dir="${src.home}" includes="**/*.properties"/>
+    </copy>
+
+    <!-- Copy external dependencies as required -->
+<!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** 
+    <mkdir  dir="${build.home}/WEB-INF/lib"/>
+    <copy  todir="${build.home}/WEB-INF/lib">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </copy>
+-->
+
+
+<!--    <copy todir="${build.home}/WEB-INF/lib" file="${logkit.jar}"/> -->
+<!--    <copy todir="${build.home}/WEB-INF/lib" file="${struts.jar}"/> -->
+<!--    <    <copy todir="${build.home}/WEB-INF/lib" file="${stxx.jar}"/> -->
+<!--    <copy todir="${build.home}/WEB-INF/lib" file="${xdmkit.jar}"/> -->
+<!--    <copy todir="${build.home}/WEB-INF/lib" file="${express.jar}"/>  -->
+
+  </target>
+
+
+
+<!-- ==================== Run Target =================================== -->
+
+
+  <target name="run" depends="compile">
+       <java classname="org.junit.runner.JUnitCore" dir=".">
+         <arg value="edmws.bimapi.test.E3Tests01"/>
+         <env key="e3test.devRoot" value="../../../../"/>
+         <classpath refid="run.classpath"/>
+       </java>
+       <java classname="org.junit.runner.JUnitCore" dir=".">
+         <arg value="edmws.bimapi.test.E3Tests02"/>
+         <env key="e3test.devRoot" value="../../../../"/>
+         <classpath refid="run.classpath"/>
+       </java>
+       <java classname="org.junit.runner.JUnitCore" dir=".">
+         <arg value="edmws.bimapi.test.E3Tests03"/>
+         <env key="e3test.devRoot" value="../../../../"/>
+         <classpath refid="run.classpath"/>
+       </java>
+       <java classname="org.junit.runner.JUnitCore" dir=".">
+         <arg value="edmws.bimapi.test.E3Tests03"/>
+         <env key="e3test.devRoot" value="../../../../"/>
+         <classpath refid="run.classpath"/>
+       </java>
+  </target>
+
+
+
+
+<!-- ==================== Javadoc Target ================================== -->
+
+<!--
+
+  The "javadoc" target creates Javadoc API documentation for the Java
+  classes included in your application.  Normally, this is only required
+  when preparing a distribution release, but is available as a separate
+  target in case the developer wants to create Javadocs independently.
+
+-->
+
+  <target name="javadoc" depends="compile"
+   description="Create Javadoc API documentation">
+
+    <mkdir          dir="${doc.deploy.home}"/>
+    <mkdir          dir="${doc.deploy.home}/api"/>
+    <javadoc sourcepath="src"
+             destdir="${doc.deploy.home}/api"
+             packagenames="edm.examples.*">
+        <classpath refid="compile.classpath"/>            
+    </javadoc>
+    <copy  todir="${doc.deploy.home}">
+        <fileset dir="${doc.home}" includes="**/*.html"/>
+        <fileset dir="${doc.home}" includes="**/*.css"/>
+    </copy>
+  </target>
+
+
+
+<!-- ==================== Prepare Target ================================== -->
+
+<!--
+
+  The "prepare" target is used to create the "build" destination directory,
+  and copy the static contents of your web application to it.  If you need
+  to copy static files from external dependencies, you can customize the
+  contents of this task.
+
+  Normally, this task is executed indirectly when needed.
+
+-->
+
+  	<target name="prepare">
+
+    	<!-- Create build directory and copy static content -->
+	    <mkdir  dir="${build.home}"/>
+<!--
+    	<copy todir="${build.home}">
+       		<fileset dir="${web.home}" excludes="**/*.java" />
+	    </copy>
+-->
+
+
+    	<!-- Create dist directory -->
+    	<mkdir  dir="${dist.home}"/>
+    	<!-- Copy static files from external dependencies as needed -->
+
+  	</target>
+  	
+
+
+
+</project>

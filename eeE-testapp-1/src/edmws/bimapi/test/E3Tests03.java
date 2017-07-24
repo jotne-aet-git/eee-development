@@ -212,8 +212,8 @@ public class E3Tests03 extends E3Tests00{
 	{
 		try {
 			String testModelName = "E3Tests03_T31";
-			String filename_ifc = testlib.getInputPathIfc4() + "/testbase/SystemDraftBoilerWithPump.ifc";
-			String filename_xml = testlib.getInputPathIfc4() + "/testbase/SystemDraftBoilerWithPump.xml";
+			String filename_ifc = testlib.getInputPathIfc4_ED2() + "/testbase/SystemDraftBoilerWithPump.ifc";
+			String filename_xml = testlib.getInputPathIfc4_ED2() + "/testbase/SystemDraftBoilerWithPump.xml";
 			String filename_out = testlib.getOutputPath() + "/HVAC_merge_" + testModelName + ".ifc";
 			this.HVACAppend(testModelName, filename_ifc, filename_xml,filename_out);
 		}
@@ -229,8 +229,8 @@ public class E3Tests03 extends E3Tests00{
 	{
 		try {
 			String testModelName = "E3Tests03_T32";
-			String filename_ifc = testlib.getInputPathIfc4() + "/ESIM_output/20160926_eeE_TestCase_UD_ifc_A3.ifc";
-			String filename_csv = testlib.getInputPathIfc4() + "/ESIM_output/KPs-as-is_concept.csv";
+			String filename_ifc = testlib.getInputPathIfc4_ED2() + "/ESIM_output/20160926_eeE_TestCase_UD_ifc_A3.ifc";
+			String filename_csv = testlib.getInputPathIfc4_ED2() + "/ESIM_output/KPs-as-is_concept.csv";
 			String filename_out = testlib.getOutputPath() + "/ESIM_merge_" + testModelName + ".ifc";
 			this.ESIMAppend(testModelName, filename_ifc, filename_csv,filename_out);
 		}
@@ -246,8 +246,8 @@ public class E3Tests03 extends E3Tests00{
 	{
 		try {
 			String testModelName = "E3Tests03_T33";
-			String filename_ifc = testlib.getInputPathIfc4() + "/testbase/20170516_BAM_Pilot_Project_UD_Alternative_1.ifc";
-			String filename_csv = testlib.getInputPathIfc4() + "/testbase/KP-as-is_no_samples_no_units.csv";
+			String filename_ifc = testlib.getInputPathIfc4_ED2() + "/testbase/20170516_BAM_Pilot_Project_UD_Alternative_1.ifc";
+			String filename_csv = testlib.getInputPathIfc4_ED2() + "/testbase/KP-as-is_no_samples_no_units.csv";
 			String filename_out = testlib.getOutputPath() + "/ESIM_merge_" + testModelName + ".ifc";
 			this.ESIMAppend(testModelName, filename_ifc, filename_csv,filename_out);
 		}
@@ -257,7 +257,23 @@ public class E3Tests03 extends E3Tests00{
 			throw ex;
 		}
 	}
-	
+
+	@Test
+	public void T35ESIMAppendUD1() throws Exception 
+	{
+		try {
+			String testModelName = "E3Tests03_T35";
+			String filename_ifc = testlib.getInputPathIfc4() + "/UD1_35/20170516_BAM_Pilot_Project_UD_Alternative_1.ifc";
+			String filename_csv = testlib.getInputPathIfc4() + "/UD1_35/KP-as-is_no_samples_with_units_A1_20170621.csv";
+			String filename_out = testlib.getOutputPath() + "/ESIM_merge_" + testModelName + ".ifc";
+			this.ESIMAppend(testModelName, filename_ifc, filename_csv,filename_out);
+		}
+		catch(Exception ex)	{
+			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
+			testlib.writeTrace(ex.toString());
+			throw ex;
+		}
+	}
 
 	
 	

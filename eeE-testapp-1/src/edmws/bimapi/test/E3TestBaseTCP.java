@@ -55,6 +55,8 @@ public class E3TestBaseTCP extends Thread implements IE3TestBase {
 	@Override
 	public String getInputPathIfc4() {return inputPathIfc4;}
 	@Override
+	public String getInputPathIfc4_ED2() {return inputPathIfc4;}
+	@Override
 	public String getOutputPath() {return outputPath;}
 	
 	private E3TestBaseTCP(){}

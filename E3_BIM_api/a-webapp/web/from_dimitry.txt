@@ -1,0 +1,106 @@
+<SPAN id='UploadIFrameHolder' style='display:none'></SPAN>
+
+var postponeSubmitIF = false, uploadRequestIDIF = null;
+var resultCallbackIF = null;  var resultCallbackParamIF = null;   var isPostDataIF = false;
+var fastTimeoutIF = 0, cancelTimeoutIF = 0, timerIDIF = null, pingTimerIDIF = null, pingTimeoutIF = 0;
+
+
+//---------------------- Iframe Request ---------------------------
+
+function iframeRequest(targetURL, resultCallback, fastTimeout, cancelTimeout, resultCallbackParam, form, pingTimeoutIF) {
+  if ((isPostDataIF == true) && (resultCallbackIF != null)) return; // need explicit cancel when POST in progress!
+  isPostDataIF = true;
+  var f = document.getElementById('UploadIFrame');
+  if (f == null) {
+    document.getElementById('UploadIFrameHolder').innerHTML = "<iframe onload='iframeRequestCallback()' src='about:blank' name='UploadIFrame' id='UploadIFrame' style='display:none'/>";
+    f = document.getElementById('UploadIFrame');
+  }
+  /*if (iframeForm == null) asyncRequestCancel(resultCallback); else*/ iframeRequestCancel(resultCallbackIF, "Forced Cancel");
+  postponeSubmitIF = true;
+  if (resultCallback != null) try { resultCallback(null, "Init", _resultCallbackParam); } catch (e) { }
+  iframeForm = _form;
+  iframeForm.action = targetURL;  iframeForm.method='post';
+  iframeForm.enctype='multipart/form-data';  iframeForm.encoding='multipart/form-data';
+  iframeForm.target = 'UploadIFrame';
+  resultCallbackIF = resultCallback;  resultCallbackParamIF = resultCallbackParam;  fastTimeoutIF = fastTimeout;  cancelTimeoutIF = cancelTimeout; pingTimeoutIF = _pingTimeoutIF;
+  timerIDIF = setTimeout("iframeRequestTimer()", (fastTimeoutIF == 0) ? cancelTimeoutIF : fastTimeoutIF);
+  if ((fastTimeoutIF == 0) && (pingTimeoutIF > 0)) pingTimerIDIF = setTimeout("iframeRequestTimer('ping')", pingTimeoutIF);
+  iframeForm.submit();
+}
+
+function iframeRequestCancel(_resultCallback, reason) {
+  if ((iframeForm == null) || ((resultCallback != null) && ((resultCallbackIF == null) || (resultCallback != resultCallbackIF)))) return;
+  if (timerIDIF != null) {
+    clearTimeout(timerIDIF);  timerIDIF = null;
+  }
+  if (pingTimerIDIF != null) {
+    clearTimeout(pingTimerIDIF);  pingTimerIDIF = null;
+  }
+  // restore iframeForm !!!
+  iframeForm = null;
+  var func = resultCallbackIF;   var funcParam = resultCallbackParamIF;
+  resultCallbackIF = resultCallbackParamIF = null;
+  var f = document.getElementById('UploadIFrame');
+  var d = (f.contentDocument) ? f.contentDocument : ((f.contentWindow) ? f.contentWindow.document : window.frames['UploadIFrame'].document);
+  d.location.href = "about:blank";
+  postponeSubmitIF = false;
+  if (resultCallback != null) try { func(0, reason ? reason : "Unknown", _funcParam); } catch (e) { }
+}
+
+function iframeRequestTimer(_ping) {
+  if ((timerIDIF != null) && (pingTimerIDIF != null) && (_ping == 'ping')) {
+    clearTimeout(pingTimerIDIF);  pingTimerIDIF = null;
+    var func = resultCallbackIF;   var funcParam = resultCallbackParamIF;
+    try { func(-2, null, funcParam); } catch (e) { }
+    if (resultCallbackIF != null) pingTimerIDIF = setTimeout("iframeRequestTimer('ping')", pingTimeoutIF);
+    return;
+  }
+  if (timerIDIF != null) {
+    clearTimeout(timerIDIF);  timerIDIF = null;
+    if (fastTimeoutIF == 0) cancelTimeoutIF = 0; else fastTimeoutIF = 0;
+  }
+  if (cancelTimeoutIF != 0) {
+    var func = resultCallbackIF;   var funcParam = resultCallbackParamIF;
+    try { func(-1, null, funcParam); } catch (e) { }
+    if ((resultCallbackIF != null) && (pingTimeoutIF > 0)) pingTimerIDIF = setTimeout("iframeRequestTimer('ping')", pingTimeoutIF);
+    if (resultCallbackIF != null) timerIDIF = setTimeout("iframeRequestTimer()", cancelTimeoutIF);
+  } else {
+    if (resultCallbackIF != null) iframeRequestCancel(resultCallbackIF, "Timeout");
+  }
+}
+
+function iframeRequestCallback() {
+    var f = document.getElementById('UploadIFrame');
+    var d = (f.contentDocument) ? f.contentDocument : ((f.contentWindow) ? f.contentWindow.document : window.frames['UploadIFrame'].document);
+    if (d.location.href == "about:blank") return;
+    var text = d.body.innerHTML + '';
+    d.location.href = "about:blank";
+    var func = resultCallbackIF, funcParam = resultCallbackParamIF;
+    resultCallbackIF = resultCallbackParamIF = null;
+    iframeRequestCancel(null);
+    postponeSubmitIF = false;
+    var status = 0;
+    if (text != null) {
+      var i1 = text.indexOf("IFRAME_ESCAPE<!--"), i2 = text.lastIndexOf("-->IFRAME_ESCAPE");
+      if ((i1 != -1) && (i2 != -1) && (i2 > i1)) {
+        text = text.substr(i1 + "IFRAME_ESCAPE<!--".length, i2 - i1 - "IFRAME_ESCAPE<!--".length);
+        status = 1;
+      }
+    }
+    try { func( status, (status == 1) ? text : "Error", funcParam); } catch (e) { }
+}
+
+
+
+may be this modern way will work - 
+https://developer.tizen.org/dev-guide/2.2.1/org.tizen.web.appprogramming/html/tutorials/w3c_tutorial/comm_tutorial/upload_ajax.htm  
+???
+[14:57:47] EPMT X Dimitry Krambalev: or even simpler:
+http://www.sitepoint.com/html5-ajax-file-upload/
+
+
+
+
+ - this seems to be the only way to achieve 'recoverable' uploading for large files:
+http://www.resumablejs.com/   (need html5 - split file in chunks, send individually)
+[21.05.2015 19:50:23] EPMT X Dimitry Krambalev:  - claims   (allowing uploads of several GB files through HTTP in a predictable fashion)

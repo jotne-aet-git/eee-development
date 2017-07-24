@@ -1,0 +1,242 @@
+<!--
+-->
+<project name="e3_bim_api" default="compile" basedir=".">
+
+  <property file="../../common.properties"/>
+  <property file="deploy.properties"/>
+  <property name="app.name"      value="e3-bimapi-a"/>
+  <property name="app.version"   value="1"/>
+  <property name="build.home"    value="build"/>
+  <property name="war.home"    value="war"/>
+ 
+  <property name="web.app"    value="${app.name}"/>
+
+
+
+<!--  ==================== Compilation Control Options ==================== -->
+
+  <property name="compile.debug"       value="true"/>
+  <property name="compile.deprecation" value="false"/>
+  <property name="compile.optimize"    value="true"/>
+
+  <path id="compile.classpath">
+      <pathelement location="${edm.jar.home}/edom3_java3.jar"/>
+      <pathelement location="${edm.jar.home}/EDMwebServices_edom3.jar"/>
+      <pathelement location="./lib/slf4j-api-1.7.21.jar"/>
+      <pathelement location="./lib/junit.jar"/>
+      <pathelement location="./lib/servlet-api.jar"/>    
+  </path>
+
+  <!-- ==================== Prepare Target ================================== -->
+
+  <target name="prepare">
+
+    <!-- Create build directory and copy static content -->
+    <mkdir  dir="${build.home}"/>
+
+    <!-- Copy static files from external dependencies as needed -->
+
+	<!-- set up dynamic dirs-->
+		<dirname property="dev_root" 		file="../../.."/>
+		<dirname property="edm.jar.home" 	file="${dev_root}/output/x64/jar/*.*"/>	
+		<property name="web.deploy.home"    value="${dev_root}/${web.root}/${web.app}"/>	
+		<property name="doc.deploy.api" 	value="${dev_root}/${doc.root}/${app.name}/api"/>
+		<echo>doc.deploy.api: ${doc.deploy.api}</echo>
+  </target>
+
+<!-- ==================== target to set and verify setups etc ====================================== -->
+	<target name="mimic" depends="prepare">
+		<echo>dev_root: ${dev_root}</echo>
+		<echo>edm.jar.home: ${edm.jar.home}</echo>
+		<dirname property="yweb.deploy.home" 	file="${web.deploy.home}/*.*"/>	
+		<echo>web.deploy.home: ${yweb.deploy.home}</echo>
+		<dirname property="ydoc.deploy.api" 	file="${doc.deploy.api}/*.*"/>	
+		<echo>doc.deploy.api: ${ydoc.deploy.api}</echo>
+	</target>
+
+ 
+<!-- ==================== Release Target ====================================== -->
+  <target name="release" depends="clean,compile,jar,javadoc"
+   description="Clean build and dist, then compile"/>
+
+<!-- ==================== Debug Target ====================================== -->
+  <target name="debug" depends="compile,jar"
+   description="Generate and compile sources"/>
+
+
+<!-- ==================== Clean Target ==================================== -->
+<!--
+  The "clean" target deletes any previous "build" and "dist" directory,
+  so that you can be ensured the application can be built from scratch.
+-->
+
+  <target name="clean" depends="prepare"
+   description="Delete old build and dist directories">
+    <delete dir="${build.home}"/>
+    <delete dir="${doc.deploy.api}"/>
+    <mkdir  dir="${edm.jar.home}"/>
+    <mkdir  dir="${war.home}"/>
+    <delete>
+      <fileset dir="${edm.jar.home}" includes="${app.name}.jar"/>
+      <fileset dir="${war.home}" includes="${app.name}.war"/>
+    </delete>
+    <delete dir="${doc.deploy}"/>
+  </target>
+
+
+
+<!-- ==================== Compile Target ================================== -->
+<!--
+  The "compile" target transforms source files (from your "src" directory)
+  into object files in the appropriate location in the build directory.
+  This example assumes that you will be including your classes in an
+  unpacked directory hierarchy under "/WEB-INF/classes".
+-->
+
+  <target name="compile" depends="prepare"
+   description="Compile Java sources">
+
+    <!-- Compile Java classes as necessary -->
+    <mkdir    dir="${build.home}"/>
+    <javac srcdir="src"
+          destdir="${build.home}"
+           debug="${compile.debug}"
+     deprecation="${compile.deprecation}"
+        optimize="${compile.optimize}"
+		includeantruntime="false"
+		>
+        <classpath refid="compile.classpath"/>    	
+    </javac>
+
+    <!-- Copy associated resource files -->
+    <!-- 
+    <copy  todir="${build.home}/library/classes">
+    <fileset dir="src" includes="**/*.properties"/>
+    </copy>
+    -->
+  </target>
+
+
+
+<!-- ==================== Jar Target =================================== -->
+
+
+ <target name="jar" depends="compile" description="Deploying classes as a JAR file">
+    <mkdir dir="${edm.jar.home}"/>
+    <jar jarfile="${edm.jar.home}/${app.name}.jar" basedir="${build.home}"/>         
+  </target>
+	
+
+<!-- ==================== War Target =================================== -->
+	 
+	<target name="war" depends="compile">
+	<war destfile="${war.home}/${app.name}.war" webxml="web/WEB-INF/web.xml">
+		<fileset dir="web"/>
+		<!--
+		<lib dir="web/WEB-INF/lib"/>
+		-->
+		<classes dir="${build.home}"/>
+	</war>
+	</target>
+	
+	
+<!-- ==================== Deploy Target =================================== -->
+
+
+  <target name="deploy" depends="jar"
+   description="Deploy application to common library">
+
+    <!-- Copy the contents of the build directory -->
+<!-- WAR deployment does not work with my TOMCAT for some reason :( 
+    <mkdir     dir="${web.deploy}"/>
+    <copy    todir="${web.deploy}">
+		<fileset dir="${war.home}" includes="${app.name}.war"/> 
+    </copy>
+-->
+    <mkdir     dir="${web.deploy.home}"/>
+    <copy    todir="${web.deploy.home}">
+		<fileset dir="./web" includes="**/*"/>
+    </copy>
+    <copy    todir="${web.deploy.home}/WEB-INF/lib">
+		<fileset dir="${edm.jar.home}" includes="${app.name}.jar"/>
+    </copy>
+    <copy    todir="${web.deploy.home}/WEB-INF/lib">
+		<fileset dir="./lib" includes="slf4j-api-1.7.21.jar"/>
+    </copy>
+    <copy    todir="${web.deploy.home}/WEB-INF/lib">
+		<fileset dir="./lib" includes="logback-classic-1.1.7.jar"/>
+    </copy>
+    <copy    todir="${web.deploy.home}/WEB-INF/lib">
+		<fileset dir="./lib" includes="logback-core-1.1.7.jar"/>
+    </copy>
+    <copy    todir="${web.deploy.home}/WEB-INF/lib">
+      <fileset dir="${edm.jar.home}" includes="edom3_java3.jar"/>
+    </copy>
+    <copy    todir="${web.deploy.home}/WEB-INF/lib">
+      <fileset dir="${edm.jar.home}" includes="EDMwebServices_edom3.jar"/>
+    </copy>
+<!--
+    <copy    todir="${web.deploy.home}/WEB-INF/classes">
+		<fileset dir="${build.home}" includes="**/*"/>
+    </copy>
+-->
+  </target>
+
+
+
+
+
+<!-- ==================== Javadoc Target ================================== -->
+
+<!--
+
+  The "javadoc" target creates Javadoc API documentation for the Java
+  classes included in your application.  Normally, this is only required
+  when preparing a distribution release, but is available as a separate
+  target in case the developer wants to create Javadocs independently.
+
+-->
+
+  <target name="javadoc" depends="compile" description="Generate documentation">
+
+    <!-- Generate API documentation -->
+    <mkdir          dir="${doc.deploy.api}"/>
+    <javadoc sourcepath="src"
+               destdir="${doc.deploy.api}"
+               packagenames="edmws.webapp.servlets,edmws.webapp.model"
+               Doctitle="E3 BIM API Documentation - ${app.name}${app.version}"
+            Windowtitle="E3 BIM API Documentation - ${app.name}${app.version}"/>
+            
+    <!-- Copy the root documentation -->
+	<!--???
+    <mkdir     dir="${doc.deploy}"/>
+    <copy    todir="${doc.deploy}">
+      <fileset dir="doc" includes="*.html"/>
+    </copy>
+    -->
+
+  </target>
+
+
+
+
+<!-- ==================== Generate Target ================================== -->
+
+
+  <target name="test_interface_all">
+
+
+	<exec executable="cmd">
+	  <arg line ="/C java -classpath ${edm.jar.home}/edom3_java.jar edm.edom3.test.standalone.TestMain"/>
+	</exec>
+<!--	
+	<exec executable="cmd">
+	  <arg line ="/C type jb_remote.err"/>
+	</exec>
+    <delete file="jb_remote.err"/>
+-->    
+  </target>
+
+
+</project>
+

@@ -525,7 +525,7 @@ public class E3Tests01 extends E3Tests00 {
 	public void T25JSONUploadModel() throws Exception 
 	{
 		try {
-			String filename = testlib.getInputPathIfc4()+ "/testbase/ED_Arch_A3F1WD06.ifc";
+			String filename = testlib.getInputPathIfc4_ED2()+ "/testbase/ED_Arch_A3F1WD06.ifc";
 			String result = this.uploadModelIFC4(IE3TestBase.TEST_PROJECT_NAME_0,"test", TEST_MODEL_NAME, this.mCurrentTestName.toString(),filename);
 
 			JSONArray jresult = this.makeModelList(result);
@@ -584,7 +584,7 @@ public class E3Tests01 extends E3Tests00 {
 	public void T27JSONMultipartUPload() throws Exception 
 	{
 		try {
-			String filename = testlib.getInputPathIfc4()+ "/testbase/ED_Arch_A3F1WD06.ifc";
+			String filename = testlib.getInputPathIfc4_ED2()+ "/testbase/ED_Arch_A3F1WD06.ifc";
 			String projectName = IE3TestBase.TEST_PROJECT_NAME_0;
 			String modelName = TEST_MODEL_NAME;
 			String description = this.mCurrentTestName.toString();

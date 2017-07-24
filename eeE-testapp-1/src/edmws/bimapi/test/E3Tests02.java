@@ -229,8 +229,8 @@ public class E3Tests02 extends E3Tests00{
 	}
 
 	
-	private final String EEE_ED_A3_ARCH_Filename =  testlib.getInputPathIfc4() + "/testbase/ED_Arch_A3F1WD06.ifc";
-	private final String EEE_ED_A3_HVAC_Filename =  testlib.getInputPathIfc4() + "/testbase/ED_HVAC1_A3.ifc";
+	private final String EEE_ED_A3_ARCH_Filename =  testlib.getInputPathIfc4_ED2() + "/testbase/ED_Arch_A3F1WD06.ifc";
+	private final String EEE_ED_A3_HVAC_Filename =  testlib.getInputPathIfc4_ED2() + "/testbase/ED_HVAC1_A3.ifc";
 	private final String EEE_ED_A3_main_Filename =  testlib.getOutputPath() + "/ED_main_A3_";
 
 	public void DownloadModelToFile(String modelName,String filename) throws Exception 

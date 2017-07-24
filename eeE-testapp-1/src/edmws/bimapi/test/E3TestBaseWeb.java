@@ -25,8 +25,8 @@ public class E3TestBaseWeb extends Thread implements IE3TestBase {
 	public static String    userName			= "superuser";
 	public static String    groupName		   	= "";
 	public static String    userPass			= "Db1$123";
-	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
-//	public static String    webServerRoot       = "http://bim-api.jotne.com:8080/e3-bimapi-a";
+//	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
+	public static String    webServerRoot       = "http://bim-api.jotne.com:8080/e3-bimapi-a";
 
 //	for local context mode 
 /*	
@@ -39,14 +39,17 @@ public class E3TestBaseWeb extends Thread implements IE3TestBase {
 //	private static String    	schemaName    	= "ifc2x3_final";
 //	private static String edm_dev_root = "C:/home/aet/proj_dev/eeE/eee-development/";
 	private static String examplesRoot = "C:/home/aet/proj_dev/eeE";
-	private static String    	inputPath   	= examplesRoot + "data/ifc2x3/";
-	private static String    	inputPathIfc4   = "C:/home/aet/proj_dev/eeE/jotnesvn/swdevelopment/testdata/ED2";
+	private static String    	inputPath   		= examplesRoot + "data/ifc2x3/";
+	private static String    	inputPathIfc4   	= "C:/home/aet/proj_dev/eeE/jotnesvn/swdevelopment/testdata";
+	private static String    	inputPathIfc4_ED2   = "C:/home/aet/proj_dev/eeE/jotnesvn/swdevelopment/testdata/ED2";
 	private static String    	outputPath   	= "C:/home/aet/proj_dev/eeE/jotnesvn/swdevelopment/output";
 	
 	@Override
 	public String getInputPath() {return inputPath;}
 	@Override
 	public String getInputPathIfc4() {return inputPathIfc4;}
+	@Override
+	public String getInputPathIfc4_ED2() {return inputPathIfc4_ED2;}
 	@Override
 	public String getOutputPath() {return outputPath;}
 	

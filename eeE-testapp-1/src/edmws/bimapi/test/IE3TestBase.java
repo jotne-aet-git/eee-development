@@ -31,6 +31,7 @@ public interface IE3TestBase {
 	 */
 	public abstract String getInputPath();
 	public abstract String getInputPathIfc4();
+	public abstract String getInputPathIfc4_ED2();
 	
 	/**
 	 * Output path for files generated during sample runs. This includes data files, log files and diagnostic files.

@@ -1,0 +1,40 @@
+Buildfile: c:\home\aet\dev_tree\trunk\EDMeXtensions\EDOM3\java\build.xml
+
+prepare:
+
+compile:
+    [javac] c:\home\aet\dev_tree\trunk\EDMeXtensions\EDOM3\java\build.xml:209: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds
+
+jar:
+
+deploy:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
+Buildfile: c:\home\aet\dev_tree\trunk\EDMeXtensions\EDMwebServices\E3_BIM_api\a-webapp\build.xml
+
+prepare:
+     [echo] doc.deploy.api: c:\home\aet\dev_tree\trunk/output/x64/doc/e3-bimapi-a/api
+
+clean:
+   [delete] Deleting directory c:\home\aet\dev_tree\trunk\EDMeXtensions\EDMwebServices\E3_BIM_api\a-webapp\build
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
+Buildfile: c:\home\aet\dev_tree\trunk\EDMeXtensions\EDMwebServices\E3_BIM_api\a-webapp\build.xml
+
+prepare:
+    [mkdir] Created dir: c:\home\aet\dev_tree\trunk\EDMeXtensions\EDMwebServices\E3_BIM_api\a-webapp\build
+     [echo] doc.deploy.api: c:\home\aet\dev_tree\trunk/output/x64/doc/e3-bimapi-a/api
+
+compile:
+    [javac] Compiling 33 source files to c:\home\aet\dev_tree\trunk\EDMeXtensions\EDMwebServices\E3_BIM_api\a-webapp\build
+
+jar:
+      [jar] Building jar: c:\home\aet\dev_tree\trunk\output\x64\jar\e3-bimapi-a.jar
+
+deploy:
+     [copy] Copying 1 file to c:\home\aet\dev_tree\trunk\EDMmodelServer-ifc\lm_server\webapps\e3-bimapi-a\WEB-INF\lib
+
+BUILD SUCCESSFUL
+Total time: 2 seconds

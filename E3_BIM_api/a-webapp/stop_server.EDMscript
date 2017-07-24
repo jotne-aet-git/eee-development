@@ -1,0 +1,4 @@
+RemoteSystems>Servercontext>DefineContext(super, superuser, $, db1, TCP, localhost, 4590, $, $, $, $, $, $, $, $)
+RemoteSystems>Server>Terminate(super, db1, $, "ALL_SERVERS,FORCE_TO_TERMINATE")
+Exit>Exit()
+
