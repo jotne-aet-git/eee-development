@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<systems>
+  <system type="HEATING" reference="Plant1" heatLoad="2405" designTemperature="-12" partOfSystem="" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Boiler" designHeatLoad="2405" guid="3CvoAKgsn09uL2tJI5vhj6" ifcEntity="IfcBoiler">
+        <ports>
+          <port name="A1" connectedToPort="B1" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+          <port name="A2" connectedToPort="B2" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+  <system type="HEATING" reference="Single family house" heatLoad="2405" designTemperature="-12" partOfSystem="" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Manifold" designHeatLoad="" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionChamberElement">
+        <ports>
+          <port name="B1" connectedToPort="A1" systemReference="Plant1" guid="3CvoAKgsn09uL2tJI5vhj6" ifcEntity="IfcDistributionPort" />
+          <port name="B2" connectedToPort="A2" systemReference="Plant1" guid="3CvoAKgsn09uL2tJI5vhj6" ifcEntity="IfcDistributionPort" />
+          <port name="B3" connectedToPort="D2" systemReference="1" guid="1Yh4xzCt995QKyjO2qdZY6" ifcEntity="IfcDistributionPort" />
+          <port name="B4" connectedToPort="C1" systemReference="1" guid="1Yh4xzCt995QKyjO2qdZY6" ifcEntity="IfcDistributionPort" />
+          <port name="B5" connectedToPort="F2" systemReference="3" guid="1Yh4xzCt995QKyjO2qdZY2" ifcEntity="IfcDistributionPort" />
+          <port name="B6" connectedToPort="E1" systemReference="3" guid="1Yh4xzCt995QKyjO2qdZY2" ifcEntity="IfcDistributionPort" />
+		  <port name="B7" connectedToPort="H2" systemReference="4" guid="3sU6zNbkz2yRbJFfZGVmDD" ifcEntity="IfcDistributionPort" />
+		  <port name="B8" connectedToPort="G1" systemReference="4" guid="3sU6zNbkz2yRbJFfZGVmDD" ifcEntity="IfcDistributionPort" />
+		  <port name="B9" connectedToPort="J2" systemReference="5" guid="1GMBODExf35fbSX7Ne1RM8" ifcEntity="IfcDistributionPort" />
+		  <port name="B10" connectedToPort="I1" systemReference="5" guid="1GMBODExf35fbSX7Ne1RM8" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+  <system type="HEATING" reference="1" heatLoad="453" designTemperature="22" partOfSystem="Single family house" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve1" designHeatLoad="453" guid="1JzW4dDmr3GBSUB0OdpRGS-1" ifcEntity="IfcValve">
+        <ports>
+          <port name="C1" connectedToPort="B4" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+          <port name="C2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C3" connectedToPort="D1" systemReference="SpaceHeater1" guid="1Yh4xzCt995QKyjO2qdZY6-1" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="SpaceHeater1" designHeatLoad="453" guid="1Yh4xzCt995QKyjO2qdZY6-1" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="D1" connectedToPort="C3" systemReference="Valve1" guid="1JzW4dDmr3GBSUB0OdpRGS-1" ifcEntity="IfcDistributionPort" />
+          <port name="D2" connectedToPort="B3" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+  <system type="HEATING" reference="3" heatLoad="1347" designTemperature="22" partOfSystem="Single family house" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve2" designHeatLoad="1347" guid="1JzW4dDmr3GBSUB0OdpRGS-2" ifcEntity="IfcValve">
+        <ports>
+          <port name="E1" connectedToPort="B6" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+          <port name="E2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="E3" connectedToPort="F1" systemReference="SpaceHeater2" guid="1Yh4xzCt995QKyjO2qdZY2-1" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="SpaceHeater2" designHeatLoad="1347" guid="1Yh4xzCt995QKyjO2qdZY2-1" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="F1" connectedToPort="E3" systemReference="Valve2" guid="1JzW4dDmr3GBSUB0OdpRGS-2" ifcEntity="IfcDistributionPort" />
+          <port name="F2" connectedToPort="B5" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+  <system type="HEATING" reference="4" heatLoad="276" designTemperature="22" partOfSystem="Single family house" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve3" designHeatLoad="276" guid="1JzW4dDmr3GBSUB0OdpRGS-3" ifcEntity="IfcValve">
+        <ports>
+          <port name="G1" connectedToPort="B8" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+          <port name="G2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="G3" connectedToPort="H1" systemReference="SpaceHeater3" guid="3sU6zNbkz2yRbJFfZGVmDD-1" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="SpaceHeater3" designHeatLoad="276" guid="1Yh4xzCt995QKyjO2qdZY2-1" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="H1" connectedToPort="G3" systemReference="Valve3" guid="1JzW4dDmr3GBSUB0OdpRGS-3" ifcEntity="IfcDistributionPort" />
+          <port name="H2" connectedToPort="B7" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>  
+  <system type="HEATING" reference="5" heatLoad="14" designTemperature="15" partOfSystem="Single family house" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve4" designHeatLoad="14" guid="1JzW4dDmr3GBSUB0OdpRGS-4" ifcEntity="IfcValve">
+        <ports>
+          <port name="I1" connectedToPort="B10" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+          <port name="I2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="I3" connectedToPort="J1" systemReference="SpaceHeater4" guid="1GMBODExf35fbSX7Ne1RM8-1" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="SpaceHeater4" designHeatLoad="14" guid="1GMBODExf35fbSX7Ne1RM8-1" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="J1" connectedToPort="I3" systemReference="Valve4" guid="1JzW4dDmr3GBSUB0OdpRGS-4" ifcEntity="IfcDistributionPort" />
+          <port name="J2" connectedToPort="B9" systemReference="Manifold" guid="1JzW4dDmr3GBSUB0OdpRGS" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system> 
+</systems>

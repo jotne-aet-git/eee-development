@@ -1,0 +1,116 @@
+##############################
+##			    ##
+## Extending the HVAC model ##
+##			    ##
+##############################
+
+
+This document is a (hopefully) short explanation of each tag and attribute in the xml file and
+how they are represented in the IFC schema/model.
+
+# <systems>
+
+Root node of the XML file. No representation in IFC.
+
+  - No attributes.
+
+
+# <system>
+
+The actual system.
+
+  - type (mandatory)
+    This attributes defines the function of the system. It has to be one of the values from 
+    IfcDistributionSystemEnum.
+
+  - reference (mandatory)
+    The name of the system. Should follow a predefined naming convention. Current proposal is 
+    PlantX, AreaX, SegmentX where X is an autoincremented number for each of those three distinctions.
+    The value is mapped to the property "Reference" of the property set "Pset_DistributionSystemCommon".
+
+    => Alternative would be to use the Name attribute of IfcDistributionSystem, but semantically the
+       property Reference looks correct.
+
+  - designHeatLoad (optional)
+    The design heatload value for the entire system (if applicable). Represented with the property 
+    "DesignHeatLoad" within a custom property set "DDS_Simulation".
+
+  - designOutsideAirTemperature (optional)
+    The outside temperature the system should be able to cope with. Represented with the property 
+    "DesignOutsideAirTemperature" within a custom property set "DDS_Simulation".
+
+  - partOfSystem (optional)
+    Helper attribute to build the relationship between systems in the IFC model. Output is an IFC
+    entity of type IfcRelAggregates relating the two systems.
+
+  - guid (optional)
+    The GlobalId of an IFC entity. Can be reused if provided.
+
+  - ifcEntity (mandatory)
+    Helper attribute to regenerate the correct IFC entity if for some reasons the original instance
+    was deleted.
+
+
+# <components>
+
+Grouping of several components providing a share of the service. Represented as IfcRelAssignsToGroup 
+in IFC.
+
+  - designHeatLoadPercentage (optional)
+    Value expressed in percentage to reflect the share this group provides to the system.
+
+    !!!Caution: Not yet defined how to represent this in IFC as IfcRelAssigns and the subtypes 
+		can not have assigned (custom) property sets. Maybe one of the inherited attributes 
+		e.g. Name or Description can be (mis-) used
+
+
+# <component>
+
+HVAC component which is tied to the (sub-) system (fulfilling a distinct functionality).
+
+  - name (mandatory)
+    Human readable name of the component. Should be unique to the project as it will serve as
+    the identification, not the GlobalId. Can follow a naming convention but not required.
+
+  - designHeatLoad (optional)
+    The design heatload value for the component (if applicable). Represented with the property 
+    "DesignHeatLoad" within a custom property set "DDS_Simulation".
+
+  - guid (optional)
+    The GlobalId of an IFC entity. Can be reused if provided.
+
+  - ifcEntity (mandatory)
+    Helper attribute to regenerate the correct IFC entity if for some reasons the original instance
+    was deleted.
+
+
+# <ports>
+
+Grouping of all ports related to the component. No explicit translation in IFC.
+
+  - No attributes.
+
+
+# <port>
+
+The actual port.
+
+  - name (mandatory)
+    Human readable name of the component. Should be unique to the project as it will serve as
+    the identification, not the GlobalId. Can follow a naming convention but not required.
+
+  - connectedToPort (mandatory)
+    Helper attribute to create the connection between different ports. Ports which are not yet 
+    connected to another port (e.g. mechanical valve port which will be connected with an actuator 
+    port) have this field empty (or null).
+
+  - systemReference
+    Helper attribute to create a relation between the port and a distribution system where the port 
+    belongs logically to the system. Represented in IFC with the entity IfcRelAssignsToProduct.
+
+  - guid (optional)
+    The GlobalId of an IFC entity. Can be reused if provided.
+
+  - ifcEntity (mandatory)
+    Helper attribute to regenerate the correct IFC entity if for some reasons the original instance
+    was deleted.

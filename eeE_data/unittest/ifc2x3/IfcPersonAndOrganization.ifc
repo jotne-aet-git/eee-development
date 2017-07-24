@@ -1,0 +1,33 @@
+ISO-10303-21;
+HEADER;
+
+/******************************************************************************************
+* STEP Physical File produced by: EDMsix Version 2.0100.b09 Sep 12 2016
+* Module:                         EDMstepFileFactory/EDMstandAlone
+* Creation date:                  Wed Sep 14 14:28:24 2016
+* Host:                           EPMT-ARNE-dell
+* Database:                       O:\edm\_edm_home\db60xml\db1
+* Database version:               6007
+* Database creation date:         Wed Sep 14 14:26:22 2016
+* Schema:                         IFC2X3
+* Model:                          DataRepository.temp
+* Model creation date:            Wed Sep 14 14:27:47 2016
+* Header model:                   
+* EDMuser:                        superuser
+* EDMgroup:                       
+* License ID and type:            10006 : Test license. Expiry date:  1 Jan 2017
+* EDMstepFileFactory options:     020000
+******************************************************************************************/
+
+FILE_DESCRIPTION((''),'2;1');
+FILE_NAME('O:\\edm\\_edm_home\\db60xml\\db1.DataRepository.temp','2016-09-14T14:28:24',('ANONYMOUS USER'),('ANONYMOUS ORGANISATION'),'EDMsix Version 2.0100.b09 Sep 12 2016','','');
+FILE_SCHEMA(('IFC2X3'));
+ENDSEC;
+
+DATA;
+#1= IFCPERSON($,'Undefined',$,$,$,$,$,$);
+#3= IFCORGANIZATION('ifcOrganizationId','ifcOrganizationName','ifcOrganizationDescription',$,$);
+#7= IFCPERSONANDORGANIZATION(#1,#3,$);
+ENDSEC;
+
+END-ISO-10303-21;

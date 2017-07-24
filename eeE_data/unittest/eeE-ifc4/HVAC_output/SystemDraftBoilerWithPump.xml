@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<systems>
+  <system type="HEATING" reference="Plant1" heatLoad="2831" designTemperature="-12" partOfSystem="" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Burner" designHeatLoad="2831" guid="3CvoAKgsn09uL2tJI5vhj6-1" ifcEntity="IfcBurner">
+        <ports>
+          <port name="A1" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="A2" connectedToPort="B1" systemReference="Boiler" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcDistributionPort" />
+          <port name="A3" connectedToPort="B2" systemReference="Boiler" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Boiler" designHeatLoad="2831" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcBoiler">
+        <ports>
+          <port name="B1" connectedToPort="A2" systemReference="Burner" guid="3CvoAKgsn09uL2tJI5vhj6-1" ifcEntity="IfcDistributionPort" />
+          <port name="B2" connectedToPort="A3" systemReference="Burner" guid="3CvoAKgsn09uL2tJI5vhj6-1" ifcEntity="IfcDistributionPort" />
+          <port name="B3" connectedToPort="H2" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="B5" connectedToPort="J2" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="B6" connectedToPort="G2" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="B7" connectedToPort="L2" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="B4" connectedToPort="C1" systemReference="Valve1" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Valve1" designHeatLoad="2831" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcValve">
+        <ports>
+          <port name="C1" connectedToPort="B4" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C2" connectedToPort="H3" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C5" connectedToPort="J3" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C6" connectedToPort="G3" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C7" connectedToPort="L3" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C3" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="C4" connectedToPort="D1" systemReference="Pump" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Pump" designHeatLoad="2831" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcPump">
+        <ports>
+          <port name="D1" connectedToPort="C4" systemReference="Valve1" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcDistributionPort" />
+          <port name="D2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="D3" connectedToPort="E1" systemReference="Valve2" guid="1Yh4xzCt995QKyjO2qdZY6-2" ifcEntity="IfcDistributionPort" />
+          <port name="D4" connectedToPort="F1" systemReference="Valve3" guid="1Yh4xzCt995QKyjO2qdZY2-2" ifcEntity="IfcDistributionPort" />
+          <port name="D5" connectedToPort="I1" systemReference="Valve4" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcDistributionPort" />
+          <port name="D6" connectedToPort="K1" systemReference="Valve5" guid="1GMBODExf35fbSX7Ne1RM8-2" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+***please have a look into the file boiler with pump.pdf***<system type="HEATING" reference="Area1" heatLoad="60" designTemperature="" partOfSystem="" ifcEntity="IfcDistributionSystem" />
+  <system type="HEATING" reference="1" heatLoad="897" designTemperature="22" partOfSystem="System1" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve2" designHeatLoad="" guid="1Yh4xzCt995QKyjO2qdZY6-2" ifcEntity="IfcValve">
+        <ports>
+          <port name="E1" connectedToPort="D3" systemReference="Pump" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcDistributionPort" />
+          <port name="E2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="E3" connectedToPort="G1" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Heating/Cooling Device" designHeatLoad="30" guid="2rL_7_bjH08QojlcDCt3oQ" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="G1" connectedToPort="E3" systemReference="Valve2" guid="1Yh4xzCt995QKyjO2qdZY6-2" ifcEntity="IfcDistributionPort" />
+          <port name="G2" connectedToPort="B6" systemReference="Boiler" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcDistributionPort" />
+          <port name="G3" connectedToPort="C6" systemReference="Valve1" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+   </system>
+   <system type="HEATING" reference="3" heatLoad="1569" designTemperature="22" partOfSystem="System1" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve3" designHeatLoad="" guid="1Yh4xzCt995QKyjO2qdZY2-2" ifcEntity="IfcValve">
+        <ports>
+          <port name="F1" connectedToPort="D4" systemReference="Pump" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcDistributionPort" />
+          <port name="F2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="F3" connectedToPort="H1" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Heating/Cooling Device" designHeatLoad="30" guid="1UsqUqypL7WfHB9TsKj1QI" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="H1" connectedToPort="F3" systemReference="Valve3" guid="1Yh4xzCt995QKyjO2qdZY2-2" ifcEntity="IfcDistributionPort" />
+          <port name="H2" connectedToPort="B3" systemReference="Boiler" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcDistributionPort" />
+          <port name="H3" connectedToPort="C2" systemReference="Valve1" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+   </system>
+   <system type="HEATING" reference="4" heatLoad="456" designTemperature="20" partOfSystem="System1" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve4" designHeatLoad="" guid="3sU6zNbkz2yRbJFfZGVmDD-2" ifcEntity="IfcValve">
+        <ports>
+          <port name="I1" connectedToPort="D5" systemReference="Pump" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcDistributionPort" />
+          <port name="I2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="I3" connectedToPort="J1" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Heating/Cooling Device" designHeatLoad="30" guid="3JZbSbbbzBvfwng5MEV4CW" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="J1" connectedToPort="I3" systemReference="Valve4" guid="3sU6zNbkz2yRbJFfZGVmDD-2" ifcEntity="IfcDistributionPort" />
+          <port name="J2" connectedToPort="B5" systemReference="Boiler" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcDistributionPort" />
+          <port name="J3" connectedToPort="C5" systemReference="Valve1" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+  <system type="HEATING" reference="5" heatLoad="294" designTemperature="15" partOfSystem="System1" ifcEntity="IfcDistributionSystem">
+    <components heatLoadPercentage="100">
+      <component name="Valve5" designHeatLoad="" guid="1GMBODExf35fbSX7Ne1RM8-2" ifcEntity="IfcValve">
+        <ports>
+          <port name="K1" connectedToPort="D6" systemReference="Pump" guid="3CvoAKgsn09uL2tJI5vhj6-4" ifcEntity="IfcDistributionPort" />
+          <port name="K2" connectedToPort="" systemReference="" guid="" ifcEntity="IfcDistributionPort" />
+          <port name="K3" connectedToPort="L1" systemReference="Heating/Cooling Device" guid="" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+      <component name="Heating/Cooling Device" designHeatLoad="30" guid="3JZbSbbbzBvfwng5MEV4CW" ifcEntity="IfcSpaceHeater">
+        <ports>
+          <port name="L1" connectedToPort="K3" systemReference="Valve5" guid="1GMBODExf35fbSX7Ne1RM8-2" ifcEntity="IfcDistributionPort" />
+          <port name="L2" connectedToPort="B7" systemReference="Boiler" guid="3CvoAKgsn09uL2tJI5vhj6-2" ifcEntity="IfcDistributionPort" />
+          <port name="L3" connectedToPort="C7" systemReference="Valve1" guid="3CvoAKgsn09uL2tJI5vhj6-3" ifcEntity="IfcDistributionPort" />
+        </ports>
+      </component>
+    </components>
+  </system>
+</systems>

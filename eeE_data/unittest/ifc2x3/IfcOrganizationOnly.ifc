@@ -1,0 +1,32 @@
+ISO-10303-21;
+HEADER;
+
+/******************************************************************************************
+* STEP Physical File produced by: The EXPRESS Data Manager Version 5.02.0100.20 : 30 May 2016
+* Module:                         EDMstepFileFactory/EDMstandAlone
+* Creation date:                  Tue Sep 13 14:31:27 2016
+* Host:                           EPMT-ARNE-dell
+* Database:                       O:\edm\_edm_home\db52xml\db1
+* Database version:               5507
+* Database creation date:         Tue Sep 13 12:35:57 2016
+* Schema:                         IFC2X3
+* Model:                          DataRepository.IfcProjectOnly
+* Model creation date:            Tue Sep 13 14:30:38 2016
+* Header model:                   
+* EDMuser:                        superuser
+* EDMgroup:                       
+* License ID and type:            4387 : Test license. Expiry date:  1 Jan 2017
+*                                 4362 : Test license. Expiry date:  1 Jan 2017
+* EDMstepFileFactory options:     020000
+******************************************************************************************/
+
+FILE_DESCRIPTION((''),'2;1');
+FILE_NAME('O:\\edm\\_edm_home\\db52xml\\db1.DataRepository.IfcProjectOnly','2016-09-13T14:31:27',('ANONYMOUS USER'),('ANONYMOUS ORGANISATION'),'The EXPRESS Data Manager Version 5.02.0100.20 : 30 May 2016','','');
+FILE_SCHEMA(('IFC2X3'));
+ENDSEC;
+
+DATA;
+#1= IFCORGANIZATION('ifcOrganizationId','ifcOrganizationName','ifcOrganizationDescription',$,$);
+ENDSEC;
+
+END-ISO-10303-21;

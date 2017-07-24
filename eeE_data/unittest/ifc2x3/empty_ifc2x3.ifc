@@ -1,0 +1,39 @@
+ISO-10303-21;
+HEADER;
+
+/******************************************************************************************
+* STEP Physical File produced by: EDMsix Version 2.0100.b05 May 12 2016
+* Module:                         EDMstepFileFactory/EDMapplicationServer
+* Creation date:                  Thu May 19 10:10:06 2016
+* Host:                           EPMT-ARNE-dell
+* Database:                       O:/DATABASE/Database1119_4020_2\db1
+* Database version:               6008
+* Database creation date:         Fri May 13 06:28:25 2016
+* Schema:                         IFC2X3
+* Model:                          facility_0000_ArK_100.0000_Referansebygg_ArK_V3
+* Model creation date:            Thu May 19 10:09:27 2016
+* Header model:                   
+* EDMuser:                        superuser
+* EDMgroup:                       fm-admin
+* License ID and type:            10007 : Test license. Expiry date:  1 Jul 2016
+* EDMstepFileFactory options:     040000000
+******************************************************************************************/
+
+FILE_DESCRIPTION((''),'2;1');
+FILE_NAME(
+'O:/DATABASE/Database1119_4020_2\\db1.facility_0000_ArK_100.0000_Referansebygg_ArK_V3'
+
+,
+          '2016-04-19T12:17:47',
+          ('ANONYMOUS USER'),
+          ('ANONYMOUS ORGANISATION'),
+          'EDMsix Version 2.0100.04 Mar 29 2016',
+          '',
+          '');
+FILE_SCHEMA(('IFC2X3'));
+ENDSEC;
+
+DATA;
+ENDSEC;
+
+END-ISO-10303-21;

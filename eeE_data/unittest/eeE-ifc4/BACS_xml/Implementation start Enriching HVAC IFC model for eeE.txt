@@ -1,0 +1,45 @@
+From:	Milos Jovanovic [milos.jovanovic@ch.sauter-bc.com]
+Sent:	15. februar 2017 10:55
+To:	Arne Tøn
+Cc:	Kaiser, Jens; Florian Heinzig
+Subject:	Implementation start "Enriching HVAC IFC model for eeE"
+Attachments:	SystemDraftBoilerWithPump.xml; SystemDraftBoilerWithManifold.xml; 
+boiler with pump.pdf; boiler with manifold.pdf; 
+BoilerWithManifoldExample.ifc; XML to IFC explained.txt
+
+Hi everyone  
+ 
+I talked to each one of you explaining the concept of enhancing the HVAC model and asked for your 
+feedback. The results are reflected in the documents you will find attached.  
+ 
+Amongst the documents you will find an actual IFC representation of the concept for the manifold 
+example providing the opportunity to Jens and me to work on our problem field independently from the 
+implementation progress.  
+Another new document is a small explanation how the data and metadata in the XML file are translated 
+into the IFC model. Feel free to comment on both.  
+ 
+If you find any errors being it typos, the IFC example or on the concept itself, please inform the whole 
+group. In future we should use a common place to share the docs. Arne offered to use his github server 
+instead of the eeE sharepoint (jungle).  
+If everyone is ok I ask you Arne to setup something for us :)  
+ 
+Current Roadmap:  
+ 
+a. Florian will create a XML file based on one of the underfloor heating models for Brussels until 22. Feb 
+and share it with Arne.  
+b. Based on the concept and the XML file Arne will start to implement the feature when his schedule 
+allows it.  
+    => Open question: In Vienna we talked to upload the XML file on the BIM server via an API. I guess 
+this is still valid and the feature will be accessible with an API call?  
+c. During March/April me and Jens will use the enhanced HVAC model to verify for completeness on the 
+actual Brussels model.  
+ 
+ 
+I want to take the opportunity to say thanks to each one of you for your effort on this subject.  
+ 
+ 
+Best Regards  
+Milos  
+ 
+ 
+

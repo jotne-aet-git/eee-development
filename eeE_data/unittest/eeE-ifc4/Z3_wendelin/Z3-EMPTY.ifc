@@ -1,0 +1,30 @@
+ISO-10303-21;
+HEADER;
+
+/******************************************************************************************
+* STEP Physical File produced by: The EXPRESS Data Manager Version 5.02.0100.07 : 28 Aug 2013
+* Module:                         EDMstepFileFactory/EDMstandAlone
+* Creation date:                  Tue Aug 30 16:17:42 2016
+* Host:                           DE-657-7423-799
+* Database:                       C:\Users\ChungHo\AppData\Local\Temp\{CBD88D6D-A55C-41F2-B7FA-B960232E7F3F}\ifc
+* Database version:               5507
+* Database creation date:         Tue Aug 30 16:17:32 2016
+* Schema:                         IFC4
+* Model:                          DataRepository.ifc
+* Model creation date:            Tue Aug 30 16:17:32 2016
+* Header model:                   DataRepository.ifc_HeaderModel
+* Header model creation date:     Tue Aug 30 16:17:32 2016
+* EDMuser:                        sdai-user
+* EDMgroup:                       sdai-group
+* License ID and type:            5605 : Permanent license. Expiry date: 
+* EDMstepFileFactory options:     020000
+******************************************************************************************/
+FILE_DESCRIPTION(('ViewDefinition [DesignTransferView_V1.0]'),'2;1');
+FILE_NAME('01212','2016-08-30T16:17:42',(''),(''),'The EXPRESS Data Manager Version 5.02.0100.07 : 28 Aug 2013','20160606_1515(x64) - Exporter 17.1.0.0 - Alternate UI 17.1.0.0','');
+FILE_SCHEMA(('IFC4'));
+ENDSEC;
+
+DATA;
+ENDSEC;
+
+END-ISO-10303-21;

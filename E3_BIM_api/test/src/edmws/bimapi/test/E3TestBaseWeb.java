@@ -25,21 +25,23 @@ public class E3TestBaseWeb extends Thread implements IE3TestBase {
 	public static String    userName			= "superuser";
 	public static String    groupName		   	= "";
 	public static String    userPass			= "Db1$123";
-	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
-//	public static String    webServerRoot       = "http://bim-api.jotne.com:8080/e3-bimapi-a";
+//	public static String    webServerRoot       = "http://localhost:8080/e3-bimapi-a";
+	public static String    webServerRoot       = "http://bim-api.jotne.com:8080/e3-bimapi-a";
 
 
 
 
 	// default value = APOLLO
-	private static String edm_dev_root = "O:/dev_tree/master"; // "C:/home/aet/dev_tree/trunk/";
+	//private static String edm_dev_root = "O:/dev_tree/master"; 
+	//private static String edm_dev_root = "C:/home/aet/dev_tree/trunk/";
+	private static String edm_dev_root = "C:/home/aet/proj_dev/eeE/eee-development";
+
 	public static void SetDevRoot(String folder) 
 	{
 		edm_dev_root = folder;
 		edm_dev_root = edm_dev_root.replace('\\', '/');
 		if(!edm_dev_root.endsWith("/")) edm_dev_root = edm_dev_root + "/";		
 	}
-	
 	@Override
 	public String getDevRootFolder() {return edm_dev_root;}
 	@Override
@@ -47,15 +49,16 @@ public class E3TestBaseWeb extends Thread implements IE3TestBase {
 	{
 		SetDevRoot(folder);
 	}
+
 	
 	@Override
-	public String getInputRootFolder() {return getDevRootFolder() + "EDMmodelServer-ifc/lm_test/";}
+	public String getInputRootFolder() {return edm_dev_root + "/eeE_data/unittest";}
 	@Override
-	public String getInputPathIfc2x3() {return getInputRootFolder() + "data/ifc2x3/";}
+	public String getInputPathIfc2x3() {return getInputRootFolder() + "/ifc2x3/";}
 	@Override
-	public String getInputPathIfc4() {return getInputRootFolder() + "data/eeE-ifc4/";}
+	public String getInputPathIfc4() {return getInputRootFolder() + "/eeE-ifc4/";}
 	@Override
-	public String getOutputPath() {return getInputRootFolder() + "output/";}
+	public String getOutputPath() {return getInputRootFolder() + "/output/";}
 	
 
 	private E3TestBaseWeb(){}

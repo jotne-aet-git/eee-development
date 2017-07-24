@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exp:iso_10303_28 xmlns:exp="urn:iso.org:standard:10303:part(28):version(2):xmlschema:common" xmlns:doc="urn:iso.org:standard:10303:part(28):version(2):xmlschema:document" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="
+    urn:iso.org:standard:10303:part(28):version(2):xmlschema:common http://www.iai-tech.org/ifcXML/IFC2x3/FINAL/ex.xsd" version="2.0">
+<!--
+/******************************************************************************************
+* ISO-10303-28 XML document
+* Date:                           Fri Dec 30 17:35:25 2016
+* Produced by:                    EDMsix Version 2.0100.a13 Dec 30 2016 
+* Module:                         EDMxmlFactory/EDMstandAlone
+* Host:                           EPMT-ARNE-dell
+* Database:                       C:\home\odisk/edm_dev/EDMcore/edmtest/db\gurudb
+* Database version:               6007
+* Database creation date:         Fri Dec 30 17:35:22 2016
+* Express schema:                 IFC2X3
+* Model:                          T200Repository.T200Model
+* Model creation date:            Fri Dec 30 17:35:25 2016
+* Header model:                   
+* EDMuser:                        guru
+* EDMgroup:                       guru-group
+* License ID:                     10006
+* EDMxmlFactory options:          024002000410
+/******************************************************************************************
+-->	<exp:iso_10303_28_header>
+		<exp:name></exp:name>
+		<exp:time_stamp>2016-12-30T17:35:25</exp:time_stamp>
+		<exp:author></exp:author>
+		<exp:organization></exp:organization>
+		<exp:preprocessor_version>EDMsix Version 2.0100.a13 Dec 30 2016</exp:preprocessor_version>
+		<exp:originating_system></exp:originating_system>
+		<exp:authorization></exp:authorization>
+		<exp:documentation></exp:documentation>
+	</exp:iso_10303_28_header>
+	<uos id="uos_1" description="" configuration="i-ifc2x3" edo="" xmlns="http://www.iai-tech.org/ifcXML/IFC2x3/FINAL" xs:schemaLocation="
+    http://www.iai-tech.org/ifcXML/IFC2x3/FINAL http://www.iai-tech.org/ifcXML/IFC2x3/FINAL/IFC2X3.xsd">
+		<IfcBezierCurve id="i1637">
+			<Degree>2</Degree>
+			<ControlPointsList exp:cType="list">
+				<IfcCartesianPoint id="i1641">
+					<Coordinates exp:cType="list">
+						<IfcLengthMeasure>0.</IfcLengthMeasure>
+						<IfcLengthMeasure>0.</IfcLengthMeasure>
+						<IfcLengthMeasure>0.</IfcLengthMeasure>
+					</Coordinates>
+				</IfcCartesianPoint>
+				<IfcCartesianPoint id="i1642">
+					<Coordinates exp:cType="list">
+						<IfcLengthMeasure>0.</IfcLengthMeasure>
+						<IfcLengthMeasure>0.</IfcLengthMeasure>
+						<IfcLengthMeasure>0.</IfcLengthMeasure>
+					</Coordinates>
+				</IfcCartesianPoint>
+			</ControlPointsList>
+			<CurveForm>polyline_form</CurveForm>
+			<ClosedCurve>false</ClosedCurve>
+			<SelfIntersect>false</SelfIntersect>
+		</IfcBezierCurve>
+		<IfcCartesianPoint id="i1643">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>0.</IfcLengthMeasure>
+				<IfcLengthMeasure>0.</IfcLengthMeasure>
+				<IfcLengthMeasure>0.</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1644">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.</IfcLengthMeasure>
+				<IfcLengthMeasure>1.</IfcLengthMeasure>
+				<IfcLengthMeasure>1.</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1645">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-2.1</IfcLengthMeasure>
+				<IfcLengthMeasure>13.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1646">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>3.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-5.1</IfcLengthMeasure>
+				<IfcLengthMeasure>8.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1647">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-2.1</IfcLengthMeasure>
+				<IfcLengthMeasure>13.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1648">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-2.1</IfcLengthMeasure>
+				<IfcLengthMeasure>13.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1649">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-2.1</IfcLengthMeasure>
+				<IfcLengthMeasure>13.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1650">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-2.1</IfcLengthMeasure>
+				<IfcLengthMeasure>13.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcCartesianPoint id="i1651">
+			<Coordinates exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-2.1</IfcLengthMeasure>
+				<IfcLengthMeasure>13.3</IfcLengthMeasure>
+			</Coordinates>
+		</IfcCartesianPoint>
+		<IfcLine id="i1652">
+			<Pnt>
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+			</Pnt>
+			<Dir>
+				<IfcVector xs:nil="true" ref="i1653"/>
+			</Dir>
+		</IfcLine>
+		<IfcVector id="i1653">
+			<Orientation>
+				<IfcDirection id="i1654">
+					<DirectionRatios exp:cType="list">
+						<exp:double-wrapper>3.</exp:double-wrapper>
+						<exp:double-wrapper>4.</exp:double-wrapper>
+					</DirectionRatios>
+				</IfcDirection>
+			</Orientation>
+			<Magnitude>3.141592654</Magnitude>
+		</IfcVector>
+		<IfcLine id="i1655">
+			<Pnt>
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+			</Pnt>
+			<Dir>
+				<IfcVector xs:nil="true" ref="i1653"/>
+			</Dir>
+		</IfcLine>
+		<IfcLine id="i1656">
+			<Pnt>
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+			</Pnt>
+			<Dir>
+				<IfcVector xs:nil="true" ref="i1653"/>
+			</Dir>
+		</IfcLine>
+		<IfcLine id="i1657">
+			<Pnt>
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+			</Pnt>
+			<Dir>
+				<IfcVector xs:nil="true" ref="i1653"/>
+			</Dir>
+		</IfcLine>
+		<IfcDirection id="i1746">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>2.</exp:double-wrapper>
+				<exp:double-wrapper>3.</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcDirection id="i1747">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>5.</exp:double-wrapper>
+				<exp:double-wrapper>6.</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcDirection id="i1749">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>2.</exp:double-wrapper>
+				<exp:double-wrapper>5.</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcDirection id="i1750">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>2.</exp:double-wrapper>
+				<exp:double-wrapper>5.</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcDirection id="i1755">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>1.1</exp:double-wrapper>
+				<exp:double-wrapper>2.2</exp:double-wrapper>
+				<exp:double-wrapper>3.3</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcDirection id="i1756">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>1.1</exp:double-wrapper>
+				<exp:double-wrapper>2.2</exp:double-wrapper>
+				<exp:double-wrapper>3.3</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcDirection id="i1757">
+			<DirectionRatios exp:cType="list">
+				<exp:double-wrapper>1.1</exp:double-wrapper>
+				<exp:double-wrapper>2.2</exp:double-wrapper>
+				<exp:double-wrapper>3.3</exp:double-wrapper>
+			</DirectionRatios>
+		</IfcDirection>
+		<IfcGeometricRepresentationContext id="i1658">
+			<Precision>2.1</Precision>
+		</IfcGeometricRepresentationContext>
+		<IfcGeometricRepresentationContext id="i1661">
+			<CoordinateSpaceDimension>2</CoordinateSpaceDimension>
+		</IfcGeometricRepresentationContext>
+		<IfcBlobTexture id="i1662">
+			<RepeatS>true</RepeatS>
+			<RepeatT>true</RepeatT>
+			<TextureType>bump</TextureType>
+			<RasterFormat>normalizedString</RasterFormat>
+			<RasterCode>true</RasterCode>
+		</IfcBlobTexture>
+		<IfcTable id="i1663">
+			<Name>test</Name>
+			<Rows exp:cType="list">
+				<IfcTableRow id="i1664">
+					<RowCells exp:cType="list">
+						<IfcVolumeMeasure>2.</IfcVolumeMeasure>
+					</RowCells>
+					<IsHeading>false</IsHeading>
+				</IfcTableRow>
+			</Rows>
+		</IfcTable>
+		<IfcBuilding id="i1666">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa1</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<CompositionType>complex</CompositionType>
+			<ElevationOfRefHeight>2.1</ElevationOfRefHeight>
+		</IfcBuilding>
+		<IfcOwnerHistory id="i1676">
+			<OwningUser>
+				<IfcPersonAndOrganization id="i1677">
+					<ThePerson>
+						<IfcPerson id="i1678"/>
+					</ThePerson>
+					<TheOrganization>
+						<IfcOrganization xs:nil="true" ref="i1680"/>
+					</TheOrganization>
+				</IfcPersonAndOrganization>
+			</OwningUser>
+			<OwningApplication>
+				<IfcApplication id="i1684">
+					<ApplicationDeveloper>
+						<IfcOrganization xs:nil="true" ref="i1680"/>
+					</ApplicationDeveloper>
+					<Version>normalizedString</Version>
+					<ApplicationFullName>normalizedString</ApplicationFullName>
+					<ApplicationIdentifier>normalizedString</ApplicationIdentifier>
+				</IfcApplication>
+			</OwningApplication>
+			<State>readwrite</State>
+			<ChangeAction>nochange</ChangeAction>
+			<LastModifiedDate>0</LastModifiedDate>
+			<LastModifyingUser>
+				<IfcPersonAndOrganization xs:nil="true" ref="i1677"/>
+			</LastModifyingUser>
+			<LastModifyingApplication>
+				<IfcApplication xs:nil="true" ref="i1684"/>
+			</LastModifyingApplication>
+			<CreationDate>0</CreationDate>
+		</IfcOwnerHistory>
+		<IfcOrganization id="i1680">
+			<Id>normalizedString</Id>
+			<Name>normalizedString</Name>
+		</IfcOrganization>
+		<IfcPerson id="i1713"/>
+		<IfcWindow id="i1685">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa2</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+		</IfcWindow>
+		<IfcReinforcementBarProperties id="i1698">
+			<TotalCrossSectionArea>3.141592654</TotalCrossSectionArea>
+			<SteelGrade>normalizedString</SteelGrade>
+			<BarCount>2.1</BarCount>
+		</IfcReinforcementBarProperties>
+		<IfcMaterialLayer id="i1699">
+			<LayerThickness>3.141592654</LayerThickness>
+			<IsVentilated>false</IsVentilated>
+		</IfcMaterialLayer>
+		<IfcGridAxis id="i1701">
+			<AxisCurve>
+				<Ifc2DCompositeCurve xs:nil="true" ref="i1706"/>
+			</AxisCurve>
+			<SameSense>true</SameSense>
+		</IfcGridAxis>
+		<Ifc2DCompositeCurve id="i1706">
+			<Segments exp:cType="list">
+				<IfcCompositeCurveSegment id="i1707">
+					<Transition>discontinuous</Transition>
+					<SameSense>true</SameSense>
+					<ParentCurve>
+						<Ifc2DCompositeCurve xs:nil="true" ref="i1706"/>
+					</ParentCurve>
+				</IfcCompositeCurveSegment>
+			</Segments>
+			<SelfIntersect>false</SelfIntersect>
+		</Ifc2DCompositeCurve>
+		<IfcActorRole id="i1709">
+			<Role>supplier</Role>
+			<Description>test</Description>
+		</IfcActorRole>
+		<IfcSite id="i1710">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa3</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<CompositionType>complex</CompositionType>
+			<RefLatitude exp:cType="list">
+				<exp:long-wrapper>1</exp:long-wrapper>
+				<exp:long-wrapper>2</exp:long-wrapper>
+				<exp:long-wrapper>3</exp:long-wrapper>
+			</RefLatitude>
+		</IfcSite>
+		<IfcActor id="i1711">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa4</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<TheActor>
+				<IfcPerson xs:nil="true" ref="i1713"/>
+			</TheActor>
+		</IfcActor>
+		<IfcWall id="i1714">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa5</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+		</IfcWall>
+		<IfcSlab id="i1715">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa6</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<PredefinedType>floor</PredefinedType>
+		</IfcSlab>
+		<IfcFluidFlowProperties id="i1716">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa7</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<PropertySource>design</PropertySource>
+			<Fluid>
+				<IfcMaterial id="i1720">
+					<Name>normalizedString</Name>
+				</IfcMaterial>
+			</Fluid>
+			<FlowrateSingleValue>
+				<IfcPowerMeasure>2.5</IfcPowerMeasure>
+			</FlowrateSingleValue>
+		</IfcFluidFlowProperties>
+		<IfcServiceLifeFactor id="i1723">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa8</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<PredefinedType>a_qualityofcomponents</PredefinedType>
+			<UpperValue>
+				<IfcNumericMeasure>2.5</IfcNumericMeasure>
+			</UpperValue>
+			<MostUsedValue>
+				<IfcVolumeMeasure>2.</IfcVolumeMeasure>
+			</MostUsedValue>
+		</IfcServiceLifeFactor>
+		<IfcMeasureWithUnit id="i1724">
+			<ValueComponent>
+				<IfcLogical>false</IfcLogical>
+			</ValueComponent>
+			<UnitComponent>
+				<IfcSIUnit xs:nil="true" ref="i1725"/>
+			</UnitComponent>
+		</IfcMeasureWithUnit>
+		<IfcSIUnit id="i1725">
+			<UnitType>absorbeddoseunit</UnitType>
+			<Prefix>exa</Prefix>
+			<Name>ampere</Name>
+		</IfcSIUnit>
+		<IfcMeasureWithUnit id="i1726">
+			<ValueComponent>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">1.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">2.3</exp:double-wrapper>
+				</IfcComplexNumber>
+			</ValueComponent>
+			<UnitComponent>
+				<IfcSIUnit xs:nil="true" ref="i1725"/>
+			</UnitComponent>
+		</IfcMeasureWithUnit>
+		<IfcMetric id="i1727">
+			<Name>normalizedString</Name>
+			<Description>normalizedString</Description>
+			<ConstraintGrade>hard</ConstraintGrade>
+			<Benchmark>greaterthan</Benchmark>
+			<DataValue>
+				<IfcText>Test</IfcText>
+			</DataValue>
+		</IfcMetric>
+		<IfcConstraintClassificationRelationship id="i1734">
+			<ClassifiedConstraint>
+				<IfcObjective xs:nil="true" ref="i1735"/>
+			</ClassifiedConstraint>
+			<RelatedClassifications exp:cType="set">
+				<IfcClassificationReference id="i1736"/>
+				<IfcClassificationReference id="i1737"/>
+			</RelatedClassifications>
+		</IfcConstraintClassificationRelationship>
+		<IfcObjective id="i1735">
+			<Name>normalizedString</Name>
+			<Description>normalizedString</Description>
+			<ConstraintGrade>hard</ConstraintGrade>
+			<ConstraintSource>normalizedString</ConstraintSource>
+			<CreatingActor>
+				<IfcOrganization xs:nil="true" ref="i1680"/>
+			</CreatingActor>
+			<CreationTime>
+				<IfcCalendarDate id="i1738">
+					<DayComponent>0</DayComponent>
+					<MonthComponent>0</MonthComponent>
+					<YearComponent>0</YearComponent>
+				</IfcCalendarDate>
+			</CreationTime>
+			<UserDefinedGrade>normalizedString</UserDefinedGrade>
+			<BenchmarkValues>
+				<IfcMetric xs:nil="true" ref="i1727"/>
+			</BenchmarkValues>
+			<ResultValues>
+				<IfcMetric xs:nil="true" ref="i1727"/>
+			</ResultValues>
+			<ObjectiveQualifier>codecompliance</ObjectiveQualifier>
+		</IfcObjective>
+		<IfcConstraintClassificationRelationship id="i1739">
+			<ClassifiedConstraint>
+				<IfcObjective xs:nil="true" ref="i1735"/>
+			</ClassifiedConstraint>
+			<RelatedClassifications exp:cType="set">
+				<IfcClassificationReference id="i1740"/>
+				<IfcClassificationReference id="i1741"/>
+			</RelatedClassifications>
+		</IfcConstraintClassificationRelationship>
+		<IfcCalendarDate id="i1770">
+			<DayComponent>0</DayComponent>
+			<MonthComponent>0</MonthComponent>
+			<YearComponent>0</YearComponent>
+		</IfcCalendarDate>
+		<IfcPresentationLayerWithStyle id="i1742">
+			<Name>normalizedString</Name>
+			<Description>normalizedString</Description>
+			<AssignedItems exp:cType="set">
+				<IfcDefinedSymbol id="i1743">
+					<Definition>
+						<IfcPreDefinedDimensionSymbol id="i1744">
+							<Name>normalizedString</Name>
+						</IfcPreDefinedDimensionSymbol>
+					</Definition>
+					<Target>
+						<IfcCartesianTransformationOperator2D id="i1745">
+							<Axis1>
+								<IfcDirection xs:nil="true" ref="i1746"/>
+							</Axis1>
+							<Axis2>
+								<IfcDirection xs:nil="true" ref="i1747"/>
+							</Axis2>
+							<LocalOrigin>
+								<IfcCartesianPoint xs:nil="true" ref="i1649"/>
+							</LocalOrigin>
+						</IfcCartesianTransformationOperator2D>
+					</Target>
+				</IfcDefinedSymbol>
+			</AssignedItems>
+			<Identifier>normalizedString</Identifier>
+			<LayerOn>false</LayerOn>
+			<LayerFrozen>false</LayerFrozen>
+			<LayerBlocked>false</LayerBlocked>
+			<LayerStyles exp:cType="set">
+				<IfcNullStyle>null</IfcNullStyle>
+				<IfcNullStyle>null</IfcNullStyle>
+			</LayerStyles>
+		</IfcPresentationLayerWithStyle>
+		<IfcCartesianTransformationOperator2D id="i1748">
+			<Axis1>
+				<IfcDirection xs:nil="true" ref="i1749"/>
+			</Axis1>
+			<Axis2>
+				<IfcDirection xs:nil="true" ref="i1750"/>
+			</Axis2>
+			<LocalOrigin>
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+			</LocalOrigin>
+		</IfcCartesianTransformationOperator2D>
+		<IfcTrimmedCurve id="i1751">
+			<BasisCurve>
+				<Ifc2DCompositeCurve xs:nil="true" ref="i1706"/>
+			</BasisCurve>
+			<Trim1 exp:cType="set">
+				<IfcParameterValue>1.1</IfcParameterValue>
+				<IfcParameterValue>2.1</IfcParameterValue>
+			</Trim1>
+			<Trim2 exp:cType="set">
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+				<IfcCartesianPoint xs:nil="true" ref="i1644"/>
+			</Trim2>
+			<SenseAgreement>true</SenseAgreement>
+			<MasterRepresentation>cartesian</MasterRepresentation>
+		</IfcTrimmedCurve>
+		<IfcTrimmedCurve id="i1752">
+			<BasisCurve>
+				<Ifc2DCompositeCurve xs:nil="true" ref="i1706"/>
+			</BasisCurve>
+			<Trim1 exp:cType="set">
+				<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+				<IfcCartesianPoint xs:nil="true" ref="i1644"/>
+			</Trim1>
+			<Trim2 exp:cType="set">
+				<IfcParameterValue>1.1</IfcParameterValue>
+				<IfcParameterValue>2.1</IfcParameterValue>
+			</Trim2>
+			<SenseAgreement>true</SenseAgreement>
+			<MasterRepresentation>cartesian</MasterRepresentation>
+		</IfcTrimmedCurve>
+		<IfcAnnotationFillArea id="i1753">
+			<OuterBoundary>
+				<Ifc2DCompositeCurve xs:nil="true" ref="i1706"/>
+			</OuterBoundary>
+			<InnerBoundaries exp:cType="set">
+				<IfcLine xs:nil="true" ref="i1656"/>
+				<IfcLine xs:nil="true" ref="i1657"/>
+			</InnerBoundaries>
+		</IfcAnnotationFillArea>
+		<IfcAnnotationFillArea id="i1754">
+			<OuterBoundary>
+				<Ifc2DCompositeCurve xs:nil="true" ref="i1706"/>
+			</OuterBoundary>
+			<InnerBoundaries exp:cType="set">
+				<IfcLine xs:nil="true" ref="i1652"/>
+				<IfcLine xs:nil="true" ref="i1655"/>
+			</InnerBoundaries>
+		</IfcAnnotationFillArea>
+		<IfcRelConnectsPathElements id="i1758">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaaa9</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<Name>normalizedString</Name>
+			<Description>normalizedString</Description>
+			<ConnectionGeometry>
+				<IfcConnectionPointGeometry id="i1759">
+					<PointOnRelatingElement>
+						<IfcCartesianPoint xs:nil="true" ref="i1643"/>
+					</PointOnRelatingElement>
+				</IfcConnectionPointGeometry>
+			</ConnectionGeometry>
+			<RelatingElement>
+				<IfcWindow xs:nil="true" ref="i1685"/>
+			</RelatingElement>
+			<RelatedElement>
+				<IfcWindow xs:nil="true" ref="i1685"/>
+			</RelatedElement>
+			<RelatingPriorities exp:cType="list">
+				<exp:long-wrapper>1</exp:long-wrapper>
+				<exp:long-wrapper>-2</exp:long-wrapper>
+				<exp:long-wrapper>-3</exp:long-wrapper>
+			</RelatingPriorities>
+			<RelatedPriorities exp:cType="list"/>
+			<RelatedConnectionType>atpath</RelatedConnectionType>
+			<RelatingConnectionType>atpath</RelatingConnectionType>
+		</IfcRelConnectsPathElements>
+		<IfcPixelTexture id="i1760">
+			<RepeatS>true</RepeatS>
+			<RepeatT>true</RepeatT>
+			<TextureType>bump</TextureType>
+			<Width>0</Width>
+			<Height>0</Height>
+			<ColourComponents>0</ColourComponents>
+			<Pixel exp:cType="list">
+				<exp:hexBinary-wrapper>C0</exp:hexBinary-wrapper>
+				<exp:hexBinary-wrapper>6D</exp:hexBinary-wrapper>
+				<exp:hexBinary-wrapper>C980</exp:hexBinary-wrapper>
+			</Pixel>
+		</IfcPixelTexture>
+		<IfcPixelTexture id="i1761">
+			<RepeatS>true</RepeatS>
+			<RepeatT>true</RepeatT>
+			<TextureType>bump</TextureType>
+			<Width>0</Width>
+			<Height>0</Height>
+			<ColourComponents>0</ColourComponents>
+			<Pixel exp:cType="list">
+				<exp:hexBinary-wrapper>C0</exp:hexBinary-wrapper>
+				<exp:hexBinary-wrapper>6D</exp:hexBinary-wrapper>
+				<exp:hexBinary-wrapper>C980</exp:hexBinary-wrapper>
+			</Pixel>
+		</IfcPixelTexture>
+		<IfcPixelTexture id="i1762">
+			<RepeatS>true</RepeatS>
+			<RepeatT>true</RepeatT>
+			<TextureType>bump</TextureType>
+			<TextureTransform>
+				<IfcCartesianTransformationOperator2D xs:nil="true" ref="i1748"/>
+			</TextureTransform>
+			<Width>0</Width>
+			<Height>0</Height>
+			<ColourComponents>0</ColourComponents>
+			<Pixel exp:cType="list">
+				<exp:hexBinary-wrapper>C0</exp:hexBinary-wrapper>
+				<exp:hexBinary-wrapper>6D</exp:hexBinary-wrapper>
+				<exp:hexBinary-wrapper>C980</exp:hexBinary-wrapper>
+			</Pixel>
+		</IfcPixelTexture>
+		<IfcMove id="i1763">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaa1a</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<ObjectType>normalizedString</ObjectType>
+			<TaskId>normalizedString</TaskId>
+			<Status>normalizedString</Status>
+			<WorkMethod>normalizedString</WorkMethod>
+			<IsMilestone>true</IsMilestone>
+			<Priority>0</Priority>
+			<MoveFrom>
+				<IfcBuilding xs:nil="true" ref="i1666"/>
+			</MoveFrom>
+			<MoveTo>
+				<IfcBuilding xs:nil="true" ref="i1666"/>
+			</MoveTo>
+			<PunchList exp:cType="list-unique">
+				<IfcText>Test</IfcText>
+				<IfcText>EMI::ListBase</IfcText>
+				<IfcText>with DefinedType String</IfcText>
+			</PunchList>
+		</IfcMove>
+		<IfcMove id="i1767">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaa2a</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<ObjectType>normalizedString</ObjectType>
+			<TaskId>normalizedString</TaskId>
+			<Status>normalizedString</Status>
+			<WorkMethod>normalizedString</WorkMethod>
+			<IsMilestone>true</IsMilestone>
+			<Priority>0</Priority>
+			<MoveFrom>
+				<IfcBuilding xs:nil="true" ref="i1666"/>
+			</MoveFrom>
+			<MoveTo>
+				<IfcBuilding xs:nil="true" ref="i1666"/>
+			</MoveTo>
+			<PunchList exp:cType="list-unique">
+				<IfcText>Test</IfcText>
+				<IfcText>EMI::ListBase</IfcText>
+				<IfcText>with DefinedType String</IfcText>
+			</PunchList>
+		</IfcMove>
+		<IfcMove id="i1768">
+			<GlobalId>aaaaaaaaaaaaaaaaaaaa3a</GlobalId>
+			<OwnerHistory>
+				<IfcOwnerHistory xs:nil="true" ref="i1676"/>
+			</OwnerHistory>
+			<ObjectType>normalizedString</ObjectType>
+			<TaskId>normalizedString</TaskId>
+			<Status>normalizedString</Status>
+			<WorkMethod>normalizedString</WorkMethod>
+			<IsMilestone>true</IsMilestone>
+			<Priority>0</Priority>
+			<MoveFrom>
+				<IfcBuilding xs:nil="true" ref="i1666"/>
+			</MoveFrom>
+			<MoveTo>
+				<IfcBuilding xs:nil="true" ref="i1666"/>
+			</MoveTo>
+			<PunchList exp:cType="list-unique">
+				<IfcText>Test</IfcText>
+				<IfcText>EMI::ListBase</IfcText>
+				<IfcText>with DefinedType String</IfcText>
+			</PunchList>
+		</IfcMove>
+		<IfcIrregularTimeSeriesValue id="i1769">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcInteger>1</IfcInteger>
+				<IfcInteger>-21</IfcInteger>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1771">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-21.1</IfcLengthMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1772">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcCountMeasure>1.1</IfcCountMeasure>
+				<IfcCountMeasure>-21.1</IfcCountMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1773">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcBoolean>true</IfcBoolean>
+				<IfcBoolean>false</IfcBoolean>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1774">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcDescriptiveMeasure>Test</IfcDescriptiveMeasure>
+				<IfcDescriptiveMeasure>EMI::ListBase</IfcDescriptiveMeasure>
+				<IfcDescriptiveMeasure>with Select DefinedType String</IfcDescriptiveMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1775">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcLogical>true</IfcLogical>
+				<IfcLogical>false</IfcLogical>
+				<IfcLogical>unknown</IfcLogical>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1776">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">1.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">2.1</exp:double-wrapper>
+				</IfcComplexNumber>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">11.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">12.1</exp:double-wrapper>
+				</IfcComplexNumber>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">21.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">22.1</exp:double-wrapper>
+				</IfcComplexNumber>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1777">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcCompoundPlaneAngleMeasure exp:cType="list">
+					<exp:long-wrapper>1</exp:long-wrapper>
+					<exp:long-wrapper>-2</exp:long-wrapper>
+					<exp:long-wrapper>3</exp:long-wrapper>
+				</IfcCompoundPlaneAngleMeasure>
+				<IfcCompoundPlaneAngleMeasure exp:cType="list">
+					<exp:long-wrapper>-11</exp:long-wrapper>
+					<exp:long-wrapper>12</exp:long-wrapper>
+					<exp:long-wrapper>-13</exp:long-wrapper>
+				</IfcCompoundPlaneAngleMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1778">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcInteger>1</IfcInteger>
+				<IfcInteger>-21</IfcInteger>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1779">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-21.1</IfcLengthMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1780">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcCountMeasure>1.1</IfcCountMeasure>
+				<IfcCountMeasure>-21.1</IfcCountMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1781">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcBoolean>true</IfcBoolean>
+				<IfcBoolean>false</IfcBoolean>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1782">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcDescriptiveMeasure>Test</IfcDescriptiveMeasure>
+				<IfcDescriptiveMeasure>EMI::ListBase</IfcDescriptiveMeasure>
+				<IfcDescriptiveMeasure>with Select DefinedType String</IfcDescriptiveMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1783">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcLogical>true</IfcLogical>
+				<IfcLogical>false</IfcLogical>
+				<IfcLogical>unknown</IfcLogical>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1784">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">1.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">2.1</exp:double-wrapper>
+				</IfcComplexNumber>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">11.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">0.</exp:double-wrapper>
+				</IfcComplexNumber>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">21.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">22.1</exp:double-wrapper>
+				</IfcComplexNumber>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1785">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcCompoundPlaneAngleMeasure exp:cType="list">
+					<exp:long-wrapper>1</exp:long-wrapper>
+					<exp:long-wrapper>-2</exp:long-wrapper>
+					<exp:long-wrapper>3</exp:long-wrapper>
+				</IfcCompoundPlaneAngleMeasure>
+				<IfcCompoundPlaneAngleMeasure exp:cType="list">
+					<exp:long-wrapper>-11</exp:long-wrapper>
+					<exp:long-wrapper>12</exp:long-wrapper>
+					<exp:long-wrapper>-13</exp:long-wrapper>
+				</IfcCompoundPlaneAngleMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1786">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcInteger>1</IfcInteger>
+				<IfcInteger>-21</IfcInteger>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1787">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcLengthMeasure>1.1</IfcLengthMeasure>
+				<IfcLengthMeasure>-21.1</IfcLengthMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1788">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcCountMeasure>1.1</IfcCountMeasure>
+				<IfcCountMeasure>-21.1</IfcCountMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1789">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcBoolean>true</IfcBoolean>
+				<IfcBoolean>false</IfcBoolean>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1790">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcDescriptiveMeasure>Test</IfcDescriptiveMeasure>
+				<IfcDescriptiveMeasure>EMI::ListBase</IfcDescriptiveMeasure>
+				<IfcDescriptiveMeasure>with Select DefinedType String</IfcDescriptiveMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1791">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcLogical>true</IfcLogical>
+				<IfcLogical>false</IfcLogical>
+				<IfcLogical>unknown</IfcLogical>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1792">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">1.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">2.1</exp:double-wrapper>
+				</IfcComplexNumber>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">11.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">12.1</exp:double-wrapper>
+				</IfcComplexNumber>
+				<IfcComplexNumber exp:cType="array">
+					<exp:double-wrapper pos="1">21.1</exp:double-wrapper>
+					<exp:double-wrapper pos="2">22.1</exp:double-wrapper>
+				</IfcComplexNumber>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+		<IfcIrregularTimeSeriesValue id="i1793">
+			<TimeStamp>
+				<IfcCalendarDate xs:nil="true" ref="i1770"/>
+			</TimeStamp>
+			<ListValues exp:cType="list">
+				<IfcCompoundPlaneAngleMeasure exp:cType="list">
+					<exp:long-wrapper>1</exp:long-wrapper>
+					<exp:long-wrapper>-2</exp:long-wrapper>
+					<exp:long-wrapper>3</exp:long-wrapper>
+				</IfcCompoundPlaneAngleMeasure>
+				<IfcCompoundPlaneAngleMeasure exp:cType="list">
+					<exp:long-wrapper>-11</exp:long-wrapper>
+					<exp:long-wrapper>12</exp:long-wrapper>
+					<exp:long-wrapper>-13</exp:long-wrapper>
+				</IfcCompoundPlaneAngleMeasure>
+			</ListValues>
+		</IfcIrregularTimeSeriesValue>
+	</uos>
+</exp:iso_10303_28>

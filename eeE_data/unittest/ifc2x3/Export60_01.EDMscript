@@ -1,0 +1,21 @@
+Aux>History>Start(O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\Export60_01.EDMscript.dia, START_HISTORY_TO_FILE)
+RemoteSystems>Servercontext>DeleteContext(local, $)
+RemoteSystems>Servercontext>DefineContext(local, superuser, $, Db1$123, LOCAL_DB, $, $, $, $, $, $, $, $, $, $)
+RemoteSystems>Database>Closedatabase(local, Db1$123, $)
+RemoteSystems>Database>Deletedatabase(local, O:\edm\_edm_home\db60xml, db1, Db1$123, $)
+RemoteSystems>Database>Createdatabase(local, O:\edm\_edm_home\db60xml, db1, Db1$123, Db1$123, "OPEN_DATABASE,OPEN_SESSION")
+RemoteSystems>Expressschema>Define(local, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\IFC2X3.exp, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\IFC2X3.exp.dia, $, "STORING_SOURCE,TC2")
+RemoteSystems>XMLconfiguration>Create(local, ifc2x3, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\ifcXML2x3_final\configuration.xml, http://www.iai-tech.org/ifcXML/IFC2x3/FINAL, ifc, http://www.iai-tech.org/ifcXML/IFC2x3/FINAL/IFC2X3.xsd, $)
+
+RemoteSystems>Models>Importstepfile(local, DataRepository, IfcOrganizationOnly, $, $, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\IfcOrganizationOnly.ifc, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\IfcOrganizationOnly.ifc.dia, $, $, LOG_TO_FILE)
+RemoteSystems>Models>ExportXMLfile(local, "whole model", $, DataRepository, IfcOrganizationOnly, $, 0, $, 10000, $, $, i-ifc2x3, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\60-IfcOrganizationOnly.xml, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\60-IfcOrganizationOnly.xml.dia, UTF-8, "INCLUDE_HEADER,WORKING_DRAFT_VERSION")
+
+RemoteSystems>Models>Importstepfile(local, DataRepository, IfcPersonAndOrganization, $, $, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\IfcPersonAndOrganization.ifc, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\IfcPersonAndOrganization.ifc.dia, $, $, LOG_TO_FILE)
+RemoteSystems>Models>ExportXMLfile(local, "whole model", $, DataRepository, IfcPersonAndOrganization, $, 0, $, 10000, $, $, i-ifc2x3, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\60-IfcPersonAndOrganization.xml, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\60-IfcPersonAndOrganization.xml.dia, UTF-8, "INCLUDE_HEADER,WORKING_DRAFT_VERSION")
+
+RemoteSystems>Models>Importstepfile(local, DataRepository, referansebygg-0000, $, $, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\0000-Referansebygg.ifc, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\0000-Referansebygg.ifc.dia, $, $, LOG_TO_FILE)
+RemoteSystems>Models>ExportXMLfile(local, "whole model", $, DataRepository, referansebygg-0000, $, 0, $, 10000, $, $, i-ifc2x3, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\60-0000-Referansebygg.xml, O:\edm_dev\EDMeXtensions\EDOM3\test\data\ifc2x3\60-0000-Referansebygg.xml.dia, UTF-8, "INCLUDE_HEADER,WORKING_DRAFT_VERSION")
+
+RemoteSystems>Database>Closedatabase(local, Db1$123, $)
+Exit>Exit()
+

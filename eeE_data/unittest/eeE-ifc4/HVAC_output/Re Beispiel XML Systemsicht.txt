@@ -1,0 +1,33 @@
+From:	Florian Heinzig [fh@dds-cad.de]
+Sent:	9. mars 2017 14:40
+To:	Raphael Schär; Arne Tøn; Jens Kaiser
+Cc:	Milos Jovanovic
+Subject:	Re: Beispiel XML Systemsicht
+
+Attachments available until 8 Apr 2017
+Hi All,
+
+please find attached the xml examples for the interface b/n bacs and hvac, done with the early 
+design test cases as well the ifc’s where the cases are based on and the schema descriptions from 
+Miloš.
+
+Don’t hesitate to go in touch in case if there any questions.
+
+Otherwise I wish you a relaxing Friday and a nice weekend.
+
+Looking forward to Munic!
+
+Florian
+
+Click to Download 
+SystemDraftBoilerWithManifold.xml
+7 KB
+Click to Download 
+SystemDraftBoilerWithPump.xml
+10 KB
+Click to Download 
+SystemDraftBoilerWithPump.ifc
+26,3 MB
+Click to Download 
+SystemDraftBoilerWithManifold.ifc
+6,9 MB
