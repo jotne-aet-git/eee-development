@@ -18,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
+
 //import edmws.webapp.servlets.E3AccessUtil;
 import edmws.webapp.servlets.E3BimApiActions;
 import edmws.webapp.servlets.E3BimApiResourcePath;
@@ -38,7 +39,7 @@ public class E3Tests03 extends E3Tests00{
 				);
 	}
 
-	private static final String TEST_MODEL_NAME = "E3Tests03";
+	private static final String TEST_MODEL_NAME_31 = "E3Tests03_T31";
 	private static final String TEST_MODEL_NAME_32 = "E3Tests03_T32";
 	private static final String BASE_URL = "/ifc-api/0.5/" + E3IfcApiResourcePath.MR_IFCMODEL;
 	
@@ -58,7 +59,8 @@ public class E3Tests03 extends E3Tests00{
 		initTestClass();
 		testlib.initTest(null);
 		if(!skipInit) {
-			E3TestUtils.createE3TestUtils(testlib).deleteAllTestModels1(TEST_MODEL_NAME);
+			E3TestUtils.createE3TestUtils(testlib).deleteAllTestModels1(TEST_MODEL_NAME_31);
+			E3TestUtils.createE3TestUtils(testlib).deleteAllTestModels1(TEST_MODEL_NAME_32);
 		}
 	}
 
@@ -104,7 +106,7 @@ public class E3Tests03 extends E3Tests00{
 	{
 		try {
 			String TEST_FILESET_HVAC = "/HVAC_output/SystemDraftBoilerWithPump";
-			String testModelName = TEST_MODEL_NAME;
+			String testModelName = TEST_MODEL_NAME_31;
 			String filename_ifc = testlib.getInputPathIfc4() + "/" +  TEST_FILESET_HVAC + ".ifc";
 			String filename_xml = testlib.getInputPathIfc4() + "/" + TEST_FILESET_HVAC + ".xml";
 			String file_type = "xml";
@@ -167,6 +169,12 @@ public class E3Tests03 extends E3Tests00{
 
 			assertTrue("Missing completion message", jsonString.contains("E3MergeBACS1 interior completed"));
 			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
+*/			
+/*			
+			model_guid = helper.getModelGuidFromName(testModelName);
+			ta = new E3TestArgs("GET",IE3TestBase.BIMAPI_MODELS_URL + "/" + model_guid);
+			String result = helper.runBimApiService(ta);
+			System.out.print(result);
 */			
 			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
 		}
