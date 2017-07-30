@@ -37,6 +37,7 @@ public class E3Tests03 extends E3Tests00{
 	}
 
 	private static final String TEST_MODEL_NAME = "E3Tests03";
+	private static final String TEST_MODEL_NAME_31 = "E3Tests03_T31";
 	private static final String BASE_URL = "/ifc-api/0.5/" + E3IfcApiResourcePath.MR_IFCMODEL;
 	
 
@@ -211,9 +212,10 @@ public class E3Tests03 extends E3Tests00{
 	public void T31HVACSAppend() throws Exception 
 	{
 		try {
-			String testModelName = "E3Tests03_T31";
-			String filename_ifc = testlib.getInputPathIfc4_ED2() + "/testbase/SystemDraftBoilerWithPump.ifc";
-			String filename_xml = testlib.getInputPathIfc4_ED2() + "/testbase/SystemDraftBoilerWithPump.xml";
+			String testModelName = TEST_MODEL_NAME_31;
+			E3TestUtils.createE3TestUtils(testlib).deleteAllTestModels1(testModelName);
+			String filename_ifc = testlib.getInputPathIfc4_ED2() + "/HVAC_output/SystemDraftBoilerWithPump.ifc";
+			String filename_xml = testlib.getInputPathIfc4_ED2() + "/HVAC_output/SystemDraftBoilerWithPump.xml";
 			String filename_out = testlib.getOutputPath() + "/HVAC_merge_" + testModelName + ".ifc";
 			this.HVACAppend(testModelName, filename_ifc, filename_xml,filename_out);
 		}
