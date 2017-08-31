@@ -281,6 +281,44 @@ public class E3Tests02 extends E3Tests00{
 		}
 	}
 
+	private final String T13_ARCH_Filename =  testlib.getInputPathIfc4() + "/BAM_Pilot/20170830_BAM Pilot Project_ED_no railing.ifc";
+	private final String T13_HVAC_Filename =  testlib.getInputPathIfc4() + "/BAM_Pilot/eeE-HVAC-Ventilation_temp3.ifc";
+	private final String T13_Merged_Filename =  testlib.getInputPathIfc4() + "/BAM_Pilot/T13_Merged.ifc";
+
+	@Test
+	public void T13Merge_BAMPilot() throws Exception 
+	{
+		try {
+			String model_arch_guid = loadCaseModelIFC4("Arch",this.getQualifiedTestName() + "_arch",T13_ARCH_Filename,"eeE ED BAM Pilot Arch");
+			String model_hvac_guid = loadCaseModelIFC4("HVAC",this.getQualifiedTestName() + "_hvac",T13_HVAC_Filename,"eeE ED BAM Pilot HVAC");
+			E3TestArgs ta = new E3TestArgs("POST",BASE_URL + "/" + model_hvac_guid + "/merge");
+			ta.bodyArgs = new JSONObject();
+			
+			JSONArray jSources = new JSONArray().put(new JSONObject().put("model_id", model_arch_guid));			
+			ta.bodyArgs.put("source_models", jSources);
+			
+			JSONObject jTarget = new JSONObject().put("model_id",model_arch_guid);
+			ta.bodyArgs.put("target_model", jTarget);
+
+			JSONArray jArguments= new JSONArray();
+			jArguments.put(new JSONObject().put("merge_into_new_version",true));			
+			ta.bodyArgs.put("arguments", jArguments);
+
+			JSONArray jresult = new JSONArray(this.runIfcApiService(ta));
+			assertTrue("Nothing returned...",jresult.length() > 0);
+			
+			log(E3Logger.DEBUG,"--- response:" + jresult.toString(2));
+			this.DownloadModelToFile(this.getQualifiedTestName() + "_hvac",T13_Merged_Filename);
+			
+			log(E3Logger.INFO,"..." + getQualifiedTestName() + " completed successfully");
+		}
+		catch(Exception ex)	{
+			log(E3Logger.ERROR,"..." + getQualifiedTestName() + " completed with error(s):" + ex.toString());
+			testlib.writeTrace(ex.toString());
+			throw ex;
+		}
+	}
+
 	
 	@Test
 	public void T21JSONListExtractEndpoints() throws Exception 
